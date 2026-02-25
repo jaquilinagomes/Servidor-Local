@@ -1,5 +1,3 @@
-
-
 interface PedidoServico {
     cliente: string;
     descricao: string;
@@ -12,10 +10,10 @@ function processarPedido(
     precoHora: number
 ) {
     const valorBase = pedido.horasEstimadas * precoHora
-    const taxaUrgencia = pedido.urgente ? valorBase * 0.3 : 0;
+    const taxaUrgencia = pedido.urgente ? valorBase + valorBase * 0.3 : 0;
     const valorTotal = valorBase + taxaUrgencia
 
     return {
         valorTotal: valorTotal
     }
-}
+}       
