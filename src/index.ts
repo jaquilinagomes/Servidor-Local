@@ -1,17 +1,78 @@
-import express from "express";
-import { adicionarServico } from "./servico.js"
+import express, { type Request, type Response } from "express";
+import { adicionarServico, listarServicos, apagarServico, obterServico } from "./servico.js"
+import { calcularOrcamento, selecionarServicos } from "./orcamento.js";
 
 const app = express();
+app.use(express.json())
 
-app.get("/hello", (req, res) => {
+app.get("/hello", (req: Request, res: Response) => {
     console.log("Hello World");
     res.send("Hello World");
 });
 
-app.post("/adicionar-servico", (req, res) => {
+// Rota para adicionar serviço novo
+app.post("/adicionar-servico", (req: Request, res: Response) => {
     const servico = req.body
+
+    console.log(servico)
+    const addServicoResponse = adicionarServico(servico)
+    res.json(addServicoResponse)
+
     adicionarServico(servico)
 })
+
+
+// Rota para listar todos os servicos
+app.get("/listar-servico", (req: Request, res: Response) => {
+    const listServicoResponse = listarServicos()
+
+    res.json(listServicoResponse)
+})
+
+// Rota para apagar serviço
+app.delete("/apagar-servico", (req: Request, res: Response) => {
+    const { nome } = req.query
+    if (nome) {
+        const apagarServicoResponse = apagarServico(nome as string)
+        res.json(apagarServicoResponse)
+    } else {
+        res.json({
+            message: "Nome do serviço é obrigatório"
+        })
+    }
+})
+
+// Rota para obter servico pelo nome
+app.get("/obter-servico", (req: Request, res: Response) => {
+    const { nome } = req.query
+    if (nome) {
+        const obterServicoResponse = obterServico(nome as string)
+        res.json(obterServicoResponse)
+    } else {
+        res.json({
+            message: "Nome do serviço é obrigatório"
+        })
+    }
+})
+
+// Rota para selecionar servicos
+app.post("/selecionar-servico", (req: Request, res: Response) => {
+    const { nome } = req.body
+
+    const selecionarServicoResponse = selecionarServicos(nome as string)
+
+    res.json(selecionarServicoResponse)
+})
+
+// Rota para calcular orçamento
+app.post("/calcular-orcamento", (req: Request, res: Response) => {
+    const { pedido } = req.body
+
+    const calcularOrcamentoResponse = calcularOrcamento(pedido)
+
+    res.json(calcularOrcamentoResponse)
+})
+
 
 app.listen(8080, () => {
     console.log("server running on port 8080");

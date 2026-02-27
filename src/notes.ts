@@ -34,3 +34,4 @@ desconto === taxaUrgencia && desconto > taxaUrgencia ?
     taxaUrgencia += desconto : taxaUrgencia -= desconto;
 
 total = (horasTrabalhadas * precoHora) + taxaUrgencia - desconto;
+
