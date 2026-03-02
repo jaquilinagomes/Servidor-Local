@@ -21,7 +21,6 @@ app.post("/adicionar-servico", (req: Request, res: Response) => {
     adicionarServico(servico)
 })
 
-
 // Rota para listar todos os servicos
 app.get("/listar-servico", (req: Request, res: Response) => {
     const listServicoResponse = listarServicos()
@@ -67,12 +66,14 @@ app.post("/selecionar-servico", (req: Request, res: Response) => {
 // Rota para calcular orçamento
 app.post("/calcular-orcamento", (req: Request, res: Response) => {
     const { pedido } = req.body
-
+    
     const calcularOrcamentoResponse = calcularOrcamento(pedido)
 
-    res.json(calcularOrcamentoResponse)
+    res.json({
+        message: "Orcamento calculado com sucesso",
+        orcamentoTotal: calcularOrcamentoResponse
+    })
 })
-
 
 app.listen(8080, () => {
     console.log("server running on port 8080");
