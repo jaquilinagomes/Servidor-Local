@@ -45,7 +45,22 @@ export function criarPrestadoresDeServico(novoPrestador: prestadorType) {
     }
 }
 
-function selecionarPrestador()
+// Função para selecionar prestadores
+export function selecionarPrestadoresDeServico(nomeDoPrestador: string) {
+    // Ciclo que percorre o array de prestadoresDeServiço
+    for (let i = 0; i < PrestadoresDeServico.length; i++) {
+        // if que verifica se o item do array é igual ao nome recebido
+        if (PrestadoresDeServico[i]?.nome === nomeDoPrestador) {
+            // se for igual, adiciona o item [i] ao array prestadoresSelecionados.push
+            prestadoresSelecionados.push(PrestadoresDeServico[i]!)
+            // retornar verdadeiro
+            return true
+        }
+    }
+    // se não return false
+    return false
+}
+
 
 // Função para calcular o orçamento
 export function calcularOrcamento(pedido: PedidoServicoType) {
