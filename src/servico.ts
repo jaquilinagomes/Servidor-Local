@@ -2,7 +2,7 @@ import { type ServicoType, type ResponseType } from "./utils/types.js";
 
 export let catalogoServicos: ServicoType[] = [];
 
-// adicionar um novo serviço
+// Adicionar um novo serviço
 export function adicionarServico(servico: ServicoType): ResponseType {
     if (!servico.nome || servico.precoHora <= 0)
         return ({
@@ -35,7 +35,7 @@ export function listarServicos(): ServicoType[] {
     return catalogoServicos
 }
 
-// apagar um serviço
+// Apagar um serviço
 export function apagarServico(nome: string): boolean {
     // Todo: implementar delete de serviço
 
@@ -52,7 +52,7 @@ export function apagarServico(nome: string): boolean {
     return true
 }
 
-//Obter um serviço pelo nome
+// Obter um serviço pelo nome
 
 export function obterServico(nome: string): ServicoType | null {
     for (let i = 0; i < catalogoServicos.length; i++) {
