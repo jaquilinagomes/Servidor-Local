@@ -29,7 +29,6 @@ export function adicionarServico(servico: ServicoType): ResponseType {
 }
 
 // Listar todos os serviços
-
 export function listarServicos(): ServicoType[] {
     // Todo: implementar fetch de serviço
     return catalogoServicos
@@ -53,7 +52,6 @@ export function apagarServico(nome: string): boolean {
 }
 
 // Obter um serviço pelo nome
-
 export function obterServico(nome: string): ServicoType | null {
     for (let i = 0; i < catalogoServicos.length; i++) {
         if (catalogoServicos[i]?.nome === nome) {
