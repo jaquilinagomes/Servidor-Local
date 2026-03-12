@@ -1,6 +1,7 @@
 import express, { type Request, type Response } from "express";
 import { adicionarServico, listarServicos, apagarServico, obterServico } from "./servico.js"
 import { apagarPrestadorDeServico, calcularOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos } from "./orcamento.js";
+import { getUserById, getUsers, insertUsers } from "./users.js";
 
 const app = express();
 app.use(express.json())
@@ -117,12 +118,59 @@ app.put("/editar-prestador", (req: Request, res: Response) => {
 app.delete("/apagar-prestador", (req: Request, res: Response) => {
     const { nomeDoPrestador } = req.body
 
-    if ( nomeDoPrestador) {
+    if (nomeDoPrestador) {
         const apagarPrestadorResponse = apagarPrestadorDeServico(nomeDoPrestador as string)
 
         res.json(apagarPrestadorResponse)
+    } else {
+        res.json({
+            message: "Nome do prestador obrigatório"
+        })
     }
 })
+
+// selecionar todos os utilizadores presentes na base de dados
+app.get("/get-users", async (req: Request, res: Response) => {
+    const getUsersResponse = await getUsers()
+
+    res.json(getUsersResponse);
+})
+
+// selecionar um utilizador por id
+app.get("/get-user-by-id", async (req: Request, res: Response) => {
+    const { id } = req.query
+if (id) {
+    const getUserByIdResponse = await getUserById(id as string)
+
+    if (!getUserByIdResponse) {
+        res.status(404).json({
+            status: "error",
+            message: "Utilizador não encontrado",
+            data: null
+        })
+    }
+
+    res.status(200).json({
+        status: "sucess",
+        message: "Utilizador encontrado",
+        data: getUserByIdResponse
+    })
+} else {
+    res.status(400).json({
+        status:"error",
+        message:"Id é obrigatório",
+        data: null
+    })
+}
+})
+
+// inserir utilizadores
+app.get("/insert-users", async (req: Request, res: Response) => {
+    const getInsertUsersResponse = await insertUsers()
+
+    res.json(getInsertUsersResponse)
+})
+
 
 app.listen(8080, () => {
     console.log("server running on port 8080");

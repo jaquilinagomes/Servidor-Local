@@ -27,3 +27,5 @@ SELECT *
 FROM tbl_prestadores
 WHERE
 tbl_prestadores.nif = "150883404";
+
+SELECT * FROM tbl_utilizadores;
