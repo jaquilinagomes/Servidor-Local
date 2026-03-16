@@ -1,7 +1,8 @@
 import express, { type Request, type Response } from "express";
-import { adicionarServico, listarServicos, apagarServico, obterServico } from "./servico.js"
-import { apagarPrestadorDeServico, calcularOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos } from "./orcamento.js";
-import { getUserById, getUsers, insertUsers } from "./users.js";
+import { adicionarServico, listarServicos, apagarServico, obterServico, userServicos } from "./servico.js"
+import { apagarPrestadorDeServico, calcularOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos, userOrcamento } from "./orcamento.js";
+import {  createUser, getUserById, getUsers, userPrestacaoServico} from "./users.js";
+import { createPrestador } from "./prestador.js";
 
 const app = express();
 app.use(express.json())
@@ -139,37 +140,106 @@ app.get("/get-users", async (req: Request, res: Response) => {
 // selecionar um utilizador por id
 app.get("/get-user-by-id", async (req: Request, res: Response) => {
     const { id } = req.query
-if (id) {
-    const getUserByIdResponse = await getUserById(id as string)
+    if (id) {
+        const getUserByIdResponse = await getUserById(id as string)
 
-    if (!getUserByIdResponse) {
-        res.status(404).json({
+        if (!getUserByIdResponse) {
+            res.status(404).json({
+                status: "error",
+                message: "Utilizador não encontrado",
+                data: null
+            })
+        }
+
+        res.status(200).json({
+            status: "sucess",
+            message: "Utilizador encontrado",
+            data: getUserByIdResponse
+        })
+    } else {
+        res.status(400).json({
             status: "error",
-            message: "Utilizador não encontrado",
+            message: "Id é obrigatório",
             data: null
         })
     }
+})
 
-    res.status(200).json({
-        status: "sucess",
-        message: "Utilizador encontrado",
-        data: getUserByIdResponse
-    })
-} else {
-    res.status(400).json({
-        status:"error",
-        message:"Id é obrigatório",
-        data: null
-    })
+// Rota para criar utilizadores no DB
+app.post("/create-user", async (req: Request, res: Response) => {
+    const user = req.body;
+
+    if (!user) {
+        return res.status(400).json({
+            error: "utilizador não encontrado!"
+        });
+    }
+    const response = await createUser(user);
+
+    res.json(response);
 }
+)
+
+// Rota para criar servico no DB
+app.post("/user-servicos", async (req: Request, res: Response) => {
+    const servicos = req.body;
+
+    if (!servicos) {
+        return res.status(400).json({
+            error: "serviço não encontrado!"
+        });
+    }
+
+    const response = await userServicos(servicos)
+
+    res.json(response);
 })
 
-// inserir utilizadores
-app.get("/insert-users", async (req: Request, res: Response) => {
-    const getInsertUsersResponse = await insertUsers()
+// Rota para criar orcamento no DB
+app.post("/user-orcamento", async (req: Request, res: Response) => {
+    const orcamento = req.body;
 
-    res.json(getInsertUsersResponse)
+    if (!orcamento) {
+        return res.status(400).json({
+            error: "orcamento não encontrado!"
+        });
+    }
+
+    const response = await userOrcamento(orcamento)
+
+    res.json(response);
 })
+
+// Rota para criar prestador
+app.post("/create-prestador", async (req: Request, res: Response) => {
+    const prestador = req.body;
+
+    if (!prestador) {
+        return res.status(400).json({
+            error: "prestador não encontrado!"
+        })
+    }
+
+    const response = await createPrestador(prestador)
+
+    res.json(response)
+})
+
+// Rota para criar prestacao de servico
+app.post("/user-prestacao-servico", async (req: Request, res: Response) => {
+    const prestacaoservico = req.body;
+
+    if (!prestacaoservico) {
+        return res.status(400).json({
+            error: "prestacao de servico não encontrado!"
+        })
+    }
+
+    const response = await userPrestacaoServico(prestacaoservico)
+
+    res.json(response)
+})
+
 
 
 app.listen(8080, () => {

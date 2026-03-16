@@ -77,5 +77,14 @@ NOW(),
 NOW()
 );
 
+INSERT INTO tbl_prestacao_servico
+values (
+
+);
+
+INSERT INTO tbl_proposta
+values (
+
+)
 
 

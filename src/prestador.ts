@@ -1,3 +1,5 @@
+import db from "./lib/db.js"
+
 class Prestador {
     nome: string
     precoHora: number
@@ -50,3 +52,33 @@ minimoParaDesconto: 1000
 percentagemDesconto: 0.1
 taxaUrgencia: 0.3
 */
+
+export async function createPrestador(prestador: any) {
+    try {
+        const [rows] = await db.execute(
+            `INSERT INTO tbl_prestador
+        (id, nif, profissao, taxa_urgencia, minimo_desconto, percentagem_desconto, disponivel, enabled, created_at, updated_at)
+        values (?,?,?,?,?,?,?,?,?,?)
+        `,
+
+            [
+                null,
+                prestador.nif,
+                prestador.profissao,
+                prestador.taxa_urgencia,
+                prestador.minimo_desconto,
+                prestador.percentagem_desconto,
+                prestador.disponivel,
+                prestador.enabled,
+                new Date(),
+                new Date()
+            ],
+        )
+
+        console.log({ rows })
+        return rows
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}

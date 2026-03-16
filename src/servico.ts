@@ -1,4 +1,5 @@
 import { type ServicoType, type ResponseType } from "./utils/types.js";
+import db from "./lib/db.js";
 
 export let catalogoServicos: ServicoType[] = [];
 
@@ -59,4 +60,31 @@ export function obterServico(nome: string): ServicoType | null {
         }
     }
     return null
+}
+
+export async function userServicos(servicos: any) {
+    try {
+        const [rows] = await db.execute(
+            `INSERT INTO tbl_servicos
+        (id, nome, descricao, categoria, enabled, created_at,  updated_at)
+        values(?, ?, ?, ?, ?, ?, ?)
+        `,
+
+            [
+                null,
+                servicos.nome,
+                servicos.descricao,
+                servicos.categoria,
+                servicos.enabled,
+                new Date(),
+                new Date()
+            ]
+        )
+
+        console.log({ rows })
+        return rows
+    } catch (error) {
+        console.log(error)
+        return null
+    }
 }
