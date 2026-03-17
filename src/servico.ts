@@ -1,4 +1,4 @@
-import { type ServicoType, type ResponseType } from "./utils/types.js";
+import { type ServicoType, type ResponseType, type servicoDBType } from "./utils/types.js";
 import db from "./lib/db.js";
 
 export let catalogoServicos: ServicoType[] = [];
@@ -62,27 +62,101 @@ export function obterServico(nome: string): ServicoType | null {
     return null
 }
 
-export async function userServicos(servicos: any) {
+export async function addServicesToDB(newService: servicoDBType) {
     try {
-        const [rows] = await db.execute(
-            `INSERT INTO tbl_servicos
+        const query = `INSERT INTO tbl_servicos
         (id, nome, descricao, categoria, enabled, created_at,  updated_at)
-        values(?, ?, ?, ?, ?, ?, ?)
-        `,
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        `
+        const values = [
+            null,
+            newService.nome,
+            newService.descricao,
+            newService.categoria,
+            newService.enabled,
+            new Date(),
+            new Date()
+        ]
 
-            [
-                null,
-                servicos.nome,
-                servicos.descricao,
-                servicos.categoria,
-                servicos.enabled,
-                new Date(),
-                new Date()
-            ]
-        )
+        const rows = await db.execute(query, values)
 
-        console.log({ rows })
         return rows
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function getServiceById(id: string) {
+    try {
+        const query = `SELECT * FROM tbl_servicos WHERE id = ?`
+
+        const values = [id]
+
+        const rows = await db.execute(query, values)
+
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
+
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function getAllServices() {
+    try {
+
+        const query = `SELECT * FROM tbl_servicos`
+
+        const rows = await db.execute(query)
+
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
+
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+// update de dados de um serviço
+export async function updateService(id: string, updateService: servicoDBType) {
+    try {
+        const query = `UPDATE tbl_servicos
+                    SET 
+                        nome=?,
+                        descricao=?,
+                        categoria=?,
+                        enabled=?,
+                        updated_at=?
+                    WHERE
+                        id=?
+                    ;`
+
+        const values = [
+            updateService.nome,
+            updateService.descricao,
+            updateService.categoria,
+            updateService.enabled,
+            new Date(),
+            id
+        ]
+
+        const rows = await db.execute(query, values)
+
+        return rows
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function deleteService(id: string) {
+    try {
+        const query = `DELETE FROM tbl_servicos WHERE id=?;`
+
+        const value = [id]
+
+        const rows = await db.execute(query, value)
     } catch (error) {
         console.log(error)
         return null

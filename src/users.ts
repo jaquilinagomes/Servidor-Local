@@ -57,7 +57,7 @@ export async function createUser(users: any) {
     }
 }
 
-export async function userPrestacaoServico(prestacaoservico: any) {
+export async function createPrestacaoServico(prestacaoservico: any) {
     try {
         const [rows] = await db.execute(
             `INSERT INTO tbl_prestacao_servico
@@ -89,12 +89,12 @@ export async function userPrestacaoServico(prestacaoservico: any) {
     }
 }
 
-export async function userProposta(proposta: any) {
+export async function createProposta(proposta: any) {
     try {
         const [rows] = await db.execute(
             `INSERT INTO tbl_proposta
             (id, id_prestacao_servico, preco_hora, horas_estimadas, estado, enabled, created_at, updated_at)
-        values (?,?,?,?,?,?,?,?,?,?,?,?)
+        values (?,?,?,?,?,?,?,?)
         `,
 
             [

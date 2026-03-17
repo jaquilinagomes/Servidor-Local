@@ -1,8 +1,9 @@
 import express, { type Request, type Response } from "express";
-import { adicionarServico, listarServicos, apagarServico, obterServico, userServicos } from "./servico.js"
-import { apagarPrestadorDeServico, calcularOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos, userOrcamento } from "./orcamento.js";
-import {  createUser, getUserById, getUsers, userPrestacaoServico} from "./users.js";
+import { adicionarServico, listarServicos, apagarServico, obterServico, addServicesToDB, getServiceById, getAllServices, updateService, deleteService } from "./servico.js"
+import { apagarPrestadorDeServico, calcularOrcamento, createOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos } from "./orcamento.js";
+import { createUser, getUserById, getUsers } from "./users.js";
 import { createPrestador } from "./prestador.js";
+import type { servicoDBType } from "./utils/types.js";
 
 const app = express();
 app.use(express.json())
@@ -174,29 +175,160 @@ app.post("/create-user", async (req: Request, res: Response) => {
             error: "utilizador não encontrado!"
         });
     }
-    const response = await createUser(user);
+    const createUserResponse = await createUser(user);
 
-    res.json(response);
+    res.json(createUserResponse);
 }
 )
 
 // Rota para criar servico no DB
-app.post("/user-servicos", async (req: Request, res: Response) => {
-    const servicos = req.body;
+app.post("/create-service", async (req: Request, res: Response) => {
+    const newService: servicoDBType = req.body
 
-    if (!servicos) {
+    if (!newService) {
         return res.status(400).json({
-            error: "serviço não encontrado!"
-        });
+            status: "error",
+            message: "Dados de serviço inválidos",
+            data: null
+        })
     }
 
-    const response = await userServicos(servicos)
+    console.log(newService)
 
-    res.json(response);
+    const createServiceResponse = await addServicesToDB(newService)
+
+    if (createServiceResponse === null) {
+        return res.status(400).json({
+            status: "sucess",
+            message: "serviço criado com sucesso",
+            data: createServiceResponse
+        })
+    }
+
 })
 
+app.get("/get-service-by-id/:id", async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    if (!id) {
+        return res.status(400).json({
+            status: "error",
+            message: "ID obrigatório",
+            data: null
+        })
+    }
+
+    const getServiceByIdResponse = await getServiceById(id as string)
+
+    if (!getServiceByIdResponse) {
+        return res.status(404).json({
+            status: "error",
+            message: "serviço não encontrado",
+            data: null
+        })
+    }
+
+    res.status(200).json({
+        status: "sucess",
+        message: "serviço encontrado",
+        data: getServiceByIdResponse
+    })
+})
+
+app.get("/get-all-services", async (req: Request, res: Response) => {
+    const getAllServicesResponse = await getAllServices()
+
+    if (!getAllServicesResponse) {
+        return res.status(400).json({
+            status: "error",
+            message: "Erro ao selecionar serviços",
+            data: null
+        })
+    }
+
+    res.status(200).json({
+        status: "sucess",
+        message: "serviços encontrados",
+        data: getAllServicesResponse
+    })
+})
+
+app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    const updatedService: servicoDBType = req.body
+
+    if (!id) {
+        return res.status(400).json({
+            status: "error",
+            message: "Dados de serviço inválidos",
+            data: null
+        })
+    }
+    if (!updatedService) {
+        return res.status(400).json({
+            status: "error",
+            message: "Dados de serviço inválidos",
+            data: null
+        })
+    }
+    const updateServiceResponse = await updateService(id as string, updatedService)
+
+    if (!updateServiceResponse) {
+        return res.status(400).json({
+            status: "error",
+            message: "Erro ao atualizar serviço",
+            data: null
+        })
+    }
+
+    return res.status(200).json({
+        status: "sucess",
+        message: "serviço atualizado com sucesso",
+        data: updateServiceResponse
+    })
+})
+
+app.delete("/delete-service-by-id/:id"), async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    if (!id) {
+        return res.status(400).json({
+            status: "error",
+            message: "ID obrigatório",
+            data: null
+        })
+    }
+
+    const deleteServiceResponse = await deleteService(id as string)
+
+    if (!deleteServiceResponse) {
+        return res.status(400).json({
+            status: "error",
+            message: "Erro ao apagar serviço",
+            data: null
+        })
+    }
+
+    return res.status(200).json({
+        status: "sucess",
+        message: "Serviço apagado com sucesso",
+        data: deleteServiceResponse
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
 // Rota para criar orcamento no DB
-app.post("/user-orcamento", async (req: Request, res: Response) => {
+app.post("/create-orcamento", async (req: Request, res: Response) => {
     const orcamento = req.body;
 
     if (!orcamento) {
@@ -205,12 +337,12 @@ app.post("/user-orcamento", async (req: Request, res: Response) => {
         });
     }
 
-    const response = await userOrcamento(orcamento)
+    const response = await createOrcamento(orcamento)
 
     res.json(response);
 })
 
-// Rota para criar prestador
+// Rota para criar prestador no DB
 app.post("/create-prestador", async (req: Request, res: Response) => {
     const prestador = req.body;
 
@@ -225,20 +357,8 @@ app.post("/create-prestador", async (req: Request, res: Response) => {
     res.json(response)
 })
 
-// Rota para criar prestacao de servico
-app.post("/user-prestacao-servico", async (req: Request, res: Response) => {
-    const prestacaoservico = req.body;
 
-    if (!prestacaoservico) {
-        return res.status(400).json({
-            error: "prestacao de servico não encontrado!"
-        })
-    }
 
-    const response = await userPrestacaoServico(prestacaoservico)
-
-    res.json(response)
-})
 
 
 

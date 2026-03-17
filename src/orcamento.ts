@@ -221,7 +221,7 @@ desconto sobre total bruto: 100 * 0.1 = 10
 
  */
 
-export async function userOrcamento(orcamento: any) {
+export async function createOrcamento(orcamento: any) {
     try {
         const body = `
         INSERT INTO tbl_orcamento

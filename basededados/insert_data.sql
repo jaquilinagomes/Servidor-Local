@@ -79,6 +79,7 @@ NOW()
 
 INSERT INTO tbl_prestacao_servico
 values (
+"9edb68a8-cf9c-4879-9f64-5a5d7bf4ce1f",
 
 );
 
