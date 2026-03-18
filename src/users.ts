@@ -1,4 +1,6 @@
 import db from "./lib/db.js";
+import type { userType } from "./utils/types.js";
+import { generateUUID } from "./utils/uuid.js";
 
 export async function getUsers() {
     const [rows] = await db.execute("SELECT * FROM tbl_utilizadores")
@@ -26,15 +28,13 @@ export async function getUserById(id: string) {
     }
 }
 
-export async function createUser(users: any) {
+export async function createUser(users: userType) {
     try {
         const [rows] = await db.execute(
             `INSERT INTO tbl_utilizadores
-    (id, nome, numero_identificacao, data_nascimento, email, telefone, pais, localidade, password, enabled, created_at, updated_at)
-    values(?,?,?,?,?,?,?,?,?,?,?,?)
-    `,
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
             [
-                users.id,
+                generateUUID(),
                 users.nome,
                 users.numero_identificacao,
                 users.data_nascimento,
@@ -57,65 +57,59 @@ export async function createUser(users: any) {
     }
 }
 
-export async function createPrestacaoServico(prestacaoservico: any) {
+export async function updateUser(id: string, updateUser: userType) {
     try {
-        const [rows] = await db.execute(
-            `INSERT INTO tbl_prestacao_servico
-        (id, designacao, subtotal, horas_estimadas, id_prestador, id_servico, preco_hora, estado, id_orcamento,enabled, created_at, updated_at)
-        values (?,?,?,?,?,?,?,?,?,?,?,?)
-        `,
+        const query = 
+        `UPDATE FROM tbl_utilizadores
+        SET
+            nome = ?,
+            numero_identificacao = ?,
+            data_nascimento = ?,
+            email = ?,
+            telefone = ?,
+            pais = ?,
+            localidade = ?,
+            password = ?,
+            enabled = ?,
+            updated_at = ?
+        WHERE id=?
+        `
+        const values = [
+            updateUser.nome,
+            updateUser.numero_identificacao,
+            updateUser.data_nascimento,
+            updateUser.email,
+            updateUser.telefone,
+            updateUser.pais,
+            updateUser.localidade,
+            updateUser.password,
+            updateUser.enabled,
+            new Date(),
+            id
+        ]
 
-            [
-                null,
-                prestacaoservico.designacao,
-                prestacaoservico.subtotal,
-                prestacaoservico.horas_estimadas,
-                prestacaoservico.id_prestador,
-                prestacaoservico.id_servico,
-                prestacaoservico.preco_hora,
-                prestacaoservico.estado,
-                prestacaoservico.id_orcamento,
-                prestacaoservico.enabled,
-                new Date(),
-                new Date()
-            ],
-        )
+        const rows = await db.execute(query, values)
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
 
-        console.log({ rows })
-        return rows
-    } catch (error) {
+    }catch(error) {
         console.log(error)
         return null
     }
 }
 
-export async function createProposta(proposta: any) {
+export async function deleteUser(id: string) {
     try {
-        const [rows] = await db.execute(
-            `INSERT INTO tbl_proposta
-            (id, id_prestacao_servico, preco_hora, horas_estimadas, estado, enabled, created_at, updated_at)
-        values (?,?,?,?,?,?,?,?)
-        `,
+        const query = `
+        DELETE FROM tbl_utilizadores
+        WHERE id = ?
+        `
+        const values = [id]
 
-            [
-                null,
-                proposta.id_prestacao_servico,
-                proposta.preco_hora,
-                proposta.horas_estimadas,
-                proposta.estado,
-                proposta.enabled,
-                new Date(),
-                new Date()
-            ],
-        )
+        const rows = await db.execute(query, values)
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : rows
 
-        console.log({ rows })
-        return rows
-    } catch (error) {
+    } catch(error) {
         console.log(error)
         return null
     }
 }
-
-
-

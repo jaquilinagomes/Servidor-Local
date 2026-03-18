@@ -1,6 +1,5 @@
 import { catalogoServicos } from "./servico.js";
 import { type PedidoServicoType, type ServicoType, type prestadorType } from "./utils/types.js"
-import db from "./lib/db.js";
 
 const taxaUrgencia: number = 0.3
 const minimoDescontado: number = 100
@@ -221,26 +220,3 @@ desconto sobre total bruto: 100 * 0.1 = 10
 
  */
 
-export async function createOrcamento(orcamento: any) {
-    try {
-        const body = `
-        INSERT INTO tbl_orcamento
-        (id, total, id_utilizadores, enabled, created_at, updated_at)
-        values (?, ?, ?, ?, ?, ?)
-        `;
-
-        const values = [
-            null,
-            orcamento.total,
-            orcamento.id_utilizadores,
-            orcamento.enabled,
-            new Date(),
-            new Date()
-        ];
-
-        const [results] = await db.execute(body, values);
-        return results;
-    } catch (error) {
-        return null;
-    }
-}

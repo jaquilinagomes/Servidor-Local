@@ -1,9 +1,9 @@
 import express, { type Request, type Response } from "express";
 import { adicionarServico, listarServicos, apagarServico, obterServico, addServicesToDB, getServiceById, getAllServices, updateService, deleteService } from "./servico.js"
-import { apagarPrestadorDeServico, calcularOrcamento, createOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos } from "./orcamento.js";
+import { apagarPrestadorDeServico, calcularOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos } from "./orcamento.js";
 import { createUser, getUserById, getUsers } from "./users.js";
-import { createPrestador } from "./prestador.js";
 import type { servicoDBType } from "./utils/types.js";
+import { generateUUID } from "./utils/uuid.js";
 
 const app = express();
 app.use(express.json())
@@ -199,11 +199,17 @@ app.post("/create-service", async (req: Request, res: Response) => {
 
     if (createServiceResponse === null) {
         return res.status(400).json({
-            status: "sucess",
-            message: "serviço criado com sucesso",
-            data: createServiceResponse
+            status:"error",
+            message: "Erro ao criar serviço",
+            data: null
         })
     }
+
+    res.status(200).json({
+        status: "sucess",
+            message: "serviço criado com sucesso",
+            data: createServiceResponse
+    })
 
 })
 
@@ -261,7 +267,7 @@ app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
     if (!id) {
         return res.status(400).json({
             status: "error",
-            message: "Dados de serviço inválidos",
+            message: "ID obrigatório",
             data: null
         })
     }
@@ -289,7 +295,7 @@ app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
     })
 })
 
-app.delete("/delete-service-by-id/:id"), async (req: Request, res: Response) => {
+app.delete("/delete-service-by-id/:id", async (req: Request, res: Response) => {
     const { id } = req.params
 
     if (!id) {
@@ -315,51 +321,7 @@ app.delete("/delete-service-by-id/:id"), async (req: Request, res: Response) => 
         message: "Serviço apagado com sucesso",
         data: deleteServiceResponse
     })
-}
-
-
-
-
-
-
-
-
-
-
-
-// Rota para criar orcamento no DB
-app.post("/create-orcamento", async (req: Request, res: Response) => {
-    const orcamento = req.body;
-
-    if (!orcamento) {
-        return res.status(400).json({
-            error: "orcamento não encontrado!"
-        });
-    }
-
-    const response = await createOrcamento(orcamento)
-
-    res.json(response);
 })
-
-// Rota para criar prestador no DB
-app.post("/create-prestador", async (req: Request, res: Response) => {
-    const prestador = req.body;
-
-    if (!prestador) {
-        return res.status(400).json({
-            error: "prestador não encontrado!"
-        })
-    }
-
-    const response = await createPrestador(prestador)
-
-    res.json(response)
-})
-
-
-
-
 
 
 app.listen(8080, () => {
