@@ -63,11 +63,10 @@ export function obterServico(nome: string): ServicoType | null {
 }
 
 export async function addServicesToDB(newService: servicoDBType) {
+    console.log({newService})
     try {
-        const query = `INSERT INTO tbl_servicos
-        (id, nome, descricao, categoria, enabled, created_at,  updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        `
+        const query = `INSERT INTO tbl_servicos VALUES (?, ?, ?, ?, ?, ?, ?)`
+        
         const values = [
             null,
             newService.nome,

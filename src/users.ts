@@ -1,4 +1,6 @@
 import db from "./lib/db.js";
+import { formatDateDDMMYYYY } from "./utils/date.js";
+import { hashPassword } from "./utils/password.js";
 import type { userType } from "./utils/types.js";
 import { generateUUID } from "./utils/uuid.js";
 
@@ -31,18 +33,18 @@ export async function getUserById(id: string) {
 export async function createUser(users: userType) {
     try {
         const [rows] = await db.execute(
-            `INSERT INTO tbl_utilizadores
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
+            `INSERT INTO tbl_utilizadores VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
+
             [
                 generateUUID(),
                 users.nome,
                 users.numero_identificacao,
-                users.data_nascimento,
+                formatDateDDMMYYYY(users.data_nascimento),
                 users.email,
                 users.telefone,
                 users.pais,
                 users.localidade,
-                users.password,
+                await hashPassword(users.password),
                 users.enabled,
                 new Date(),
                 new Date()
@@ -77,12 +79,12 @@ export async function updateUser(id: string, updateUser: userType) {
         const values = [
             updateUser.nome,
             updateUser.numero_identificacao,
-            updateUser.data_nascimento,
+            formatDateDDMMYYYY(updateUser.data_nascimento),
             updateUser.email,
             updateUser.telefone,
             updateUser.pais,
             updateUser.localidade,
-            updateUser.password,
+            await hashPassword(updateUser.password),
             updateUser.enabled,
             new Date(),
             id
@@ -105,8 +107,8 @@ export async function deleteUser(id: string) {
         `
         const values = [id]
 
-        const rows = await db.execute(query, values)
-        return Array.isArray(rows) && rows.length > 0 ? rows[0] : rows
+        const rows: any = await db.execute(query, values)
+        return rows[0]?.affectedRows === 0 ? null : rows
 
     } catch(error) {
         console.log(error)
