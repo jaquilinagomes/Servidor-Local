@@ -1,8 +1,8 @@
 import express, { type Request, type Response } from "express";
 import { adicionarServico, listarServicos, apagarServico, obterServico, addServicesToDB, getServiceById, getAllServices, updateService, deleteService } from "./servico.js"
 import { apagarPrestadorDeServico, calcularOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos } from "./orcamento.js";
-import { createUser, getUserById, getUsers } from "./users.js";
-import type { servicoDBType } from "./utils/types.js";
+import { createUser, deleteUser, getUserById, getUsers, updateUser } from "./users.js";
+import type { servicoDBType, userType } from "./utils/types.js";
 import { generateUUID } from "./utils/uuid.js";
 
 const app = express();
@@ -180,6 +180,72 @@ app.post("/create-user", async (req: Request, res: Response) => {
     res.json(createUserResponse);
 }
 )
+
+// Rota para atualizar utilizadores by ID
+app.put("/update-user", async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    const updatedUser: userType = req.body
+
+    if (!id) {
+        return res.status(400).json({
+            status: "error",
+            message: "ID obrigatório",
+            data: null
+        })
+    }
+    if (!updatedUser) {
+        return res.status(400).json({
+            status: "error",
+            message: "Dados do usuário inválidos",
+            data: null
+        })
+    }
+    const updateUserResponse = await updateUser(id as string, updatedUser)
+
+    if (!updateUserResponse) {
+        return res.status(400).json({
+            status: "error",
+            message: "Erro ao atualizar usuário",
+            data: null
+        })
+    }
+
+    return res.status(200).json({
+        status: "sucess",
+        message: "Usuário atualizado com sucesso",
+        data: updateUserResponse
+    })
+})
+
+// Rota para apagar utilizadores no DB
+app.delete("/delete-user-by-id/:id", async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    if (!id) {
+        return res.status(400).json({
+            status: "error",
+            message: "ID obrigatório",
+            data: null
+        })
+    }
+
+    const deleteUserResponse = await deleteUser(id as string)
+
+    if (!deleteUserResponse) {
+        return res.status(400).json({
+            status: "error",
+            message: "Erro ao apagar usuário",
+            data: null
+        })
+    }
+
+    return res.status(200).json({
+        status: "sucess",
+        message: "Usuário apagado com sucesso",
+        data: deleteUserResponse
+    })
+})
 
 // Rota para criar servico no DB
 app.post("/create-service", async (req: Request, res: Response) => {

@@ -28,7 +28,7 @@ export interface prestadorType {
     taxaUrgencia: number
 }
 
-export interface prestadorType {
+export interface prestadorDBType {
 id: string,
 nif: string,
 profissao: string,
@@ -62,6 +62,32 @@ export interface servicoDBType {
     nome: string,
     descricao: string,
     categoria: string,
+    enabled: boolean,
+    created_at: string,
+    updated_at: string
+}
+
+export interface PropostaDBType {
+    id: string,
+    id_prestacao_servico: string,
+    Preco_hora: string,
+    horas_estimadas: string,
+    estado: string,
+    enabled:boolean,
+    created_at: string,
+    updated_at: string
+}
+
+export interface prestacaoServicoDBType {
+    id: string,
+    designacao: string,
+    subtotal: string,
+    horas_estimadas: string,
+    id_prestador: string,
+    id_servico: string,
+    preco_hora: string,
+    estado: string,
+    id_orcamento: string,
     enabled: boolean,
     created_at: string,
     updated_at: string

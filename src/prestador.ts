@@ -1,5 +1,4 @@
 
-
 class Prestador {
     nome: string
     precoHora: number
