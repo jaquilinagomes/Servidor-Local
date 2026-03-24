@@ -28,14 +28,13 @@ export interface prestadorType {
     taxaUrgencia: number
 }
 
-export interface prestadorDBType {
+export interface PrestadorDBType {
 id: string,
 nif: string,
 profissao: string,
-taxa_urgencia: string,
-minimo_desconto: string,
-percentagem_desconto: string,
-disponivel: string,
+taxa_urgencia: number,
+minimo_desconto: number,
+percentagem_desconto: number,
 enabled: boolean,
 created_at: string,
 updated_at: string
@@ -67,10 +66,19 @@ export interface servicoDBType {
     updated_at: string
 }
 
+export interface OrcamentoDBType {
+    id : string,
+    total: number,
+    id_utilizadores: string,
+    enabled: boolean,
+    created_at: string,
+    updated_at: string
+}
+
 export interface PropostaDBType {
     id: string,
     id_prestacao_servico: string,
-    Preco_hora: string,
+    preco_hora: string,
     horas_estimadas: string,
     estado: string,
     enabled:boolean,
@@ -78,14 +86,14 @@ export interface PropostaDBType {
     updated_at: string
 }
 
-export interface prestacaoServicoDBType {
+export interface PrestacaoServicoDBType {
     id: string,
     designacao: string,
-    subtotal: string,
-    horas_estimadas: string,
+    subtotal: number,
+    horas_estimadas: number,
     id_prestador: string,
     id_servico: string,
-    preco_hora: string,
+    preco_hora: number,
     estado: string,
     id_orcamento: string,
     enabled: boolean,
