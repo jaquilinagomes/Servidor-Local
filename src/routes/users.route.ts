@@ -4,7 +4,7 @@ import { UsersController } from "../controllers/users.controller.js";
 const UsersRoute = {
     create: "/create",
     getAll: "/",
-    getById:"/get-user-by-id/:id",
+    getById:"/get-by-id/:id",
     update:"/update/:id",
     delete:"/delete/:id"
 }

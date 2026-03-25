@@ -54,7 +54,7 @@ export async function createPropostas(
 }
 }
 
-export async function update(id: string, updateProposta: PropostaDBType) {
+export async function updateProposta(id: string, updateProposta: PropostaDBType) {
     try {
         const [ rows ] = await db.execute(
             `UPDATE tbl_propostas
@@ -86,5 +86,17 @@ export async function update(id: string, updateProposta: PropostaDBType) {
     }
     }
 
+    export async function deleteProposta(id: string) {
+        try {
+            const query = `DELETE FROM tbl_proposta WHERE id = ?`;
+            const [rows]: any = await db.execute(query, [id]);
 
+            if (rows.affectedRows === 0)
+                return null;
+
+        } catch(error) {
+            console.log(error)
+            return null
+        }
+    }
 

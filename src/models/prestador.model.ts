@@ -1,4 +1,4 @@
-import type { PrestadorDBType, prestadorType, PropostaDBType } from "../utils/types.js";
+import type { PrestadorDBType } from "../utils/types.js";
 import db from "../lib/db.js";
 import { generateUUID } from "../utils/uuid.js";
 
@@ -86,8 +86,19 @@ async update(id: string, prestador: PrestadorDBType) {
     }
 },
 
+async delete(id: string) {
+    try {
+        const rows: any = await db.execute(
+            `DELETE FROM tbl_prestadores
+            WHEREV id = ?`,
 
-
-
+            [id]
+        )
+return rows[0].affectedRows === 0 ? null : rows[0]
+    } catch(error) {
+        console.log(error)
+        return null
+    }
+}
 
 }
