@@ -11,7 +11,7 @@
 components:
   schemas:
     # schema principal de serviço
-    servico:
+    Servico:
       type: object
       properties:
         id:
@@ -22,7 +22,7 @@ components:
           example: "serviço de limpeza"
         descricao:
           type: string
-          example: "Serviço de limpeza profissional para residências e"
+          example: "Serviço de limpeza profissional para residências e empresas."
         categoria: 
           type: string
           example: "Limpeza"
@@ -36,6 +36,37 @@ components:
           type: string
           example: "2022-01-01T00:00:00.000Z"
 
+    #schema para criar um novo servico
+    CreateService:
+      type: object
+      properties:
+        nome:
+          type: string
+          example: "Servico de Limpeza"
+        descricao:
+          type: string
+          example: "Serviço de limpeza profissional para residências e empresas."
+        categoria:
+          type: string
+          example: "Limpeza"
+        enabled:
+          type: boolean
+          example: true
+
+    #schema generico para sucesso
+    ResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Serviço criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/Servico"
+
     # schema generico de resposta de erro
     ResponseError:
       type: object
@@ -48,6 +79,5 @@ components:
           example: false
         data:
           type: object
-          properties:
-            null
+          properties: null
 

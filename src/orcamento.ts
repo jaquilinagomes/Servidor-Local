@@ -1,6 +1,7 @@
 import db from "./lib/db.js";
 import { catalogoServicos } from "./servico.js";
 import { type OrcamentoDBType, type PedidoServicoType, type ServicoType, type prestadorType } from "./utils/types.js"
+import { generateUUID } from "./utils/uuid.js";
 
 const taxaUrgencia: number = 0.3
 const minimoDescontado: number = 100
@@ -171,10 +172,6 @@ export function apagarPrestadorDeServico(nomeDoPrestador: string) {
     return null
 } */
 
-
-
-
-
 // Função para calcular o orçamento
 export function calcularOrcamento(pedido: PedidoServicoType) {
     let totalBruto: number = 0
@@ -229,7 +226,7 @@ export async function create(newOrcamento: OrcamentoDBType) {
             ( id, total, id_utilizadores, enabled, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?,?)`,
                 [
-                    null,
+                    generateUUID(),
                     newOrcamento.total,
                     newOrcamento.id_utilizadores,
                     newOrcamento.enabled,
@@ -293,12 +290,12 @@ export async function create(newOrcamento: OrcamentoDBType) {
                             ;`
             const values = [
 
-                id,
                 OrcamentoAtualizado.id,
                 OrcamentoAtualizado.total,
                 OrcamentoAtualizado.id_utilizadores,
                 OrcamentoAtualizado.enabled,
-                Date()
+                Date(),
+                id
             ]
             const rows = await db.execute(query, values)
 

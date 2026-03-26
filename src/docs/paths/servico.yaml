@@ -3,7 +3,7 @@
 paths:
   /service:
     get:
-      summary: Listar tosdos os serviços
+      summary: Listar todos os serviços
       description: Retorna uma lista de todos os servicos disponíveis
       responses:
         "200":
@@ -13,7 +13,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/servico"
+                $ref: "#/components/schemas/Servico"
         "404":
           description: "Nenhum serviço encontrado"
           content:
@@ -21,6 +21,7 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/ResponseError"
+
   /service/create:
     post:
       summary: Criar um novo serviço
@@ -31,4 +32,117 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
+              $ref: "#/components/schemas/CreateService"
+      responses:
+        "200":
+          description: Serviço criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "400":
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type:
+                $ref: "#/components/schemas/ResponseError"
+
+  /service/get-by-id/{id}:
+    get:
+      summary: Buscar um serviço por ID
+      description: Retorna um serviço específico pelo ID
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: ID do serviço
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Serviço encontrado
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "404":
+          description: Serviço não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+
+  /service/update/{id}:
+    put:
+      summary: Atualizar um serviço
+      description: Atualiza um serviço específico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do serviço a ser atualizado
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/CreateService"
+      responses:
+        "200":
+          description: Serviço atualizado com sucesso
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "400":
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+        "404":
+          description: Serviço não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"
+
+  /service/delete/{id}:
+    delete:
+      summary: Apagar um serviço
+      description: Apaga um serviço específico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do servico a ser apagado
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Serviço apagado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseSucess"
+        "404":
+          description: Serviço não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/ResponseError"

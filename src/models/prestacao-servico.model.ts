@@ -1,5 +1,6 @@
 import db from "../lib/db.js";
 import type { PrestacaoServicoDBType} from "../utils/types.js";
+import { generateUUID } from "../utils/uuid.js";
 
 export const PrestacaoServicoModel = {
     async create(newPrestacaoServico: PrestacaoServicoDBType) {
@@ -10,7 +11,7 @@ export const PrestacaoServicoModel = {
             ( id, designacao, subtotal, horas_estimadas, id_prestador, id_servicos, preco_hora, estado, id_orcamento, enabled, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?,?)`,
                 [
-                    null,
+                    generateUUID(),
                     newPrestacaoServico.designacao,
                     newPrestacaoServico.subtotal,
                     newPrestacaoServico.horas_estimadas,
@@ -71,11 +72,9 @@ export const PrestacaoServicoModel = {
                     SET 
                     designacao=?, subtotal=?, horas_estimadas=?, id_prestador=?, id_servicos=?, preco_hora=?, estado=?, id_orcamento=?, enabled=?, updated_at=?
 
-                    WHERE 
-                        id=?
-                            ;`
-            const values = [
+                    WHERE id = ?`;
 
+            const values = [
                 PrestacaoServicoAtualizado.designacao,
                 PrestacaoServicoAtualizado.subtotal,
                 PrestacaoServicoAtualizado.horas_estimadas,
@@ -85,9 +84,10 @@ export const PrestacaoServicoModel = {
                 PrestacaoServicoAtualizado.estado,
                 PrestacaoServicoAtualizado.id_orcamento,
                 PrestacaoServicoAtualizado.enabled,
-
-                new Date()
+                new Date(),
+                id
             ]
+
             const rows = await db.execute(query, values)
 
             return rows
@@ -100,8 +100,11 @@ export const PrestacaoServicoModel = {
     async delete(id: string) {
         try {
             const query = `DELETE FROM tbl_prestador_de_servico WHERE id=?`
+
             const value = [id]
+
             const rows: any = await db.execute(query, value)
+            
             return rows[0]?.affectedRows === 0 ? null : rows
 
         } catch (error) {

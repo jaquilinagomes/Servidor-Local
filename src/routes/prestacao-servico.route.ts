@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { prestacaoServicoController } from "../controllers/prestacao-servico.controller.js";
 
-const PrestacaoServicoRoute = {
+const PrestacaoServicoRouter = {
     create: "/create",
     getById:"/get-by-id/:id",
     getAll: "/",
@@ -11,10 +11,10 @@ const PrestacaoServicoRoute = {
 
 const router = Router()
 
-router.get(PrestacaoServicoRoute.getAll, prestacaoServicoController.getAll)
-router.get(PrestacaoServicoRoute.getById, prestacaoServicoController.get)
-router.post(PrestacaoServicoRoute.create, prestacaoServicoController.create)
-router.put(PrestacaoServicoRoute.update, prestacaoServicoController.update)
-router.delete(PrestacaoServicoRoute.delete, prestacaoServicoController.delete)
+router.get(PrestacaoServicoRouter.getAll, prestacaoServicoController.getAll)
+router.get(PrestacaoServicoRouter.getById, prestacaoServicoController.get)
+router.post(PrestacaoServicoRouter.create, prestacaoServicoController.create)
+router.put(PrestacaoServicoRouter.update, prestacaoServicoController.update)
+router.delete(PrestacaoServicoRouter.delete, prestacaoServicoController.delete)
 
 export { router };

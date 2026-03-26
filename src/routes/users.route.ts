@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UsersController } from "../controllers/users.controller.js";
 
-const UsersRoute = {
+const UserRouter = {
     create: "/create",
     getAll: "/",
     getById:"/get-by-id/:id",
@@ -10,10 +10,10 @@ const UsersRoute = {
 }
 const router = Router()
 
-router.get(UsersRoute.getAll, UsersController.getAll)
-router.get(UsersRoute.getById, UsersController.get)
-router.post(UsersRoute.create, UsersController.create)
-router.put(UsersRoute.update, UsersController.update)
-router.delete(UsersRoute.update, UsersController.delete)
+router.get(UserRouter.getAll, UsersController.getAll)
+router.get(UserRouter.getById, UsersController.get)
+router.post(UserRouter.create, UsersController.create)
+router.put(UserRouter.update, UsersController.update)
+router.delete(UserRouter.update, UsersController.delete)
 
 export { router };

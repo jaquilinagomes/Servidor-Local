@@ -6,22 +6,22 @@ import { generateUUID } from "../utils/uuid.js";
 
 
 export const UsersModel = {
-    async create(users: userType) {
+    async create(user: userType) {
         try {
         const [rows] = await db.execute(
             `INSERT INTO tbl_utilizadores VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
 
             [
                 generateUUID(),
-                users.nome,
-                users.numero_identificacao,
-                formatDateDDMMYYYY(users.data_nascimento),
-                users.email,
-                users.telefone,
-                users.pais,
-                users.localidade,
-                await hashPassword(users.password),
-                users.enabled,
+                user.nome,
+                user.numero_identificacao,
+                formatDateDDMMYYYY(user.data_nascimento),
+                user.email,
+                user.telefone,
+                user.pais,
+                user.localidade,
+                await hashPassword(user.password),
+                user.enabled,
                 new Date(),
                 new Date()
             ],

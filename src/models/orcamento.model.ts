@@ -1,5 +1,6 @@
 import db from "../lib/db.js";
 import type { OrcamentoDBType } from "../utils/types.js";
+import { generateUUID } from "../utils/uuid.js";
 
 export const OrcamentoModel = {
     async create(newOrcamento: OrcamentoDBType) {
@@ -10,7 +11,7 @@ export const OrcamentoModel = {
             ( id, total, id_utilizadores, enabled, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?,?)`,
                 [
-                    null,
+                    generateUUID(),
                     newOrcamento.total,
                     newOrcamento.id_utilizadores,
                     newOrcamento.enabled,
@@ -75,12 +76,11 @@ export const OrcamentoModel = {
                             ;`
             const values = [
 
-                id,
-                OrcamentoAtualizado.id,
                 OrcamentoAtualizado.total,
                 OrcamentoAtualizado.id_utilizadores,
                 OrcamentoAtualizado.enabled,
-                Date()
+                new Date(),
+                id
             ]
             const rows = await db.execute(query, values)
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { prestadorController } from "../controllers/prestador.controller.js";
 
-const PrestadorRoute = {
+const PrestadorRouter = {
     create: "/create",
     getById:"/get-by-id/:id",
     getAll: "/",
@@ -11,10 +11,10 @@ const PrestadorRoute = {
 
 const router = Router()
 
-router.get(PrestadorRoute.getAll, prestadorController.getAll)
-router.get(PrestadorRoute.getById, prestadorController.get)
-router.post(PrestadorRoute.create, prestadorController.create)
-router.put(PrestadorRoute.update, prestadorController.update)
-router.delete(PrestadorRoute.delete, prestadorController.delete)
+router.get(PrestadorRouter.getAll, prestadorController.getAll)
+router.get(PrestadorRouter.getById, prestadorController.get)
+router.post(PrestadorRouter.create, prestadorController.create)
+router.put(PrestadorRouter.update, prestadorController.update)
+router.delete(PrestadorRouter.delete, prestadorController.delete)
 
 export { router };
