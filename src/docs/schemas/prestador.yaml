@@ -1,0 +1,96 @@
+# schema/prestador.yaml
+
+# id: string,
+# nif: string,
+# profissao: string,
+# taxa_urgencia: number,
+# minimo_desconto: number,
+# percentagem_desconto: number,
+# enabled: boolean,
+# created_at: string,
+# updated_at: string
+
+components:
+  schemas:
+    # schema principal de prestador
+    Prestador:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        nif: 
+          type: string
+          example: "145345678"
+        profissao:
+          type: string
+          example: "Rececionista"
+        taxa_urgencia: 
+          type: number
+          example: "1000"
+        minimo_desconto:
+          type: number
+          example: "1.0"
+        percentagem_desconto:
+          type: number
+          example: "0.1"
+        enabled: 
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+        updated_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+
+    # schema para criar um novo prestador
+    CreatePrestador:
+      type: object
+      properties:
+        nif: 
+          type: string
+          example: "145345678"
+        profissao:
+          type: string
+          example: "Rececionista"
+        taxa_urgencia: 
+          type: number
+          example: "1000"
+        minimo_desconto:
+          type: number
+          example: "1.0"
+        percentagem_desconto:
+          type: number
+          example: "0.1"
+        enabled: 
+          type: boolean
+          example: true
+
+    # schema generico para sucesso
+    PrestadorResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Prestador criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/Prestador"
+
+    # schema generico de resposta de erro
+    PrestadorResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar prestadores"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object
+          properties: null

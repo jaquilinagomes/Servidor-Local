@@ -1,31 +1,27 @@
-# schema/servico.yaml
+# schema/orcamento.yaml
 
-#  id: string,
-#  nome: string,
-#  descricao: string,
-#  categoria: string,
-#  enabled: boolean,
-#  created_at: string,
-#  updated_at: string
+# id: string,
+# total: number,
+# id_utilizadores: string,
+# enabled: boolean,
+# created_at: string,
+# updated_at: string
 
 components:
   schemas:
-    # schema principal de serviço
-    Servico:
+    # schema principal de orcamento
+    Orcamento:
       type: object
       properties:
         id:
           type: integer
           example: 1
-        nome: 
+        total: 
+          type: number
+          example: "2000"
+        id_utilizadores:
           type: string
-          example: "serviço de limpeza"
-        descricao:
-          type: string
-          example: "Serviço de limpeza profissional para residências e empresas."
-        categoria: 
-          type: string
-          example: "Limpeza"
+          example: 1
         enabled: 
           type: boolean
           example: true
@@ -36,44 +32,41 @@ components:
           type: string
           example: "2022-01-01T00:00:00.000Z"
 
-    # schema para criar um novo servico
-    CreateService:
+    # schema para criar um novo orcamento
+    CreateOrcamento:
       type: object
       properties:
-        nome:
+        total: 
+          type: number
+          example: "2000"
+        id_utilizadores:
           type: string
-          example: "Servico de Limpeza"
-        descricao:
-          type: string
-          example: "Serviço de limpeza profissional para residências e empresas."
-        categoria:
-          type: string
-          example: "Limpeza"
+          example: 1
         enabled:
           type: boolean
           example: true
 
     # schema generico para sucesso
-    ResponseSucess:
+    OrcamentoResponseSucess:
       type: object
       properties:
         message:
           type: string
-          example: "Serviço criado com sucesso"
+          example: "Orçamento criado com sucesso"
         status:
           type: boolean
           example: true
         data:
           type: object
-          $ref: "#/components/schemas/Servico"
+          $ref: "#/components/schemas/Orcamento"
 
     # schema generico de resposta de erro
-    ResponseError:
+    OrcamentoResponseError:
       type: object
       properties:
         message:
           type: string
-          example: "Erro ao buscar serviços"
+          example: "Erro ao buscar orçamentos"
         status:
           type: boolean
           example: false

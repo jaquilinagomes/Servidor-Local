@@ -73,7 +73,7 @@ async update(id: string, userAtualizado: userType) {
             password = ?,
             enabled = ?,
             updated_at = ?
-        WHERE id=?
+        WHERE id = ?
         `
         const values = [
             userAtualizado.nome,

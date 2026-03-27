@@ -1,98 +1,99 @@
-# paths/servico.yaml
+# paths/users.yaml
 
 paths:
-  /service:
+  /users:
     get:
-      summary: Listar todos os serviços
+      summary: Listar todos os usuários
       tags:
-        - Servico
-      description: Retorna uma lista de todos os servicos disponíveis
+        - Users
+      description: Retorna uma lista de todos os usuários disponíveis
       responses:
         "200":
-          description: Lista de serviços
+          description: Lista de usuários
           content:
           application/json:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/Servico"
+                $ref: "#components/schemas/CreateUsers"
         "404":
-          description: "Nenhum serviço encontrado"
+          description: "Nenhum usuário encontrado"
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseError"
+                $ref: "#components/schemas/UsersResponseError"
 
-  /service/create:
+  /users/create:
     post:
-      summary: Criar um novo serviço
+      summary: Criar um novo usuário
       tags:
-        - Servico
-      description: Cria um novo serviço
+        - Users
+      description: Cria um novo usuário
       requestBody:
         required: true
         content:
           application/json:
             schema:
               type: object
-              $ref: "#/components/schemas/CreateService"
+              $ref: "#/components/schemas/CreateUsers"
       responses:
         "200":
-          description: Serviço criado com sucesso
+          description: Usuário criado com sucesso
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/UsersResponseSucess"
         "400":
           description: Dados inválidos
           content:
             application/json:
               schema:
                 type:
-                $ref: "#/components/schemas/ResponseError"
+                $ref: "#/components/schemas/UsersResponseError"
 
-  /service/get-by-id/{id}:
+  /users/get-by-id/{id}:
     get:
-      summary: Buscar um serviço por ID
+      summary: Buscar um usuário por ID
       tags:
-        - Servico
-      description: Retorna um serviço específico pelo ID
+        - Users
+      description: Retorna um usuário específico pelo ID
       parameters: 
         - name: id
           in: path
           required: true
-          description: ID do serviço
+          description: ID do usuário
           schema:
             type: integer
             example: 1
       responses:
         "200":
-          description: Serviço encontrado
+          description: Usuário encontrado
           content: 
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/UsersResponseSucess"
         "404":
-          description: Serviço não encontrado
+          description: Usuário não encontrado
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseError"
+                $ref: "#/components/schemas/UsersResponseError"
 
-  /service/update/{id}:
+    /users/update/{id}:
     put:
-      summary: Atualizar um serviço
-        - Servico
-      description: Atualiza um serviço específico pelo ID
+      summary: Atualizar um usuário
+      tags:
+        - Users
+      description: Atualiza um usuário específico pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do serviço a ser atualizado
+          description: ID do usuário a ser atualizado
           schema:
             type: integer
             example: 1
@@ -102,56 +103,56 @@ paths:
           application/json:
             schema:
               type: object
-              $ref: "#/components/schemas/CreateService"
+              $ref: "#/components/schemas/CreateUsers"
       responses:
         "200":
-          description: Serviço atualizado com sucesso
+          description: Usuário atualizado com sucesso
           content: 
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/UsersResponseSucess"
         "400":
           description: Dados inválidos
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseError"
+                $ref: "#/components/schemas/UsersResponseError"
         "404":
-          description: Serviço não encontrado
+          description: Usuário não encontrado
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseError"
+                $ref: "#/components/schemas/UsersResponseError"
 
-  /service/delete/{id}:
+    /users/delete/{id}:
     delete:
-      summary: Apagar um serviço
+      summary: Apagar um usuário
       tags:
-        - Servico
-      description: Apaga um serviço específico pelo ID
+        - Users
+      description: Apaga um usuário específico pelo ID
       parameters:
         - name: id
           in: path
           required: true
-          description: ID do servico a ser apagado
+          description: ID do usuário a ser apagado
           schema:
             type: integer
             example: 1
       responses:
         "200":
-          description: Serviço apagado com sucesso
+          description: Usuário apagado com sucesso
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseSucess"
+                $ref: "#/components/schemas/UsersResponseSucess"
         "404":
-          description: Serviço não encontrado
+          description: Usuário não encontrado
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/ResponseError"
+                $ref: "#/components/schemas/UsersResponseError"

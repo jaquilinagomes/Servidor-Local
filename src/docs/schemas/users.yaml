@@ -1,0 +1,117 @@
+# schema/users.yaml
+
+#  id: string,
+#  nome: string,
+#  numero_identificacao: string,
+#  data_nascimento: string,
+#  email: string,
+#  telefone:string ,
+#  pais:string ,
+#  localidade:string ,
+#  password:string ,
+#  enabled: boolean,
+#  created_at: string,
+#  updated_at: string
+
+components:
+  schemas:
+  # schema principal de users
+    Users:
+      type: object
+    properties:
+        id:
+          type: integer
+          example: 1
+        nome: 
+          type: string
+          example: "Laura Gomes"
+        numero_identificacao:
+          type: string
+          example: F009H
+        data_nascimento:
+          type: string
+          example: 1999-05-04
+        email:
+          type: string
+          example: "[Email Address]"
+        telefone:
+          type: string
+          example:
+        pais:
+          type: string
+          example: "Cabo-Verde"
+        localidade:
+          type: string
+          example: "Fazenda"
+        password: 
+          type: string
+          example: 'senha123'
+        enabled:
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+        updated_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+
+  # schema para criar um novo users
+    CreateUsers:
+        type: object
+    properties:
+        nome: 
+          type: string
+          example: Laura Gomes
+        numero_identificacao:
+          type: string
+          example: F009H
+        data_nascimento:
+          type: string
+          example: 1999-05-04
+        email:
+          type: string
+          example: Email Address
+        telefone:
+          type: string
+          example: '900 00 00'
+        pais:
+          type: string
+          example: Cabo-Verde
+        localidade:
+          type: string
+          example: Fazenda
+        password: 
+          type: string
+          example: 'senha123'
+        enabled:
+          type: boolean
+          example: true
+
+  # schema generico para sucesso
+    UsersResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "usuário criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/CreateUsers"
+
+    # schema generico de resposta de erro
+    UsersResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar usuários"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object
+          properties: null
