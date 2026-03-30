@@ -40,7 +40,7 @@ created_at: string,
 updated_at: string
 }
 
-export interface userType {
+export interface userDBType {
     id: string,
     nome: string,
     numero_identificacao: string,
@@ -78,8 +78,8 @@ export interface OrcamentoDBType {
 export interface PropostaDBType {
     id: string,
     id_prestacao_servico: string,
-    preco_hora: string,
-    horas_estimadas: string,
+    preco_hora: number,
+    horas_estimadas: number,
     estado: string,
     enabled:boolean,
     created_at: string,

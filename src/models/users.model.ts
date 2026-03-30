@@ -1,12 +1,12 @@
 import db from "../lib/db.js";
 import { formatDateDDMMYYYY } from "../utils/date.js";
 import { hashPassword } from "../utils/password.js";
-import type { userType } from "../utils/types.js";
+import type { userDBType } from "../utils/types.js";
 import { generateUUID } from "../utils/uuid.js";
 
 
-export const UsersModel = {
-    async create(user: userType) {
+export const UserModel = {
+    async create(user: userDBType) {
         try {
         const [rows] = await db.execute(
             `INSERT INTO tbl_utilizadores VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
@@ -58,7 +58,23 @@ async get(id: string) {
     }
 },
 
-async update(id: string, userAtualizado: userType) {
+async getByEmail(email: string): Promise<userDBType | null> {
+    try {
+        const [rows] = await db.execute(
+            `SELECT * FROM tbl_utilizadores
+            WHERE tbl_utilizadores.email = ?`,
+            [email]
+        )
+
+        if (Array.isArray(rows) && rows.length === 0) return null
+        return Array.isArray(rows) ? rows [0] as userDBType : null
+    } catch(error) {
+        console.log(error)
+        return null
+    }
+},
+
+async update(id: string, userAtualizado: userDBType) {
     try {
         const query = 
         `UPDATE FROM tbl_utilizadores
@@ -114,6 +130,5 @@ async delete(id: string) {
         return null
     }
 }
-
 
 }

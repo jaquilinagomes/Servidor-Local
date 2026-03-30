@@ -86,6 +86,7 @@ paths:
   /service/update/{id}:
     put:
       summary: Atualizar um serviço
+      tags:
         - Servico
       description: Atualiza um serviço específico pelo ID
       parameters:

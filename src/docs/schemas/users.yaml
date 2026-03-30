@@ -18,7 +18,7 @@ components:
   # schema principal de users
     Users:
       type: object
-    properties:
+      properties:
         id:
           type: integer
           example: 1
@@ -30,13 +30,13 @@ components:
           example: F009H
         data_nascimento:
           type: string
-          example: 1999-05-04
+          example: "1999-05-04"
         email:
           type: string
-          example: "[Email Address]"
+          example: "lauragomes@gmail.com"
         telefone:
           type: string
-          example:
+          example: "900 00 00"
         pais:
           type: string
           example: "Cabo-Verde"
@@ -68,10 +68,10 @@ components:
           example: F009H
         data_nascimento:
           type: string
-          example: 1999-05-04
+          example: "1999-05-04"
         email:
           type: string
-          example: Email Address
+          example: "lauragomes@gmail.com"
         telefone:
           type: string
           example: '900 00 00'

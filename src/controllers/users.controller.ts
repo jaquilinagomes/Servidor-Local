@@ -1,23 +1,25 @@
-import { UsersModel } from "../models/users.model.js";
-import type { userType } from "../utils/types.js";
+import { UserModel } from "../models/users.model.js";
+import { comparePassword } from "../utils/password.js";
+import type { userDBType } from "../utils/types.js";
 import type { Request, Response } from "express";
+import { jwt } from "jsonwebtoken";
 
-export const UsersController = {
+export const UserController = {
     async create(req: Request, res: Response) {
-        const user: userType = req.body;
+        const user: userDBType = req.body;
         
             if (!user) {
                 return res.status(400).json({
                     error: "utilizador não encontrado!"
                 });
             }
-            const createUserResponse = await UsersModel.create(user);
+            const createUserResponse = await UserModel.create(user);
         
             res.json(createUserResponse);
 },
 
 async getAll(req: Request, res: Response) {
-    const getUsersResponse = await UsersModel.getAll()
+    const getUsersResponse = await UserModel.getAll()
     
         res.json(getUsersResponse);
 },
@@ -25,7 +27,7 @@ async getAll(req: Request, res: Response) {
 async get(req: Request, res: Response) {
     const { id } = req.query
         if (id) {
-            const getUserByIdResponse = await UsersModel.get(id as string)
+            const getUserByIdResponse = await UserModel.get(id as string)
     
             if (!getUserByIdResponse) {
                 res.status(404).json({
@@ -52,7 +54,7 @@ async get(req: Request, res: Response) {
 async update(req: Request, res: Response) {
     const { id } = req.params
     
-        const updatedUser: userType = req.body
+        const updatedUser: userDBType = req.body
     
         if (!id) {
             return res.status(400).json({
@@ -68,7 +70,7 @@ async update(req: Request, res: Response) {
                 data: null
             })
         }
-        const updateUserResponse = await UsersModel.update(id as string, updatedUser)
+        const updateUserResponse = await UserModel.update(id as string, updatedUser)
     
         if (!updateUserResponse) {
             return res.status(400).json({
@@ -85,6 +87,45 @@ async update(req: Request, res: Response) {
         })
 },
 
+async login(req: Request, res: Response) {
+    const { email, password } = req.body
+
+    if (!email || !password) {
+        return res.status(400).json ({
+            status: "error",
+            message: "Crendenciais invalidos",
+            data: null
+        })
+    }
+
+    const userData = await UserModel.getByEmail(email as string)
+
+    if (!userData) {
+        return res.status(404).json ({
+            status: "error",
+            message: "Não existe nenhuma conta com este email",
+            data: null
+        })
+    }
+    const isPasswordValid = await comparePassword(password, userData.password)
+
+    if (!isPasswordValid) {
+        return res.status(400).json({
+            status: "error",
+            message: "Credenciais invalidos",
+            data: null
+        })
+    }
+
+    const payload = {
+        id: userData.id,
+        email: userData.email,
+        nome: userData.nome
+    }
+
+    const token = jwt.sign(payload, process.env.JWT_SECRET as string, {expiresIn: "1h"})
+},
+
 async delete(req: Request, res: Response) {
     const { id } = req.params
 
@@ -96,7 +137,7 @@ async delete(req: Request, res: Response) {
         })
         }
 
-        const deleteUserResponse = await UsersModel.delete(id as string)
+        const deleteUserResponse = await UserModel.delete(id as string)
 
     if (!deleteUserResponse) {
         return res.status(400).json({
@@ -112,6 +153,5 @@ async delete(req: Request, res: Response) {
         data: deleteUserResponse
     }) 
 }
-
 
 }

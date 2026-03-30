@@ -2,7 +2,7 @@
 
 # id: string,
 # total: number,
-# id_utilizadores: string,
+# id_utilizadores: integer,
 # enabled: boolean,
 # created_at: string,
 # updated_at: string
@@ -18,10 +18,10 @@ components:
           example: 1
         total: 
           type: number
-          example: "2000"
+          example: 400
         id_utilizadores:
           type: string
-          example: 1
+          example: 10
         enabled: 
           type: boolean
           example: true
@@ -38,10 +38,10 @@ components:
       properties:
         total: 
           type: number
-          example: "2000"
+          example: 400
         id_utilizadores:
           type: string
-          example: 1
+          example: 10
         enabled:
           type: boolean
           example: true

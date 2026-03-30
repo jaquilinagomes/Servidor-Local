@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UsersController } from "../controllers/users.controller.js";
+import { UserController } from "../controllers/users.controller.js";
 
 const UserRouter = {
     create: "/create",
@@ -10,10 +10,10 @@ const UserRouter = {
 }
 const router = Router()
 
-router.get(UserRouter.getAll, UsersController.getAll)
-router.get(UserRouter.getById, UsersController.get)
-router.post(UserRouter.create, UsersController.create)
-router.put(UserRouter.update, UsersController.update)
-router.delete(UserRouter.update, UsersController.delete)
+router.get(UserRouter.getAll, UserController.getAll)
+router.get(UserRouter.getById, UserController.get)
+router.post(UserRouter.create, UserController.create)
+router.put(UserRouter.update, UserController.update)
+router.delete(UserRouter.update, UserController.delete)
 
 export { router };

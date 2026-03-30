@@ -83,7 +83,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/UsersResponseError"
 
-    /users/update/{id}:
+  /users/update/{id}:
     put:
       summary: Atualizar um usuário
       tags:
@@ -127,7 +127,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/UsersResponseError"
 
-    /users/delete/{id}:
+  /users/delete/{id}:
     delete:
       summary: Apagar um usuário
       tags:

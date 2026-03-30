@@ -27,13 +27,13 @@ components:
           example: "Rececionista"
         taxa_urgencia: 
           type: number
-          example: "1000"
+          example: 25.5
         minimo_desconto:
           type: number
-          example: "1.0"
+          example: 100
         percentagem_desconto:
           type: number
-          example: "0.1"
+          example: 10
         enabled: 
           type: boolean
           example: true
@@ -56,13 +56,13 @@ components:
           example: "Rececionista"
         taxa_urgencia: 
           type: number
-          example: "1000"
+          example: 25.5
         minimo_desconto:
           type: number
-          example: "1.0"
+          example: 10
         percentagem_desconto:
           type: number
-          example: "0.1"
+          example: 10
         enabled: 
           type: boolean
           example: true

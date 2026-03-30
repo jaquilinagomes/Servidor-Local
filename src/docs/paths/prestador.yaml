@@ -24,7 +24,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/PrestadorResponseError"
 
-  /service/create:
+  /prestador/create:
     post:
       summary: Criar um novo prestador
       tags:
@@ -53,7 +53,7 @@ paths:
                 type:
                 $ref: "#/components/schemas/PrestadorResponseError"
 
-  /service/get-by-id/{id}:
+  /prestador/get-by-id/{id}:
     get:
       summary: Buscar um prestador por ID
       tags:
@@ -83,7 +83,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/PrestadorResponseError"
 
-  /service/update/{id}:
+  /prestador/update/{id}:
     put:
       summary: Atualizar um prestador
       tags:
@@ -127,7 +127,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/PrestadorResponseError"
 
-  /service/delete/{id}:
+  /prestador/delete/{id}:
     delete:
       summary: Apagar um prestador
       tags:
