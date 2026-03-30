@@ -1,1 +1,0 @@
-USE servidor_local;
