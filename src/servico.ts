@@ -1,0 +1,166 @@
+import { type ServicoType, type ResponseType, type servicoDBType } from "./utils/types.js";
+import db from "./lib/db.js";
+
+export let catalogoServicos: ServicoType[] = [];
+
+// Adicionar um novo serviço
+export function adicionarServico(servico: ServicoType): ResponseType {
+    if (!servico.nome || servico.precoHora <= 0)
+        return ({
+            status: false,
+            message: "Erro: Nome obrigatório e preço deve ser maior que Zero.",
+            data: null,
+        })
+
+    for (let i = 0; i < catalogoServicos.length; i++) {
+        if (catalogoServicos[i]?.nome === servico.nome) {
+            return ({
+                status: false,
+                message: "Erro: O serviço já existe.",
+                data: null,
+            })
+        }
+    }
+    catalogoServicos.push(servico);
+    return ({
+        status: true,
+        message: "Sucesso: Serviço adicionado!",
+        data: servico,
+    })
+}
+
+// Listar todos os serviços
+export function listarServicos(): ServicoType[] {
+    // Todo: implementar fetch de serviço
+    return catalogoServicos
+}
+
+// Apagar um serviço
+export function apagarServico(nome: string): boolean {
+    // Todo: implementar delete de serviço
+
+    const novoCatalogoTemp: ServicoType[] = []
+
+    for (let i = 0; i < catalogoServicos.length; i++) {
+        if (catalogoServicos[i]?.nome !== undefined && catalogoServicos[i]?.nome !== nome) {
+            novoCatalogoTemp.push(catalogoServicos[i]!)
+        }
+    } // Devolve um novo catalogo sem o servico que foi apagado
+
+    catalogoServicos = novoCatalogoTemp
+
+    return true
+}
+
+// Obter um serviço pelo nome
+export function obterServico(nome: string): ServicoType | null {
+    for (let i = 0; i < catalogoServicos.length; i++) {
+        if (catalogoServicos[i]?.nome === nome) {
+            return catalogoServicos[i]!
+        }
+    }
+    return null
+}
+
+export async function addServicesToDB(newService: servicoDBType) {
+    console.log({newService})
+    try {
+        const query = `INSERT INTO tbl_servicos VALUES (?, ?, ?, ?, ?, ?, ?)`
+        
+        const values = [
+            null,
+            newService.nome,
+            newService.descricao,
+            newService.categoria,
+            newService.enabled,
+            new Date(),
+            new Date()
+        ]
+
+        const rows = await db.execute(query, values)
+
+        return rows
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function getServiceById(id: string) {
+    try {
+        const query = `SELECT * FROM tbl_servicos WHERE id = ?`
+
+        const values = [id]
+
+        const rows = await db.execute(query, values)
+
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
+
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function getAllServices() {
+    try {
+
+        const query = `SELECT * FROM tbl_servicos`
+
+        const rows = await db.execute(query)
+
+        return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
+
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+// update de dados de um serviço
+export async function updateService(id: string, updateService: servicoDBType) {
+    try {
+        const query = `UPDATE tbl_servicos
+                    SET 
+                        nome=?,
+                        descricao=?,
+                        categoria=?,
+                        enabled=?,
+                        updated_at=?
+                    WHERE
+                        id=?
+                    ;`
+
+        const values = [
+            updateService.nome,
+            updateService.descricao,
+            updateService.categoria,
+            updateService.enabled,
+            new Date(),
+            id
+        ]
+
+        const rows = await db.execute(query, values)
+
+        return rows
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+export async function deleteService(id: string) {
+    try {
+        const query = `DELETE FROM tbl_servicos WHERE id=?;`
+
+        const value = [id]
+
+        const rows: any = await db.execute(query, value)
+
+        return rows[0]?.affectedRows === 0 ? null : rows
+        
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}

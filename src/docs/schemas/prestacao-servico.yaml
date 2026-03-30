@@ -1,0 +1,114 @@
+# schema/prestacao-servico.yaml
+
+#  id: string,
+#  designacao: string,
+#  subtotal: number,
+#  horas_estimadas: number,
+#  id_prestador: string,
+#  id_servico: string,
+#  preco_hora: number,
+#  estado: string,
+#  id_orcamento: string,
+#  enabled: boolean,
+#  created_at: string,
+#  updated_at: string
+
+components:
+  schemas:
+    # schema principal de prestacao servico
+    PrestacaoServico:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        designacao: 
+          type: string
+          example: "Fazer manutenção"
+        subtotal:
+          type: number
+          example: 2000
+        horas_estimadas: 
+          type: number
+          example: 8
+        id_prestador:
+          type: string
+          example: 1
+        id_servico:
+          type: string
+          example: 2
+        preco_hora:
+          type: number
+          example: 200
+        estado: 
+          type: string
+          example: pendente
+        id_orcamento:
+          type: string
+          example: 3
+        enabled: 
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+        updated_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+
+    # schema para criar um novo prestacao servico
+    CreatePrestacaoServico:
+      type: object
+      properties:
+        designacao: 
+          type: string
+          example: "Fazer manutenção"
+        subtotal:
+          type: number
+          example: 2000
+        horas_estimadas: 
+          type: number
+          example: 8
+        id_prestador:
+          type: string
+          example: 1
+        id_servico:
+          type: string
+          example: 2
+        preco_hora:
+          type: number
+          example: 200
+        estado:
+          type: string
+          example: pendente
+        id_orcamento:
+          type: string
+          example:
+
+    # schema generico para sucesso
+    PrestacaoServicoResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Prestação serviço criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/PrestacaoServico"
+
+    # schema generico de resposta de erro
+    PrestacaoServicoResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar prestação serviço"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object
+          properties: null

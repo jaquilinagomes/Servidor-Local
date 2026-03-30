@@ -1,0 +1,158 @@
+# schema/prestador.yaml
+
+paths:
+  /prestador:
+    get:
+      summary: Listar todos os prestadores
+      tags:
+        - Prestador
+      description: Retorna uma lista de todos os prestadores disponíveis
+      responses:
+        "200":
+          description: Lista de prestadores
+          content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Prestador"
+        "404":
+          description: "Nenhum prestador encontrado"
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseError"
+
+  /prestador/create:
+    post:
+      summary: Criar um novo prestador
+      tags:
+        - Prestador
+      description: Cria um novo prestador
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/CreatePrestador"
+      responses:
+        "200":
+          description: Prestador criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseSucess"
+        "400":
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type:
+                $ref: "#/components/schemas/PrestadorResponseError"
+
+  /prestador/get-by-id/{id}:
+    get:
+      summary: Buscar um prestador por ID
+      tags:
+        - Prestador
+      description: Retorna um prestador específico pelo ID
+      parameters: 
+        - name: id
+          in: path
+          required: true
+          description: ID do prestador
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Prestador encontrado
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseSucess"
+        "404":
+          description: Prestador não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseError"
+
+  /prestador/update/{id}:
+    put:
+      summary: Atualizar um prestador
+      tags:
+        - Prestador
+      description: Atualiza um prestador específico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do prestador a ser atualizado
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/CreatePrestador"
+      responses:
+        "200":
+          description: Prestador atualizado com sucesso
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseSucess"
+        "400":
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseError"
+        "404":
+          description: Prestador não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseError"
+
+  /prestador/delete/{id}:
+    delete:
+      summary: Apagar um prestador
+      tags:
+        - Prestador
+      description: Apaga um prestador específico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do prestador a ser apagado
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Prestador apagado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseSucess"
+        "404":
+          description: Prestador não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/PrestadorResponseError"
