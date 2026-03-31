@@ -66,6 +66,7 @@ export const PrestacaoServicoModel = {
             return null
         }
     },
+    
     async update(id: string, PrestacaoServicoAtualizado: PrestacaoServicoDBType) {
         try {
             const query = `UPDATE tbl_prestador_de_servico 
