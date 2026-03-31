@@ -22,7 +22,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#components/schemas/UsersResponseError"
+                $ref: "#components/schemas/UserResponseError"
 
   /users/create:
     post:
@@ -44,14 +44,14 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseSucess"
+                $ref: "#/components/schemas/UserResponseSucess"
         "400":
           description: Dados inválidos
           content:
             application/json:
               schema:
                 type:
-                $ref: "#/components/schemas/UsersResponseError"
+                $ref: "#/components/schemas/UserResponseError"
 
   /users/get-by-id/{id}:
     get:
@@ -59,7 +59,7 @@ paths:
       tags:
         - Users
       description: Retorna um usuário específico pelo ID
-      parameters: 
+      parameters:
         - name: id
           in: path
           required: true
@@ -70,18 +70,18 @@ paths:
       responses:
         "200":
           description: Usuário encontrado
-          content: 
+          content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseSucess"
+                $ref: "#/components/schemas/UserResponseSucess"
         "404":
           description: Usuário não encontrado
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseError"
+                $ref: "#/components/schemas/UserResponseError"
 
   /users/update/{id}:
     put:
@@ -107,25 +107,25 @@ paths:
       responses:
         "200":
           description: Usuário atualizado com sucesso
-          content: 
+          content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseSucess"
+                $ref: "#/components/schemas/UserResponseSucess"
         "400":
           description: Dados inválidos
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseError"
+                $ref: "#/components/schemas/UserResponseError"
         "404":
           description: Usuário não encontrado
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseError"
+                $ref: "#/components/schemas/UserResponseError"
 
   /users/delete/{id}:
     delete:
@@ -148,11 +148,46 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseSucess"
+                $ref: "#/components/schemas/UserResponseSucess"
         "404":
           description: Usuário não encontrado
           content:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UsersResponseError"
+                $ref: "#/components/schemas/UserResponseError"
+
+  /users/login:
+    post:
+      summary: Login de um usuário
+      tags:
+        - Users
+      description: Faz login de um usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginUser"
+      responses:
+        "200":
+          description: Usuário logado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UserResponseSucess"
+        "404":
+          description: "Usuário não encontrado"
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UserResponseError"
+        "400":
+          description: "Erro ao logar usuário"
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UserResponseError"

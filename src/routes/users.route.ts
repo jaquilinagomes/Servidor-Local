@@ -1,19 +1,22 @@
 import { Router } from "express";
 import { UserController } from "../controllers/users.controller.js";
+import AuthMilddleware from "../security/auth.middleware.js";
 
-const UserRouter = {
+const UserRoute = {
     create: "/create",
     getAll: "/",
     getById:"/get-by-id/:id",
     update:"/update/:id",
-    delete:"/delete/:id"
+    delete:"/delete/:id",
+    login: "/login"
 }
 const router = Router()
 
-router.get(UserRouter.getAll, UserController.getAll)
-router.get(UserRouter.getById, UserController.get)
-router.post(UserRouter.create, UserController.create)
-router.put(UserRouter.update, UserController.update)
-router.delete(UserRouter.update, UserController.delete)
+router.get(UserRoute.getAll, AuthMilddleware, UserController.getAll)
+router.get(UserRoute.getById, UserController.get)
+router.post(UserRoute.create, UserController.create)
+router.put(UserRoute.update, UserController.update)
+router.delete(UserRoute.update, UserController.delete)
+router.post(UserRoute.login, UserController.login)
 
 export { router };

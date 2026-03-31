@@ -45,7 +45,7 @@ components:
           example: "Fazenda"
         password: 
           type: string
-          example: 'senha123'
+          example: '12345678'
         enabled:
           type: boolean
           example: true
@@ -83,13 +83,23 @@ components:
           example: Fazenda
         password: 
           type: string
-          example: 'senha123'
+          example: '12345678'
         enabled:
           type: boolean
           example: true
 
+    LoginUser:
+      type: object
+      proprities:
+        email:
+          type: string
+          example: "user@example.com"
+        password:
+          type: string
+          string: "senha123"
+
   # schema generico para sucesso
-    UsersResponseSucess:
+    UserResponseSucess:
       type: object
       properties:
         message:
@@ -103,7 +113,7 @@ components:
           $ref: "#/components/schemas/CreateUsers"
 
     # schema generico de resposta de erro
-    UsersResponseError:
+    UserResponseError:
       type: object
       properties:
         message:

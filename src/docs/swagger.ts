@@ -14,6 +14,21 @@ const Options: swaggerJsdoc.Options = {
                 url: 'http://localhost:8080',
                 descripition: 'dev',
             }
+        ],
+
+        components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: "http",
+                    scheme: "bearer",
+                    bearerFormat: "JWT"
+                }
+            }
+        },
+        security: [
+            {
+                bearerAuth: []
+            }
         ]
     },
 
@@ -21,6 +36,7 @@ const Options: swaggerJsdoc.Options = {
         path.join(process.cwd(), "./src/docs/schemas/*.yaml"),
         path.join(process.cwd(), "./src/docs/paths/*.yaml"),
     ]
+
 }
 
 export const swaggerSpec = swaggerJsdoc(Options);

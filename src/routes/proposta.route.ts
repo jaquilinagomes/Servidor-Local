@@ -2,7 +2,7 @@ import { Router } from "express"
 import { PropostaController } from "../controllers/proposta.controller.js"
 
 
-const PropostaRouter = {
+const PropostaRoute = {
     create: "/create",
     getById:"/get-by-id/:id",
     getAll: "/",
@@ -12,10 +12,10 @@ const PropostaRouter = {
 
 const router = Router()
 
-router.get(PropostaRouter.getAll, PropostaController.getAll)
-router.get(PropostaRouter.getById, PropostaController.get)
-router.post(PropostaRouter.create, PropostaController.create)
-router.put(PropostaRouter.update, PropostaController.update)
-router.delete(PropostaRouter.delete, PropostaController.delete)
+router.get(PropostaRoute.getAll, PropostaController.getAll)
+router.get(PropostaRoute.getById, PropostaController.get)
+router.post(PropostaRoute.create, PropostaController.create)
+router.put(PropostaRoute.update, PropostaController.update)
+router.delete(PropostaRoute.delete, PropostaController.delete)
 
 export { router };
