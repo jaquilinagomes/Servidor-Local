@@ -55,7 +55,7 @@ async update(req: Request, res: Response) {
     const { id } = req.params
     
         const updatedUser: userDBType = req.body
-    
+
         if (!id) {
             return res.status(400).json({
                 status: "error",
@@ -71,7 +71,7 @@ async update(req: Request, res: Response) {
             })
         }
         const updateUserResponse = await UserModel.update(id as string, updatedUser)
-    
+
         if (!updateUserResponse) {
             return res.status(400).json({
                 status: "error",
@@ -89,7 +89,6 @@ async update(req: Request, res: Response) {
 
 async login(req: Request, res: Response) {
     const { email, password } = req.body
-
     if (!email || !password) {
         return res.status(400).json ({
             status: "error",
@@ -99,7 +98,6 @@ async login(req: Request, res: Response) {
     }
 
     const userData = await UserModel.getByEmail(email as string)
-
     if (!userData) {
         return res.status(404).json ({
             status: "error",
@@ -108,7 +106,6 @@ async login(req: Request, res: Response) {
         })
     }
     const isPasswordValid = await comparePassword(password, userData.password)
-
     if (!isPasswordValid) {
         return res.status(400).json({
             status: "error",

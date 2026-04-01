@@ -24,19 +24,19 @@ components:
           example: 1
         nome: 
           type: string
-          example: "Laura Gomes"
+          example: "Jaquilina Gomes"
         numero_identificacao:
           type: string
-          example: F009H
+          example: F007Q
         data_nascimento:
           type: string
-          example: "1999-05-04"
+          example: "27-03-1996"
         email:
           type: string
-          example: "lauragomes@gmail.com"
+          example: "gomesjaquilina@gmail.com"
         telefone:
           type: string
-          example: "900 00 00"
+          example: "959 14 30"
         pais:
           type: string
           example: "Cabo-Verde"
@@ -45,7 +45,7 @@ components:
           example: "Fazenda"
         password: 
           type: string
-          example: '12345678'
+          example: "1234567"
         enabled:
           type: boolean
           example: true
@@ -58,23 +58,23 @@ components:
 
   # schema para criar um novo users
     CreateUsers:
-        type: object
-    properties:
+      type: object
+      properties:
         nome: 
           type: string
-          example: Laura Gomes
+          example: Jaquilina Gomes
         numero_identificacao:
           type: string
-          example: F009H
+          example: F007Q
         data_nascimento:
           type: string
-          example: "1999-05-04"
+          example: "27-03-1996"
         email:
           type: string
-          example: "lauragomes@gmail.com"
+          example: "gomesjaquilina@gmail.com"
         telefone:
           type: string
-          example: '900 00 00'
+          example: "959 14 30"
         pais:
           type: string
           example: Cabo-Verde
@@ -83,14 +83,14 @@ components:
           example: Fazenda
         password: 
           type: string
-          example: '12345678'
+          example: "1234567"
         enabled:
           type: boolean
           example: true
 
     LoginUser:
       type: object
-      proprities:
+      properties:
         email:
           type: string
           example: "user@example.com"
