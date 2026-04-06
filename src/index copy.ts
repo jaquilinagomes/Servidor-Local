@@ -2,7 +2,7 @@ import express, { type Request, type Response } from "express";
 import { adicionarServico, listarServicos, apagarServico, obterServico, addServicesToDB, getServiceById, getAllServices, updateService, deleteService } from "./servico.js"
 import { apagarPrestadorDeServico, calcularOrcamento, criarPrestadoresDeServico, editarPrestadorDeServico, listarPrestadoresDeServico, selecionarPrestadoresDeServico, selecionarServicos } from "./orcamento.js";
 import { createUser, deleteUser, getUserById, getUsers, updateUser } from "./users.js";
-import type { servicoDBType, userType } from "./utils/types.js";
+import type { servicoDBType, userDBType } from "./utils/types.js";
 import { generateUUID } from "./utils/uuid.js";
 
 const app = express();
@@ -185,7 +185,7 @@ app.post("/create-user", async (req: Request, res: Response) => {
 app.put("/update-user", async (req: Request, res: Response) => {
     const { id } = req.params
 
-    const updatedUser: userType = req.body
+    const updatedUser: userDBType = req.body
 
     if (!id) {
         return res.status(400).json({

@@ -46,6 +46,15 @@ components:
           type: boolean
           example: true
 
+    CalculateOrcamento:
+      type: object
+      required:
+        - id
+      properties:
+      id:
+        type: integer
+        example: 1
+
     # schema generico para sucesso
     OrcamentoResponseSucess:
       type: object

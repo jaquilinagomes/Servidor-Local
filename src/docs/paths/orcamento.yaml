@@ -83,6 +83,43 @@ paths:
                 type: object
                 $ref: "#/components/schemas/OrcamentoResponseError"
 
+  /orcamento/calculate/{id}:
+    put:
+      summary: Calcular um orçamento
+      tags:
+        - Orcamento
+      description: Calcular um orçamento específico pelo ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID do orçamento a ser calculado
+          schema:
+            type: integer
+            example: 1
+      responses:
+        "200":
+          description: Orçamento calculado com sucesso
+          content: 
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/OrcamentoResponseSucess"
+        "400":
+          description: Dados inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/OrcamentoResponseError"
+        "404":
+          description: Orçamento não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/OrcamentoResponseError"
+
   /orcamento/update/{id}:
     put:
       summary: Atualizar um orçamento

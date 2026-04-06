@@ -98,6 +98,19 @@ components:
           type: string
           string: "senha123"
 
+    UpdatePassword:
+      type: object
+      properties:
+        passwordAntiga:
+          type: string
+          example: "senha123"
+        passwordNova:
+          type: string
+          example: "senha123"
+        confirmarPassword:
+          type: string
+          example: "senha123"
+
   # schema generico para sucesso
     UserResponseSucess:
       type: object

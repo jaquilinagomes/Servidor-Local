@@ -47,9 +47,9 @@ export interface userDBType {
     data_nascimento: string,
     email: string,
     telefone:string ,
-    pais:string ,
+    pais: string ,
     localidade:string ,
-    password:string ,
+    password: string ,
     enabled: boolean,
     created_at: string,
     updated_at: string
