@@ -20,7 +20,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           example: 1
         designacao: 
           type: string
@@ -42,7 +42,7 @@ components:
           example: 200
         estado: 
           type: string
-          example: pendente
+          example: pendente, em_progresso, finalizado, cancelado
         id_orcamento:
           type: string
           example: 3
@@ -59,6 +59,11 @@ components:
     # schema para criar um novo prestacao servico
     CreatePrestacaoServico:
       type: object
+      required:
+        - designacao
+        - id_prestador
+        - id_servico
+        - preco_hora
       properties:
         designacao: 
           type: string
@@ -80,7 +85,7 @@ components:
           example: 200
         estado:
           type: string
-          example: pendente
+          example: pendente, em_progresso, finalizado, cancelado
         id_orcamento:
           type: string
           example:

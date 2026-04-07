@@ -46,7 +46,7 @@ components:
           type: boolean
           example: true
 
-    CalculateOrcamento:
+    CalcularOrcamento:
       type: object
       required:
         - id

@@ -16,7 +16,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           example: 1
         id_prestacao_servico: 
           type: integer
@@ -29,7 +29,7 @@ components:
           example: 8
         estado:
           type: string
-          example: "pendente"
+          example: "pendente, aceito, recusado"
         enabled: 
           type: boolean
           example: true
@@ -43,6 +43,10 @@ components:
     # schema para criar um novo proposta
     CreateProposta:
       type: object
+      required:
+        - id_prestacao_servico
+        - preco_hora
+        - horas_estimadas
       properties:
         id_prestacao_servico: 
           type: integer
@@ -55,10 +59,51 @@ components:
           example: 8
         estado:
           type: string
-          example: "pendente"
+          example: "pendente, aceito, recusado"
         enabled: 
           type: boolean
           example: true
+
+    UpdateProposta:
+      type: object
+      properties:
+        preco_hora:
+          type: number
+          example: 55.0
+        horas_estimadas:
+          type: integer
+          example: 6
+        estado:
+          type: string
+          example: "aceito"
+        enabled:
+          type: boolean
+          example: true
+
+    AceitarPoposta:
+      type: object
+      properties:
+        status:
+          type: string
+          example: success
+        message:
+          type: string
+          example: Proposta aceite com sucesso
+        data:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "15"
+            id_orcamento:
+              type: string
+              example: "3"
+            id_prestacao_servico:
+              type: string
+              example: "7"
+            estado:
+              type: string
+              example: Aceite
 
     # schema generico para sucesso
     PropostaResponseSucess:

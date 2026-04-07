@@ -116,7 +116,8 @@ async update(id: string, userAtualizado: userDBType) {
 
 async updatePassword(id: string, password: string) {
     try {
-        const updateUser = await db.execute("UPDATE tbl_utilizadores SET password = ?, updated_at = ? WHERE id = ?", [
+        const updateUser = await db.execute(
+            "UPDATE tbl_utilizadores SET password = ?, updated_at = ? WHERE id = ?", [
             await hashPassword(password),
             new Date(),
             id

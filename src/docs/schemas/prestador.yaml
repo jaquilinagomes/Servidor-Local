@@ -17,7 +17,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
           example: 1
         nif: 
           type: string

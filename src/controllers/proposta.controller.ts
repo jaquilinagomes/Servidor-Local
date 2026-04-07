@@ -102,6 +102,31 @@ export const PropostaController = {
             data: updatePropostaResponse
         })
     },
+
+    async aceitarProposta(req: Request, res: Response) {
+        const { id } = req.params
+        if (!id) {
+            return res.status(400).json({
+                status: "error",
+                message: "ID obrigatório",
+                data: null
+            });
+        }
+        const result = await PropostaModel.aceitarProposta(id as string);
+        if (!result) {
+            return res.status(400).json({
+                status: "error",
+                message: "Proposta inválida ou não encontrada",
+                data: null
+            });
+        }
+        return res.status(200).json({
+            status: "success",
+            message: "Proposta aceite com sucesso",
+            data: result
+        });
+    },
+
     async delete(req: Request, res: Response) {
             const { id } = req.params
 

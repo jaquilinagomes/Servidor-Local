@@ -25,7 +25,7 @@ async getAll(req: Request, res: Response) {
 },
 
 async get(req: Request, res: Response) {
-    const { id } = req.query
+    const { id } = req.params
         if (id) {
             const getUserByIdResponse = await UserModel.get(id as string)
     
@@ -113,6 +113,7 @@ async updatePassword(req: Request, res: Response) {
             data: null
         })
     }
+
     const updatePasswordResponse = await UserModel.updatePassword (id as string, passwordNova as string)
     res.status(200).json({
         status: "sucess",

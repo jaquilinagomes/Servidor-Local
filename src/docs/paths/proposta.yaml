@@ -83,6 +83,33 @@ paths:
                 type: object
                 $ref: "#/components/schemas/PropostaResponseError"
 
+  /proposta/aceitar/{id}:
+    put:
+      summary: Aceita uma proposta
+      tags:
+        - Proposta
+      description: Aceita uma proposta
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID da proposta a ser aceita
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Proposta aceite com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PropostaResponseSucess"
+        "400":
+          description: Erro de validação
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PropostaResponseError"
+
   /proposta/update/{id}:
     put:
       summary: Atualizar uma proposta

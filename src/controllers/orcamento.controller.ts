@@ -87,7 +87,6 @@ export const OrcamentoController = {
                 data: null
             })
         }
-
         const updateOrcamentoResponse = await OrcamentoModel.update(id as string, updateOrcamento)
         if (!updateOrcamentoResponse) {
             return res.status(400).json({
@@ -102,6 +101,30 @@ export const OrcamentoController = {
             data: updateOrcamentoResponse
         })
     },
+
+    async calcularOrcamento(req: Request, res: Response) {
+    const { id } = req.params
+    if (!id) {
+        return res.status(400).json({
+            status: "error",
+            message: "ID obrigatório",
+            data: null
+        });
+    }
+    const result = await OrcamentoModel.calcularOrcamento(id as string)
+    if (!result) {
+        return res.status(400).json({
+            status: "error",
+            message: "Dados de orçamento inválidos",
+            data: null
+        });
+    }
+    return res.status(200).json({
+        status: "success",
+        message: "Orçamento calculado com sucesso",
+        data: result
+    });
+},
 
     async delete(req: Request, res: Response) {
         const { id } = req.params

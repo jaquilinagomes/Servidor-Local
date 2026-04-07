@@ -83,7 +83,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/OrcamentoResponseError"
 
-  /orcamento/calculate/{id}:
+  /orcamento/calcular/:id:
     put:
       summary: Calcular um orçamento
       tags:
