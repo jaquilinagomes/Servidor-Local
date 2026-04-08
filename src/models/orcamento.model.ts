@@ -71,7 +71,6 @@ export const OrcamentoModel = {
                         id_utilizadores=?,
                         enabled=?,
                         uptaded=?
-
                     WHERE 
                         id=?
                             ;`
@@ -92,11 +91,11 @@ export const OrcamentoModel = {
         }
     },
 
-    async calcularOrcamento(id: string) {
+    /* async calcularOrcamento(id: string) {
     try {
         const queryServices = `
             SELECT preco_hora, horas_estimadas, id_prestador 
-            FROM tbl_prestacao_servicos 
+            FROM tbl_prestacao_servico
             WHERE id_orcamento = ?`;
         const [services] = await db.execute(queryServices, [id]) as [any[], any];
         if (!services || services.length === 0) {
@@ -106,7 +105,7 @@ export const OrcamentoModel = {
         for (const item of services) {
             let subtotal = item.preco_hora * item.horas_estimadas;
             const queryUrgencia = `
-                SELECT taxa_Urgencia, percentagem_desconto 
+                SELECT taxa_urgencia, percentagem_desconto 
                 FROM tbl_prestadores 
                 WHERE id = ?`;
             const [prestadorData] = await db.execute(queryUrgencia, [item.id_prestador]) as [any[], any];
@@ -129,7 +128,7 @@ export const OrcamentoModel = {
         console.error(err);
         return null;
     }
-},
+}, */
 
     async delete(id: string) {
         try {

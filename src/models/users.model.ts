@@ -51,7 +51,7 @@ async get(id: string) {
         )
 
         if (Array.isArray(rows) && rows.length === 0) return null
-        return Array.isArray(rows) ? rows[0] : null
+        return Array.isArray(rows) ? rows[0] as userDBType : null
     } catch (error) {
         console.log(error)
         return null

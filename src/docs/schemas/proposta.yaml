@@ -29,7 +29,7 @@ components:
           example: 8
         estado:
           type: string
-          example: "pendente, aceito, recusado"
+          example: "pendente, aceite, recusado"
         enabled: 
           type: boolean
           example: true
@@ -59,7 +59,7 @@ components:
           example: 8
         estado:
           type: string
-          example: "pendente, aceito, recusado"
+          example: "pendente, aceite, recusado"
         enabled: 
           type: boolean
           example: true

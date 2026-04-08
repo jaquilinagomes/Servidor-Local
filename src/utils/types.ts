@@ -80,7 +80,8 @@ export interface PropostaDBType {
     id_prestacao_servico: string,
     preco_hora: number,
     horas_estimadas: number,
-    estado: string,
+    estado: EstadoProposta,
+    id_prestador: string,
     enabled:boolean,
     created_at: string,
     updated_at: string
@@ -94,17 +95,22 @@ export interface PrestacaoServicoDBType {
     id_prestador: string,
     id_servico: string,
     preco_hora: number,
-    estado: string,
+    estado: EstadoPrestacaoServico,
     id_orcamento: string,
     enabled: boolean,
     created_at: string,
     updated_at: string
 }
 
-export enum Estado {
+export enum EstadoProposta {
     PENDENTE = "pendente",
-    ACEITO = "aceito",
-    CANCELADO = "cancelado",
+    ACEITE = "aceite",
+    CANCELADO = "cancelado"
+}
+
+export enum EstadoPrestacaoServico {
+    PENDENTE = "pendente",
+    EM_PROGRESSO = "em_progresso",
     FINALIZADO = "finalizado",
-    EM_PROGRESSO = "em progresso"
+    CANCELADO = "cancelado"
 }

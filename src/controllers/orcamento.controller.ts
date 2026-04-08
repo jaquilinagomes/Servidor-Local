@@ -1,5 +1,8 @@
 import { OrcamentoModel } from "../models/orcamento.model.js"
-import type { OrcamentoDBType } from "../utils/types.js"
+import { PrestacaoServicoModel } from "../models/prestacao-servico.model.js"
+import { PrestadorModel } from "../models/prestador.model.js"
+import { PropostaModel } from "../models/proposta.model.js"
+import { EstadoProposta, type OrcamentoDBType, type PropostaDBType } from "../utils/types.js"
 import type { Request, Response } from "express"
 
 export const OrcamentoController = {
@@ -102,7 +105,7 @@ export const OrcamentoController = {
         })
     },
 
-    async calcularOrcamento(req: Request, res: Response) {
+    /* async calcularOrcamento(req: Request, res: Response) {
     const { id } = req.params
     if (!id) {
         return res.status(400).json({
@@ -125,7 +128,7 @@ export const OrcamentoController = {
         data: result
     });
 },
-
+*/
     async delete(req: Request, res: Response) {
         const { id } = req.params
 
@@ -151,6 +154,99 @@ export const OrcamentoController = {
             status: "success",
             message: "Orcamento criado com sucesso",
             data: deleteOrcamentoResponse
+        })
+    },
+
+    async calculateBudget(req: Request, res: Response) {
+        const { id } = req.params
+
+        if (!id) {
+            return res.status(400).json({
+                status: "error",
+                message: "ID obrigatório",
+                data: null
+            })
+        }
+        // then calculate budget
+
+        // to fetch proposals we need to fetch prestacao_servico first
+        const prestacaoServico = await PrestacaoServicoModel.getByIdOrcamento(id as string)
+
+        if (!prestacaoServico) {
+            return res.status(404).json({
+                status: "error",
+                message: "Prestação de serviço não encontrado",
+                data: null
+            })
+        }
+
+        // fetch all proposal
+        const proposals = await PropostaModel.getByPrestacaoServico(prestacaoServico.id)
+
+        if (!proposals) {
+            return res.status(404).json({
+                status: "error",
+                message: "Proposta não encontrada",
+                data: null
+            })
+        }
+
+        //find accepted proposal
+        const acceptedProposal: PropostaDBType | undefined = proposals.find((proposal) => proposal.estado === EstadoProposta.ACEITE)
+
+        if (!acceptedProposal) {
+            return res.status(404).json({
+                status: "error",
+                message: "Ainda nenhuma proposta foi aceite",
+                data: null
+            })
+        }
+
+        const preco_hora = acceptedProposal.preco_hora
+        const horas_estimadas = acceptedProposal.horas_estimadas
+
+        // fetch prestador to get urgency tax minimun discount and discount percentage based on attrs in utils/types.ts
+        const prestador = await PrestadorModel.get(acceptedProposal.id_prestador)
+
+        if (!prestador) {
+            return res.status(404).json({
+                status: "error",
+                message: "Prestador não encontrado",
+                data: null
+            })
+        }
+
+        const urgencyTax = prestador.taxa_urgencia
+        const minimumDiscount = prestador.minimo_desconto
+        const discountPercentage = prestador.percentagem_desconto
+
+        // calculate the budget based on utils/types.ts
+        let subtotal = preco_hora * horas_estimadas
+
+        // if minimum discount is greater than discount percentage
+        if (subtotal > minimumDiscount) {
+            subtotal = subtotal * (1 - discountPercentage)
+        }
+
+        if (prestacaoServico.urgente) {
+            // add urgency tax
+            subtotal = subtotal * (1 - urgencyTax)
+        }
+
+        const updateOrcamentoResponse = await OrcamentoModel.updateBudget(id as string, subtotal)
+
+        if (!updateOrcamentoResponse) {
+            return res.status(400).json({
+                status: "error",
+                message: "Erro ao calcular orcamento",
+                data: null
+            })
+        }
+
+        return res.status(200).json({
+            status: "sucess",
+            message: "Orcamento calculado e atualizado com sucesso",
+            data: updateOrcamentoResponse
         })
     }
 }

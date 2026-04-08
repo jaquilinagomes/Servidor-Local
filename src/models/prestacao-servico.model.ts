@@ -1,3 +1,4 @@
+import type { RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
 import type { PrestacaoServicoDBType} from "../utils/types.js";
 import { generateUUID } from "../utils/uuid.js";
@@ -109,6 +110,22 @@ export const PrestacaoServicoModel = {
             return rows[0]?.affectedRows === 0 ? null : rows
 
         } catch (error) {
+            console.log(error)
+            return null
+        }
+    },
+
+    async getByIdOrcamento(id_orcamento: string): Promise<PrestacaoServicoDBType | null> {
+        try {
+            const [rows] = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>(
+                `SELECT * FROM tbl_servico
+                WHERE tbl_prestacao_servico.id_orcamento = ?`,
+
+                [id_orcamento]
+            )
+            if (Array.isArray(rows) && rows.length === 0) return null
+            return Array.isArray(rows) ? rows[0] as PrestacaoServicoDBType : null
+        } catch(error) {
             console.log(error)
             return null
         }

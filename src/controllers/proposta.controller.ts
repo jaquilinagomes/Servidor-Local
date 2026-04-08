@@ -103,7 +103,7 @@ export const PropostaController = {
         })
     },
 
-    async aceitarProposta(req: Request, res: Response) {
+    /* async aceitarProposta(req: Request, res: Response) {
         const { id } = req.params
         if (!id) {
             return res.status(400).json({
@@ -126,6 +126,7 @@ export const PropostaController = {
             data: result
         });
     },
+   */
 
     async delete(req: Request, res: Response) {
             const { id } = req.params

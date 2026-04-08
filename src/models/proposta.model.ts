@@ -1,3 +1,4 @@
+import type { RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
 import type { PropostaDBType } from "../utils/types.js";
 import { generateUUID } from "../utils/uuid.js";
@@ -88,7 +89,7 @@ async update(id: string, proposta: PropostaDBType) {
     }
 },
 
-async aceitarProposta(id: string) {
+/* async aceitarProposta(id: string) {
         try {
             const selectQuery = "SELECT * FROM tbl_proposta WHERE id = ?"
             const selectValue = [id]
@@ -113,6 +114,7 @@ async aceitarProposta(id: string) {
             return null;
         }
     },
+*/
 
 async delete(id: string) {
     try {
@@ -127,6 +129,33 @@ async delete(id: string) {
     } catch(error) {
         console.log(error)
         return null
+    }
+},
+
+async getByPrestacaoServico(id_prestacao_servico: string): Promise<PropostaDBType[] | null> {
+    try {
+        const [ rows ] = await db.execute<PropostaDBType[] & RowDataPacket[]>(
+            `SELECT * FROM tbl_propostas
+            WHERE tbl_propostas.id_prestacao_servico = ?`,
+
+            [id_prestacao_servico]
+        )
+
+        if (Array.isArray(rows) && rows.length === 0) return null
+        return Array.isArray(rows) ? rows : null
+    } catch(error) {
+        console.log(error)
+        return null
+    }
+},
+
+async acceptProposal(id: string) {
+    try {
+        const [ rows ] = await db.execute(
+            `UPDATE tbl_propostas`
+        )
+    } catch(error) {
+
     }
 }
 

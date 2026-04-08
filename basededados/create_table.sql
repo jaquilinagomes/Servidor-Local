@@ -104,4 +104,9 @@ DROP COLUMN `preco-hora`,
 ADD COLUMN preco_hora DOUBLE AFTER id_servico
 ;
 
-
+ALTER TABLE tbl_proposta
+ADD COLUMN id_prestador VARCHAR(255) NOT NULL,
+ADD CONSTRAINT fk_tbl_prestadores_proposta
+FOREIGN KEY (id_prestador)
+REFERENCES tbl_prestadores(id)
+;
