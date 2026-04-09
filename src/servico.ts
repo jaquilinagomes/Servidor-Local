@@ -1,10 +1,10 @@
-import { type ServicoType, type ResponseType, type servicoDBType } from "./utils/types.js";
+import { type ServicoType, type ResponseType, type servicoDBType, type ResponseServicoType } from "./utils/types.js";
 import db from "./lib/db.js";
 
 export let catalogoServicos: ServicoType[] = [];
 
 // Adicionar um novo serviço
-export function adicionarServico(servico: ServicoType): ResponseType {
+export function adicionarServico(servico: ServicoType): ResponseServicoType {
     if (!servico.nome || servico.precoHora <= 0)
         return ({
             status: false,

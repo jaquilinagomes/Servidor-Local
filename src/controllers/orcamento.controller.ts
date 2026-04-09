@@ -2,7 +2,7 @@ import { OrcamentoModel } from "../models/orcamento.model.js"
 import { PrestacaoServicoModel } from "../models/prestacao-servico.model.js"
 import { PrestadorModel } from "../models/prestador.model.js"
 import { PropostaModel } from "../models/proposta.model.js"
-import { EstadoProposta, type OrcamentoDBType, type PropostaDBType } from "../utils/types.js"
+import { EstadoProposta, type OrcamentoDBType, type PropostaDBType, type ResponseType } from "../utils/types.js"
 import type { Request, Response } from "express"
 
 export const OrcamentoController = {
@@ -41,7 +41,7 @@ export const OrcamentoController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Orcamento feito com sucesso",
             data: getAllOrcamentoResponse
         })
@@ -65,7 +65,7 @@ export const OrcamentoController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Prestador encontrado com sucesso!",
             data: getOrcamentoResponse
         })
@@ -105,30 +105,6 @@ export const OrcamentoController = {
         })
     },
 
-    /* async calcularOrcamento(req: Request, res: Response) {
-    const { id } = req.params
-    if (!id) {
-        return res.status(400).json({
-            status: "error",
-            message: "ID obrigatório",
-            data: null
-        });
-    }
-    const result = await OrcamentoModel.calcularOrcamento(id as string)
-    if (!result) {
-        return res.status(400).json({
-            status: "error",
-            message: "Dados de orçamento inválidos",
-            data: null
-        });
-    }
-    return res.status(200).json({
-        status: "success",
-        message: "Orçamento calculado com sucesso",
-        data: result
-    });
-},
-*/
     async delete(req: Request, res: Response) {
         const { id } = req.params
 
@@ -161,45 +137,50 @@ export const OrcamentoController = {
         const { id } = req.params
 
         if (!id) {
-            return res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "ID obrigatório",
                 data: null
-            })
+            }
+            return res.status(400).json(response)
         }
+
         // then calculate budget
 
         // to fetch proposals we need to fetch prestacao_servico first
         const prestacaoServico = await PrestacaoServicoModel.getByIdOrcamento(id as string)
 
         if (!prestacaoServico) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Prestação de serviço não encontrado",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
 
         // fetch all proposal
         const proposals = await PropostaModel.getByPrestacaoServico(prestacaoServico.id)
 
         if (!proposals) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Proposta não encontrada",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
 
         //find accepted proposal
         const acceptedProposal: PropostaDBType | undefined = proposals.find((proposal) => proposal.estado === EstadoProposta.ACEITE)
 
         if (!acceptedProposal) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Ainda nenhuma proposta foi aceite",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
 
         const preco_hora = acceptedProposal.preco_hora
@@ -209,11 +190,12 @@ export const OrcamentoController = {
         const prestador = await PrestadorModel.get(acceptedProposal.id_prestador)
 
         if (!prestador) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Prestador não encontrado",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
 
         const urgencyTax = prestador.taxa_urgencia
@@ -236,17 +218,19 @@ export const OrcamentoController = {
         const updateOrcamentoResponse = await OrcamentoModel.updateBudget(id as string, subtotal)
 
         if (!updateOrcamentoResponse) {
-            return res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Erro ao calcular orcamento",
                 data: null
-            })
+            }
+            return res.status(400).json(response)
         }
 
-        return res.status(200).json({
-            status: "sucess",
-            message: "Orcamento calculado e atualizado com sucesso",
-            data: updateOrcamentoResponse
-        })
+            const response: ResponseType<OrcamentoDBType> = {
+                status: "success",
+                message: "Orcamento calculado e atualizado com sucesso",
+                data: updateOrcamentoResponse
+        }
+        return res.status(200).json(response)
     }
 }

@@ -38,7 +38,7 @@ export const PropostaController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Serviços buscado com sucesso",
             data: getAllPropostaResponse
         })
@@ -62,7 +62,7 @@ export const PropostaController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Proposta efetuado com sucesso",
             data: getPropostaResponse
         })

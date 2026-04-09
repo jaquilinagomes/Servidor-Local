@@ -5,7 +5,7 @@ export interface PedidoServicoType {
     urgente: boolean;
 }
 
-export interface ResponseType {
+export interface ResponseServicoType {
     status: boolean,
     message: string,
     data: ServicoType | null,
@@ -53,7 +53,6 @@ export interface userDBType {
     enabled: boolean,
     created_at: string,
     updated_at: string
-
 }
 
 export interface servicoDBType {
@@ -75,6 +74,19 @@ export interface OrcamentoDBType {
     updated_at: string
 }
 
+export enum EstadoProposta {
+    PENDENTE = "pendente",
+    ACEITE = "aceite",
+    CANCELADO = "cancelado"
+}
+
+export enum EstadoPrestacaoServico {
+    PENDENTE = "pendente",
+    EM_PROGRESSO = "em_progresso",
+    FINALIZADO = "finalizado",
+    CANCELADO = "cancelado"
+}
+
 export interface PropostaDBType {
     id: string,
     id_prestacao_servico: string,
@@ -94,23 +106,28 @@ export interface PrestacaoServicoDBType {
     horas_estimadas: number,
     id_prestador: string,
     id_servico: string,
-    preco_hora: number,
+    preco_hora: number, 
     estado: EstadoPrestacaoServico,
     id_orcamento: string,
+    id_utilizador: string,  
+    urgente: boolean,
     enabled: boolean,
     created_at: string,
     updated_at: string
 }
 
-export enum EstadoProposta {
-    PENDENTE = "pendente",
-    ACEITE = "aceite",
-    CANCELADO = "cancelado"
+export interface PrestacaoServicoDetalhadoType {
+    id: string,
+    nome_utilizador: string,
+    email_utilizador: string,
+    nome_servico: string,
+    descricao: string,
+    data_pedido: string,
+    urgente: boolean
 }
 
-export enum EstadoPrestacaoServico {
-    PENDENTE = "pendente",
-    EM_PROGRESSO = "em_progresso",
-    FINALIZADO = "finalizado",
-    CANCELADO = "cancelado"
+export interface ResponseType<T> {
+    status: "success" | "error",
+    message: string,
+    data: T | null
 }

@@ -153,7 +153,7 @@ app.get("/get-user-by-id", async (req: Request, res: Response) => {
         }
 
         res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Utilizador encontrado",
             data: getUserByIdResponse
         })
@@ -212,7 +212,7 @@ app.put("/update-user", async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({
-        status: "sucess",
+        status: "success",
         message: "Usuário atualizado com sucesso",
         data: updateUserResponse
     })
@@ -241,7 +241,7 @@ app.delete("/delete-user-by-id/:id", async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({
-        status: "sucess",
+        status: "success",
         message: "Usuário apagado com sucesso",
         data: deleteUserResponse
     })
@@ -272,7 +272,7 @@ app.post("/create-service", async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-        status: "sucess",
+        status: "success",
             message: "serviço criado com sucesso",
             data: createServiceResponse
     })
@@ -301,7 +301,7 @@ app.get("/get-service-by-id/:id", async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-        status: "sucess",
+        status: "success",
         message: "serviço encontrado",
         data: getServiceByIdResponse
     })
@@ -319,7 +319,7 @@ app.get("/get-all-services", async (req: Request, res: Response) => {
     }
 
     res.status(200).json({
-        status: "sucess",
+        status: "success",
         message: "serviços encontrados",
         data: getAllServicesResponse
     })
@@ -355,7 +355,7 @@ app.put("/update-service-by-id/:id", async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({
-        status: "sucess",
+        status: "success",
         message: "serviço atualizado com sucesso",
         data: updateServiceResponse
     })
@@ -383,7 +383,7 @@ app.delete("/delete-service-by-id/:id", async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({
-        status: "sucess",
+        status: "success",
         message: "Serviço apagado com sucesso",
         data: deleteServiceResponse
     })

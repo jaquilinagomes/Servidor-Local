@@ -38,7 +38,7 @@ async get(req: Request, res: Response) {
             }
     
             res.status(200).json({
-                status: "sucess",
+                status: "success",
                 message: "Utilizador encontrado",
                 data: getUserByIdResponse
             })
@@ -81,7 +81,7 @@ async update(req: Request, res: Response) {
         }
     
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Usuário atualizado com sucesso",
             data: updateUserResponse
         })
@@ -116,7 +116,7 @@ async updatePassword(req: Request, res: Response) {
 
     const updatePasswordResponse = await UserModel.updatePassword (id as string, passwordNova as string)
     res.status(200).json({
-        status: "sucess",
+        status: "success",
         message:"Senha atualizada com sucesso",
         data: updatePasswordResponse
     })
@@ -158,7 +158,7 @@ async login(req: Request, res: Response) {
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {expiresIn: "1h"})
 
     return res.status(200).json({
-        status: "Sucess",
+        status: "Success",
         message: "Login realizado com sucesso",
         data: {
             token,
@@ -189,7 +189,7 @@ async delete(req: Request, res: Response) {
     }
 
     return res.status(200).json({
-        status: "sucess",
+        status: "success",
         message: "Usuário apagado com sucesso",
         data: deleteUserResponse
     }) 

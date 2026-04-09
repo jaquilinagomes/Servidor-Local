@@ -23,7 +23,7 @@ export const ServicoController = {
             })
         }
         return res.status(200).json({
-            status:"sucess",
+            status:"success",
             message:"Servico criado com sucesso",
             data: createServiceResponse
         })
@@ -40,7 +40,7 @@ export const ServicoController = {
             })
         }
         return res.status(200).json({
-            status:"sucess",
+            status:"success",
             message: "Serviços buscados com sucesso",
             data: getAllServicesResponse
         })
@@ -65,7 +65,7 @@ export const ServicoController = {
             })
         }
         return res.status(200).json({
-            status:"sucess",
+            status:"success",
             message:"Serviço encontrado com sucesso",
             data: getServiceResponse
         })
@@ -101,7 +101,7 @@ export const ServicoController = {
             }
         
             return res.status(200).json({
-                status: "sucess",
+                status: "success",
                 message: "serviço atualizado com sucesso",
                 data: updateServiceResponse
             })
@@ -129,7 +129,7 @@ export const ServicoController = {
                 }
             
                 return res.status(200).json({
-                    status: "sucess",
+                    status: "success",
                     message: "Serviço apagado com sucesso",
                     data: deleteServiceResponse
                 })

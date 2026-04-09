@@ -40,7 +40,7 @@ export const prestacaoServicoController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Prestacao de servico feito com sucesso",
             data: getAllPrestacaoServicoResponse
         })
@@ -65,7 +65,7 @@ export const prestacaoServicoController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Prestacao de serviço encontrado com sucesso!",
             data: getPrestacaoServicoResponse
         })
@@ -106,8 +106,7 @@ export const prestacaoServicoController = {
     },
     async delete(req: Request, res: Response) {
             const { id } = req.params
-    
-    
+
             if (!id) {
                 return res.status(400).json({
                     status: "error",

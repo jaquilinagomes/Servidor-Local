@@ -39,7 +39,7 @@ export const prestadorController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Prestador buscado com sucesso",
             data: getAllPrestadorResponse
         })
@@ -64,7 +64,7 @@ export const prestadorController = {
             })
         }
         return res.status(200).json({
-            status: "sucess",
+            status: "success",
             message: "Prestador encontrado com sucesso!",
             data: getServiceResponse
         })
