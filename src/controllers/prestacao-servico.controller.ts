@@ -1,4 +1,4 @@
-import type { PrestacaoServicoDBType } from "../utils/types.js"
+import type { PrestacaoServicoDBType, PrestacaoServicoDetalhadoType, ResponseType } from "../utils/types.js"
 import { PrestacaoServicoModel } from "../models/prestacao-servico.model.js" 
 import type { Request, Response } from "express"
 
@@ -14,36 +14,42 @@ export const prestacaoServicoController = {
                 data: null
             })
         }
-        const createPrestacaoServicoResponse = await PrestacaoServicoModel.create(newPrestacaoServico)
+        const createPrestacaoServicoResponse: PrestacaoServicoDBType | null = await PrestacaoServicoModel.create(newPrestacaoServico)
 
         if (createPrestacaoServicoResponse === null) {
-            return res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Erro ao pedir orcamento",
                 data: null
-            })
+            }
+            return res.status(400).json(response)
         }
-        res.status(200).json({
+
+        const response: ResponseType<PrestacaoServicoDBType> = {
             status: "success",
             message: "Pedido de orcamento feito com sucesso",
             data: createPrestacaoServicoResponse
-        })
+        }
+        return res.status(200).json(response)
     },
     
     async getAll(req: Request, res: Response) {
-        const getAllPrestacaoServicoResponse = await PrestacaoServicoModel.getAll()
+        const getAllPrestacaoServicoResponse: PrestacaoServicoDBType[] | null = await PrestacaoServicoModel.getAll()
         if (!getAllPrestacaoServicoResponse) {
-            return res.status(500).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Erro ao buscar servidor",
                 data: null
-            })
+            }
+            return res.status(500).json(response)
         }
-        return res.status(200).json({
+
+        const response: ResponseType<PrestacaoServicoDBType[]> = {
             status: "success",
             message: "Prestacao de servico feito com sucesso",
             data: getAllPrestacaoServicoResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async get(req: Request, res: Response) {
@@ -55,21 +61,25 @@ export const prestacaoServicoController = {
                 data: null
             })
         }
-        const getPrestacaoServicoResponse = await PrestacaoServicoModel.get(id as string)
+        const getPrestacaoServicoResponse: PrestacaoServicoDBType | null = await PrestacaoServicoModel.get(id as string)
 
         if (!getPrestacaoServicoResponse) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Prestação de servico nao encontrado!",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
-        return res.status(200).json({
+
+        const response: ResponseType<PrestacaoServicoDBType> = {
             status: "success",
             message: "Prestacao de serviço encontrado com sucesso!",
             data: getPrestacaoServicoResponse
-        })
+        }
+        return res.status(200).json(response)
     },
+
     async update(req: Request, res: Response) {
         const { id } = req.params
 
@@ -115,19 +125,50 @@ export const prestacaoServicoController = {
                 })
             }
     
-            const deletePrestacaoServicoResponse = await PrestacaoServicoModel.delete(id as string)
+            const deletePrestacaoServicoResponse: PrestacaoServicoDBType | null = await PrestacaoServicoModel.delete(id as string)
     
             if (!deletePrestacaoServicoResponse) {
-                return res.status(400).json({
+                const response: ResponseType<null> = {
                     status: "error",
                     message: "Erro ao eliminar prestador de serviço!",
                     data: null
-                })
+                }
+                return res.status(400).json(response)
             }
-            return res.status(200).json({
+
+            const response: ResponseType<PrestacaoServicoDBType> = {
                 status: "success",
                 message: "Prestador de serviço criado com sucesso",
                 data: deletePrestacaoServicoResponse
-            })
+            }
+            return res.status(200).json(response)
+        },
+
+    async getAllPrestacaoServicoDetalhada(req: Request, res: Response) {
+        const { limit, offset } = req.query as {limit: string, offset: string}
+
+        let LIMIT = 10
+        let OFFSET = 0
+
+        if (limit && parseInt(limit) > 0) LIMIT = parseInt(limit)
+        if (offset && parseInt(offset) > 0) OFFSET = parseInt(offset)
+
+        const getAllPrestacaoServicosResponse: PrestacaoServicoDetalhadoType[] | null = await PrestacaoServicoModel.getAllPrestacaoServicoDetalhada(LIMIT, OFFSET)
+
+        if (!getAllPrestacaoServicosResponse) {
+            const response: ResponseType<null> = {
+                status: "error",
+                message: "Erro ao buscar prestacoes de servico",
+                data: null
+            }
+            return res.status(500).json(response)
         }
+
+        const response: ResponseType<PrestacaoServicoDetalhadoType[]> = {
+            status: "success",
+            message: "Prestacoes de servico buscadas com sucesso",
+            data: getAllPrestacaoServicosResponse
+        }
+        return res.status(200).json(response)
     }
+}

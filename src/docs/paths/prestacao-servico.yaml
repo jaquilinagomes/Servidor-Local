@@ -156,3 +156,36 @@ paths:
               schema:
                 type: object
                 $ref: "#/components/schemas/PrestacaoServicoResponseError"
+
+  /prestacao-servico/get-all-detalhado:
+    get:
+      summary: Buscar todas as prestações de serviço detalhada
+      tags:
+        - Prestacao de Servico
+      description: Retorna uma lista de todas as prestações de serviço específico detalhadas
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "10"
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "0"
+      responses:
+        "200":
+          description: Prestação de serviço detalhada encontrada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+        "500":
+          description: Erro ao buscar prestação de serviço detalhada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrestacaoServicoResponseError"

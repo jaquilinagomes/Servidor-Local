@@ -11,64 +11,77 @@ export const OrcamentoController = {
         if (!newOrcamento) {
             return res.status(400).json({
                 status: "error",
-                message: "Orcamento de servico invalidos",
+                message: "Dados de orcamento invalidos",
                 data: null
             })
         }
-        const createOrcamentoResponse = await OrcamentoModel.create(newOrcamento)
+        const createOrcamentoResponse: OrcamentoDBType | null = await OrcamentoModel.create(newOrcamento)
 
         if (createOrcamentoResponse === null) {
-            return res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
-                message: "Erro ao pedir orcamento",
+                message: "Erro ao criar orcamento",
                 data: null
-            })
+            }
+            return res.status(400).json(response)
         }
-        res.status(200).json({
+
+        const response: ResponseType<OrcamentoDBType> = {
             status: "success",
-            message: "Pedido de orcamento feito com sucesso",
+            message: "Orcamento criado com sucesso",
             data: createOrcamentoResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async getAll(req: Request, res: Response) {
-        const getAllOrcamentoResponse = await OrcamentoModel.getAll()
+        const getAllOrcamentoResponse: OrcamentoDBType[] | null = await OrcamentoModel.getAll()
+
         if (!getAllOrcamentoResponse) {
-            return res.status(500).json({
+            const response: ResponseType<null> = {
                 status: "error",
-                message: "Erro ao buscar servidor",
+                message: "Erro ao buscar orcamentos",
                 data: null
-            })
+            }
+            return res.status(500).json(response)
         }
-        return res.status(200).json({
+
+        const response: ResponseType<OrcamentoDBType[]> = {
             status: "success",
-            message: "Orcamento feito com sucesso",
+            message: "Orcamento criado com sucesso",
             data: getAllOrcamentoResponse
-        })
+        }
+
+        return res.status(200).json(response)
     },
+
     async get(req: Request, res: Response) {
         const id = req.params.id
+
         if (!id) {
             return res.status(400).json({
                 status: "error",
-                message: "Id de prestador nao encontrado!",
+                message: "Id de orcamento nao encontrado!",
                 data: null
             })
         }
-        const getOrcamentoResponse = await OrcamentoModel.get(id as string)
+        const getOrcamentoResponse: OrcamentoDBType | null = await OrcamentoModel.get(id as string)
 
         if (!getOrcamentoResponse) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status: "error",
-                message: "Prestador nao encontrado!",
+                message: "Orcamento nao encontrado!",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
-        return res.status(200).json({
+
+        const response: ResponseType<OrcamentoDBType> = {
             status: "success",
-            message: "Prestador encontrado com sucesso!",
+            message: "Orcamento encontrado com sucesso!",
             data: getOrcamentoResponse
-        })
+        }
+        return res.status(200).json(response)  
     },
 
     async update(req: Request, res: Response) {
@@ -117,20 +130,23 @@ export const OrcamentoController = {
             })
         }
 
-        const deleteOrcamentoResponse = await OrcamentoModel.delete(id as string)
+        const deleteOrcamentoResponse: OrcamentoDBType | null = await OrcamentoModel.delete(id as string)
 
         if (!deleteOrcamentoResponse) {
-            return res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Erro ao eliminar orcamento!",
                 data: null
-            })
+            }
+            return res.status(400).json(response)
         }
-        return res.status(200).json({
+
+        const response: ResponseType<OrcamentoDBType> = {
             status: "success",
             message: "Orcamento criado com sucesso",
             data: deleteOrcamentoResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async calculateBudget(req: Request, res: Response) {

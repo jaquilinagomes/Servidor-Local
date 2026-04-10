@@ -1,12 +1,13 @@
+import type { FieldPacket, RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
 import type { OrcamentoDBType } from "../utils/types.js";
 import { generateUUID } from "../utils/uuid.js";
 
 export const OrcamentoModel = {
-    async create(newOrcamento: OrcamentoDBType) {
+    async create(newOrcamento: OrcamentoDBType): Promise<OrcamentoDBType | null> {
         try {
 
-            const [rows] = await db.execute(
+            const [rows] = await db.execute<OrcamentoDBType & RowDataPacket[]>(
                 `INSERT INTO tbl_prestador
             ( id, total, id_utilizadores, enabled, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?,?)`,
@@ -30,11 +31,11 @@ export const OrcamentoModel = {
         }
     },
 
-    async getAll() {
+    async getAll(): Promise<OrcamentoDBType[] | null> {
         try {
             const query = `SELECT * FROM tbl_orcamento`
 
-            const rows = await db.execute(query)
+            const rows = await db.execute<OrcamentoDBType[] & RowDataPacket[]>(query)
 
             return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
 
@@ -44,13 +45,13 @@ export const OrcamentoModel = {
         }
     },
 
-    async get(id: string) {
+    async get(id: string): Promise<OrcamentoDBType | null> {
         try {
             const query = `SELECT * FROM tbl_orcamento WHERE id = ?`
 
             const value = [id]
 
-            const rows = await db.execute(query, value)
+            const rows = await db.execute<OrcamentoDBType & RowDataPacket[]>(query, value)
 
             return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
 
@@ -89,11 +90,11 @@ export const OrcamentoModel = {
         }
     },
 
-    async delete(id: string) {
+    async delete(id: string): Promise<OrcamentoDBType | null> {
         try {
             const query = `DELETE FROM tbl_orcamento WHERE id=?`
             const value = [id]
-            const rows: any = await db.execute(query, value)
+            const rows: any = await db.execute<OrcamentoDBType & RowDataPacket[]>(query, value)
             return rows[0]?.affectedRows === 0 ? null : rows
 
         } catch (error) {

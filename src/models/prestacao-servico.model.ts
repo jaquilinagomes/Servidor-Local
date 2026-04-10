@@ -4,10 +4,10 @@ import type { PrestacaoServicoDBType, PrestacaoServicoDetalhadoType} from "../ut
 import { generateUUID } from "../utils/uuid.js";
 
 export const PrestacaoServicoModel = {
-    async create(newPrestacaoServico: PrestacaoServicoDBType) {
+    async create(newPrestacaoServico: PrestacaoServicoDBType): Promise<PrestacaoServicoDBType | null> {
         try {
 
-            const [rows] = await db.execute(
+            const [rows] = await db.execute<PrestacaoServicoDBType & RowDataPacket[]>(
                 `INSERT INTO tbl_prestador_servico
             ( id, designacao, subtotal, horas_estimadas, id_prestador, id_servicos, preco_hora, estado, id_orcamento, enabled, created_at, updated_at)
             VALUES (?, ?, ?, ?, ?, ?, ?,?)`,
@@ -39,11 +39,11 @@ export const PrestacaoServicoModel = {
         }
     },
 
-    async getAll() {
+    async getAll(): Promise<PrestacaoServicoDBType[] | null> {
         try {
             const query = `SELECT * FROM tbl_prestador_de_servico`
 
-            const rows = await db.execute(query)
+            const rows = await db.execute<PrestacaoServicoDBType[] & RowDataPacket[]>(query)
 
             return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
 
@@ -54,13 +54,13 @@ export const PrestacaoServicoModel = {
 
     },
 
-    async get(id: string) {
+    async get(id: string): Promise<PrestacaoServicoDBType | null> {
         try {
             const query = `SELECT * FROM tbl_prestador_de_servico WHERE id = ?`
 
             const value = [id]
 
-            const rows = await db.execute(query, value)
+            const rows = await db.execute<PrestacaoServicoDBType & RowDataPacket[]>(query, value)
 
             return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
 
@@ -103,13 +103,13 @@ export const PrestacaoServicoModel = {
         }
     },
     
-    async delete(id: string) {
+    async delete(id: string): Promise<PrestacaoServicoDBType | null> {
         try {
             const query = `DELETE FROM tbl_prestador_de_servico WHERE id=?`
 
             const value = [id]
 
-            const rows: any = await db.execute(query, value)
+            const rows: any = await db.execute<PrestacaoServicoDBType & RowDataPacket[]>(query, value)
             
             return rows[0]?.affectedRows === 0 ? null : rows
 
@@ -159,9 +159,9 @@ export const PrestacaoServicoModel = {
                     offset.toString()
                 ]
             )
+
             if (Array.isArray(rows) && rows.length === 0) return null
             return Array.isArray(rows) ? rows as PrestacaoServicoDetalhadoType[] : null
-        
         } catch (error) {
             console.log(error)
             return null
