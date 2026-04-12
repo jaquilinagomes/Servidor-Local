@@ -1,3 +1,4 @@
+import type { RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
 import { formatDateDDMMYYYY } from "../utils/date.js";
 import { hashPassword } from "../utils/password.js";
@@ -6,9 +7,9 @@ import { generateUUID } from "../utils/uuid.js";
 
 
 export const UserModel = {
-    async create(user: userDBType) {
+    async create(user: userDBType): Promise<userDBType | null> {
         try {
-        const [rows] = await db.execute(
+        const [rows] = await db.execute<userDBType & RowDataPacket[]>(
             `INSERT INTO tbl_utilizadores VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
 
             [
@@ -35,15 +36,15 @@ export const UserModel = {
     }
 },
 
-async getAll() {
-    const [rows] = await db.execute("SELECT * FROM tbl_utilizadores")
+async getAll(): Promise<userDBType[] | null> {
+    const [rows] = await db.execute<userDBType[] & RowDataPacket[]>("SELECT * FROM tbl_utilizadores")
 
     return rows
 },
 
-async get(id: string) {
+async get(id: string): Promise<userDBType | null>{
     try {
-        const [rows] = await db.execute(
+        const [rows] = await db.execute<userDBType & RowDataPacket[]>(
             `SELECT * FROM tbl_utilizadores 
         WHERE tbl_utilizadores.id = ?`,
 
@@ -60,7 +61,7 @@ async get(id: string) {
 
 async getByEmail(email: string): Promise<userDBType | null> {
     try {
-        const [rows] = await db.execute(
+        const [rows] = await db.execute<userDBType & RowDataPacket[]>(
             `SELECT * FROM tbl_utilizadores
             WHERE tbl_utilizadores.email = ?`,
             [email]
@@ -129,7 +130,7 @@ async updatePassword(id: string, password: string) {
     }
 },
 
-async delete(id: string) {
+async delete(id: string): Promise<userDBType | null> {
     try {
         const query = `
         DELETE FROM tbl_utilizadores
@@ -137,7 +138,7 @@ async delete(id: string) {
         `
         const values = [id]
 
-        const rows: any = await db.execute(query, values)
+        const rows: any = await db.execute<userDBType & RowDataPacket[]>(query, values)
         return rows[0]?.affectedRows === 0 ? null : rows
 
     } catch(error) {

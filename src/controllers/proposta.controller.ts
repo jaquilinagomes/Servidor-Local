@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { PropostaModel } from "../models/proposta.model.js";
-import type { PropostaDBType } from "../utils/types.js";
+import type { PropostaDBType, ResponseType, userDBType } from "../utils/types.js";
 
 
 export const PropostaController = {
@@ -13,36 +13,42 @@ export const PropostaController = {
                 data: null
             })
         }
-        const createPropostaResponse = await PropostaModel.create(newProposta)
+        const createPropostaResponse: PropostaDBType | null = await PropostaModel.create(newProposta)
 
         if (createPropostaResponse === null) {
-            return res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Erro ao criar Proposta",
                 data: null
-            })
+            }
+            return res.status(400).json(response)
         }
-        res.status(200).json({
+        const response: ResponseType<PropostaDBType> = {
             status: "success",
             message: "Proposta criado com sucesso",
             data: createPropostaResponse
-        })
+        }
+        return res.status(200).json(response)
     },
+
     async getAll(req: Request, res: Response) {
-        const getAllPropostaResponse = await PropostaModel.getAll()
+        const getAllPropostaResponse: PropostaDBType[] | null = await PropostaModel.getAll()
         if (!getAllPropostaResponse) {
-            return res.status(500).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Erro ao buscar servidor",
                 data: null
-            })
+            }
+            return res.status(500).json(response)
         }
-        return res.status(200).json({
+        const response: ResponseType<PropostaDBType[]> = {
             status: "success",
             message: "Serviços buscado com sucesso",
             data: getAllPropostaResponse
-        })
+        }
+        return res.status(200).json(response)
     },
+
     async get(req: Request, res: Response) {
         const id = req.params.id
         if (!id) {
@@ -52,20 +58,22 @@ export const PropostaController = {
                 data: null
             })
         }
-        const getPropostaResponse = await PropostaModel.get(id as string)
+        const getPropostaResponse: PropostaDBType | null = await PropostaModel.get(id as string)
 
         if (!getPropostaResponse) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Proposta nao efetuado!",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
-        return res.status(200).json({
+        const response: ResponseType<PropostaDBType> = {
             status: "success",
             message: "Proposta efetuado com sucesso",
             data: getPropostaResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async update(req: Request, res: Response) {
@@ -139,19 +147,21 @@ export const PropostaController = {
                 })
             }
     
-            const deletePropostaResponse = await PropostaModel.delete(id as string)
+            const deletePropostaResponse: PropostaDBType | null = await PropostaModel.delete(id as string)
     
             if (!deletePropostaResponse) {
-                return res.status(400).json({
+                const response: ResponseType<null> = {
                     status: "error",
                     message: "Erro ao eliminar proposta!",
                     data: null
-                })
+                }
+                return res.status(400).json(response)
             }
-            return res.status(200).json({
+            const response: ResponseType<PropostaDBType> = {
                 status: "success",
                 message: "Proposta eliminado com sucesso",
                 data: deletePropostaResponse
-            })
+            }
+            return res.status(200).json(response)
         }
     }

@@ -1,12 +1,13 @@
 import type { PrestadorDBType } from "../utils/types.js";
 import db from "../lib/db.js";
 import { generateUUID } from "../utils/uuid.js";
+import type { RowDataPacket } from "mysql2";
 
 
 export const PrestadorModel = {
-    async create(prestador: PrestadorDBType) {
+    async create(prestador: PrestadorDBType): Promise<PrestadorDBType | null> {
         try {
-        const [ rows ] = await db.execute(
+        const [ rows ] = await db.execute<PrestadorDBType & RowDataPacket[]>(
             `INSERT INTO tbl_prestadores
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 
@@ -31,8 +32,8 @@ export const PrestadorModel = {
 
     },
 
-    async getAll() {
-        const [ rows ] = await db.execute(
+    async getAll(): Promise<PrestadorDBType[] | null> {
+        const [ rows ] = await db.execute<PrestadorDBType[] & RowDataPacket[]>(
             `SELECT * FROM tbl_prestadores`)
 
             return rows
@@ -40,7 +41,7 @@ export const PrestadorModel = {
 
     async get(id: string): Promise<PrestadorDBType | null> {
         try {
-            const [ rows ] = await db.execute(
+            const [ rows ] = await db.execute<PrestadorDBType & RowDataPacket[]>(
                 `SELECT * FROM tbl-prestadores
                 WHERE tbl_prestadores.id = ?`,
 
@@ -86,9 +87,9 @@ async update(id: string, prestador: PrestadorDBType) {
     }
 },
 
-async delete(id: string) {
+async delete(id: string): Promise<PrestadorDBType | null> {
     try {
-        const rows: any = await db.execute(
+        const rows: any = await db.execute<PrestadorDBType & RowDataPacket[]>(
             `DELETE FROM tbl_prestadores
             WHEREV id = ?`,
 

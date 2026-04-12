@@ -6,10 +6,10 @@ import { generateUUID } from "../utils/uuid.js";
 
 
 export const PropostaModel = {
-    async create(proposta: PropostaDBType) {
+    async create(proposta: PropostaDBType): Promise<PropostaDBType | null> {
         try {
 
-    const [rows] = await db.execute(
+    const [rows] = await db.execute<PropostaDBType & RowDataPacket[]>(
     `INSERT INTO tbl_proposta
     ( id, id_prestacao_servico, preco_hora, horas_estimadas, estado, enabled, created_at, updated_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -35,22 +35,22 @@ export const PropostaModel = {
 }
 },
 
-async getAll() {
-    const [rows] = await db.execute("SELECT * FROM tbl_servicos");
+async getAll(): Promise<PropostaDBType[] | null> {
+    const [rows] = await db.execute<PropostaDBType[] & RowDataPacket[]>("SELECT * FROM tbl_servicos");
 
     return rows;
 },
 
-async get(id: string) {
+async get(id: string): Promise<PropostaDBType | null> {
     try {
-    const [rows] = await db.execute(
+    const [rows] = await db.execute<PropostaDBType & RowDataPacket[]>(
  "SELECT * FROM tbl_propostas WHERE id = ?",
 
     [id]
 );
 
     if (Array.isArray(rows) && rows.length === 0) return null
-    return Array.isArray(rows) ? rows[0] : null;
+    return Array.isArray(rows) ? rows[0] as PropostaDBType : null;
 } catch(error) {
     console.log(error)
     return null
@@ -89,9 +89,9 @@ async update(id: string, proposta: PropostaDBType) {
     }
 },
 
-async delete(id: string) {
+async delete(id: string): Promise<PropostaDBType | null> {
     try {
-        const rows:any = await db.execute(
+        const rows:any = await db.execute<PropostaDBType & RowDataPacket[]>(
             `DELETE FRom tbl_propostas
             WHERE id = ?`,
 

@@ -10,7 +10,7 @@ export const OrcamentoModel = {
             const [rows] = await db.execute<OrcamentoDBType & RowDataPacket[]>(
                 `INSERT INTO tbl_prestador
             ( id, total, id_utilizadores, enabled, created_at, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?,?)`,
+            VALUES (?, ?, ?, ?, ?, ?)`,
                 [
                     generateUUID(),
                     newOrcamento.total,

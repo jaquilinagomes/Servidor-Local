@@ -1,8 +1,9 @@
+import type { RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
 import type { servicoDBType } from "../utils/types.js";
 
 export const ServiceModel = {
-    async create(newService: servicoDBType) {
+    async create(newService: servicoDBType): Promise<servicoDBType | null> {
         try {
         const query = `INSERT INTO tbl_servicos VALUES (?, ?, ?, ?, ?, ?, ?)`
 
@@ -16,7 +17,7 @@ export const ServiceModel = {
             new Date()
         ]
 
-        const rows = await db.execute(query, values)
+        const [rows] = await db.execute<servicoDBType & RowDataPacket[]>(query, values)
 
         return rows
     } catch (error) {
@@ -25,12 +26,12 @@ export const ServiceModel = {
     }
     },
 
-    async getAll() {
+    async getAll(): Promise<servicoDBType[] | null> {
         try {
 
         const query = `SELECT * FROM tbl_servicos`
 
-        const rows = await db.execute(query)
+        const rows = await db.execute<servicoDBType[] & RowDataPacket[]>(query)
 
         return Array.isArray(rows) && rows.length > 0 ? rows[0] : []
 
@@ -40,13 +41,13 @@ export const ServiceModel = {
     }
     },
 
-    async get(id: string) {
+    async get(id: string): Promise<servicoDBType | null> {
         try {
         const query = `SELECT * FROM tbl_servicos WHERE id = ?`
 
         const values = [id]
 
-        const rows = await db.execute(query, values)
+        const rows = await db.execute<servicoDBType & RowDataPacket[]>(query, values)
 
         return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
 
@@ -87,13 +88,13 @@ export const ServiceModel = {
     }
     },
 
-    async delete(id: string) {
+    async delete(id: string): Promise<servicoDBType | null> {
         try {
         const query = `DELETE FROM tbl_servicos WHERE id=?;`
 
         const value = [id]
 
-        const rows: any = await db.execute(query, value)
+        const rows: any = await db.execute<servicoDBType & RowDataPacket[]>(query, value)
 
         return rows[0]?.affectedRows === 0 ? null : rows
         

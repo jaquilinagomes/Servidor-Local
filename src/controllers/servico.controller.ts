@@ -1,5 +1,5 @@
 import { ServiceModel } from "../models/servico.model.js";
-import type { servicoDBType } from "../utils/types.js";
+import type { ResponseType, servicoDBType } from "../utils/types.js";
 import type { Request, Response } from "express";
 
 export const ServicoController = {
@@ -13,37 +13,41 @@ export const ServicoController = {
                 data: null
             })
         }
-        const createServiceResponse = await ServiceModel.create(newService)
+        const createServiceResponse: servicoDBType | null = await ServiceModel.create(newService)
 
         if (createServiceResponse === null) {
-            return res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message:"Erro ao criar serviço",
                 data:  null
-            })
+            }
+            return res.status(400).json(response)
         }
-        return res.status(200).json({
+        const response: ResponseType<servicoDBType> = {
             status:"success",
             message:"Servico criado com sucesso",
             data: createServiceResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async getAll(req: Request, res: Response) {
-        const getAllServicesResponse = await ServiceModel.getAll()
+        const getAllServicesResponse: servicoDBType[] | null = await ServiceModel.getAll()
         
         if (!getAllServicesResponse) {
-            return res.status(500).json({
+            const response: ResponseType<null> = {
                 status:"error",
                 message:"Erro ao criar serviços",
                 data: null
-            })
+            }
+            return res.status(500).json(response)
         }
-        return res.status(200).json({
+        const response: ResponseType<servicoDBType[]> = {
             status:"success",
             message: "Serviços buscados com sucesso",
             data: getAllServicesResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async get( req: Request, res: Response) {
@@ -55,20 +59,22 @@ export const ServicoController = {
                 data: null
             })
         }
-        const getServiceResponse = await ServiceModel.get(id as string)
+        const getServiceResponse: servicoDBType | null = await ServiceModel.get(id as string)
 
         if (!getServiceResponse) {
-            return res.status(404).json({
+            const response: ResponseType<null> = {
                 status:"error",
                 message:"Serviço não encontrado",
                 data: null
-            })
+            }
+            return res.status(404).json(response)
         }
-        return res.status(200).json({
+        const response: ResponseType<servicoDBType> = {
             status:"success",
             message:"Serviço encontrado com sucesso",
             data: getServiceResponse
-        })
+        }
+        return res.status(200).json(response)
     },
 
     async update(req: Request, res: Response) {
@@ -118,20 +124,21 @@ export const ServicoController = {
                     })
                 }
             
-                const deleteServiceResponse = await ServiceModel.delete(id as string)
+                const deleteServiceResponse: servicoDBType | null = await ServiceModel.delete(id as string)
             
                 if (!deleteServiceResponse) {
-                    return res.status(400).json({
+                    const response: ResponseType<null> = {
                         status: "error",
                         message: "Erro ao apagar serviço",
                         data: null
-                    })
+                    }
+                    return res.status(400).json(response)
                 }
-            
-                return res.status(200).json({
+                const response: ResponseType<servicoDBType> = {
                     status: "success",
                     message: "Serviço apagado com sucesso",
                     data: deleteServiceResponse
-                })
+                }
+                return res.status(200).json(response)
         }
 }
