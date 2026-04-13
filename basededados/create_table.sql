@@ -84,29 +84,76 @@ CREATE TABLE IF NOT EXISTS `tbl_proposta` (
 	`updated_at` DATETIME NOT NULL
 );
 
-ALTER TABLE tbl_proposta
-ADD CONSTRAINT fk_prestacao_servico_proposta
-FOREIGN KEY (id_prestacao_servico)
-REFERENCES tbl_prestacao_servico(id)
+CREATE TABLE IF NOT EXISTS `tbl_empresa` (
+	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
+    designacao VARCHAR(255) NOT NULL,
+    descricao VARCHAR(255),
+    localizacao VARCHAR(255) NOT NULL,
+    nif DOUBLE NOT NULL UNIQUE,
+    icone VARCHAR(255),
+    id_utilizador VARCHAR(255) NOT NULL,
+    enabled BOOLEAN NOT NULL,
+    created_at DATETIME NOT NULL,
+    updated_at DATETIME NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `tbl_categoria` (
+	id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT UNIQUE,
+	designacao VARCHAR(255) NOT NULL,
+	icone VARCHAR(255),
+	created_at DATETIME NOT NULL,
+	updated_at DATETIME NOT NULL
+);
+
+ALTER TABLE tbl_empresa
+	ADD CONSTRAINT fk_utilizador_empresa
+	FOREIGN KEY (id_utilizador)
+	REFERENCES tbl_utilizadores(id)
+;
+
+ALTER TABLE tbl_servicos
+	DROP COLUMN categoria,
+	ADD COLUMN id_categoria INTEGER AFTER descricao,
+	ADD CONSTRAINT fk_categoria_servico
+	FOREIGN KEY (id_categoria)
+	REFERENCES tbl_categoria(id)
 ;
 
 ALTER TABLE tbl_prestacao_servico
-ADD CONSTRAINT fk_prestadores_prestacao_servico
-FOREIGN KEY (id_prestador)
-REFERENCES tbl_prestadores(id),
-ADD CONSTRAINT fk_servico_prestacao_servico
-FOREIGN KEY (id_servico)
-REFERENCES tbl_servicos(id)
+ADD COLUMN urgente BOOLEAN AFTER id_orcamento
 ;
 
-ALTER TABLE tbl_prestacao_servico
-DROP COLUMN `preco-hora`,
-ADD COLUMN preco_hora DOUBLE AFTER id_servico
+ALTER TABLE tbl_prestadores
+ADD COLUMN id_empresa INTEGER AFTER disponivel
+;
+
+ALTER TABLE tbl_prestadores
+DROP COLUMN disponivel
 ;
 
 ALTER TABLE tbl_proposta
-ADD COLUMN id_prestador VARCHAR(255) NOT NULL,
-ADD CONSTRAINT fk_tbl_prestadores_proposta
-FOREIGN KEY (id_prestador)
-REFERENCES tbl_prestadores(id)
+	ADD CONSTRAINT fk_prestacao_servico_proposta
+	FOREIGN KEY (id_prestacao_servico)
+	REFERENCES tbl_prestacao_servico(id)
+;
+
+ALTER TABLE tbl_prestacao_servico
+	ADD CONSTRAINT fk_prestadores_prestacao_servico
+	FOREIGN KEY (id_prestador)
+	REFERENCES tbl_prestadores(id),
+	ADD CONSTRAINT fk_servico_prestacao_servico
+	FOREIGN KEY (id_servico)
+	REFERENCES tbl_servicos(id)
+;
+
+ALTER TABLE tbl_prestacao_servico
+	DROP COLUMN `preco-hora`,
+	ADD COLUMN preco_hora DOUBLE AFTER id_servico
+;
+
+ALTER TABLE tbl_proposta
+	ADD COLUMN id_prestador VARCHAR(255) NOT NULL,
+	ADD CONSTRAINT fk_tbl_prestadores_proposta
+	FOREIGN KEY (id_prestador)
+	REFERENCES tbl_prestadores(id)
 ;

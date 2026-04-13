@@ -1,53 +1,78 @@
 import { UserModel } from "../models/users.model.js";
 import { comparePassword } from "../utils/password.js";
-import type { userDBType } from "../utils/types.js";
+import type { ResponseType, userDBType } from "../utils/types.js";
 import type { Request, Response } from "express";
 import  jwt  from "jsonwebtoken";
 
 export const UserController = {
     async create(req: Request, res: Response) {
-        const user: userDBType = req.body;
-        
-            if (!user) {
-                return res.status(400).json({
-                    error: "utilizador não encontrado!"
-                });
-            }
-            const createUserResponse = await UserModel.create(user);
-        
-            res.json(createUserResponse);
-},
+        const newUser: userDBType = req.body
+
+        if (!newUser) {
+            return res.status(400).json({
+                status: "error",
+                message: "Dados de utilizador inválidos",
+                data: null,
+            })
+        }
+
+        console.log(newUser)
+
+        const createUserResponse: userDBType | null = await UserModel.create(newUser)
+
+        const response: ResponseType<userDBType> = {
+            status: "success",
+            message: "Utilizador criado com sucesso",
+            data: createUserResponse,
+        }
+        return res.status(201).json(response)
+    },
 
 async getAll(req: Request, res: Response) {
-    const getUsersResponse = await UserModel.getAll()
-    
-        res.json(getUsersResponse);
+    const getUsersResponse: userDBType[] | null = await UserModel.getAll()
+    if (!getUsersResponse) {
+        const response: ResponseType<null> = {
+            status: "error",
+                message: "Erro ao buscar utilizadores",
+                data: null,
+        }
+            return res.status(500).json(response)
+        }
+        const response: ResponseType<userDBType[]> = {
+            status: "success",
+                message: "Utilizadores buscados com sucesso",
+                data: getUsersResponse
+        }
+        return res.status(200).json(response)
 },
 
 async get(req: Request, res: Response) {
     const { id } = req.params
         if (id) {
-            const getUserByIdResponse = await UserModel.get(id as string)
-    
+            const getUserByIdResponse: userDBType | null = await UserModel.get(id as string)
             if (!getUserByIdResponse) {
-                res.status(404).json({
+                const response: ResponseType<null> = {
                     status: "error",
                     message: "Utilizador não encontrado",
                     data: null
-                })
+                }
+                return res.status(404).json(response)
             }
-    
-            res.status(200).json({
+
+            const response: ResponseType<userDBType> = {
                 status: "success",
                 message: "Utilizador encontrado",
                 data: getUserByIdResponse
-            })
+            }
+            return res.status(200).json(response)
+
         } else {
-            res.status(400).json({
+            const response: ResponseType<null> = {
                 status: "error",
                 message: "Id é obrigatório",
                 data: null
-            })
+            }
+            return res.status(400).json(response)
         }
 },
 
@@ -115,7 +140,7 @@ async updatePassword(req: Request, res: Response) {
     }
 
     const updatePasswordResponse = await UserModel.updatePassword (id as string, passwordNova as string)
-    res.status(200).json({
+    return res.status(200).json({
         status: "success",
         message:"Senha atualizada com sucesso",
         data: updatePasswordResponse
@@ -178,21 +203,22 @@ async delete(req: Request, res: Response) {
         })
         }
 
-        const deleteUserResponse = await UserModel.delete(id as string)
+        const deleteUserResponse: userDBType | null = await UserModel.delete(id as string)
 
     if (!deleteUserResponse) {
-        return res.status(400).json({
+        const response: ResponseType<null> = {
             status: "error",
             message: "Erro ao apagar usuário",
             data: null
-        })
+        }
+        return res.status(400).json(response)
     }
-
-    return res.status(200).json({
+    const response: ResponseType<userDBType> = {
         status: "success",
         message: "Usuário apagado com sucesso",
         data: deleteUserResponse
-    }) 
+    }
+    return res.status(200).json(response) 
 }
 
 }

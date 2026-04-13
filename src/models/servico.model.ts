@@ -1,6 +1,6 @@
 import type { RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
-import type { servicoDBType } from "../utils/types.js";
+import { ServicoDetalhadoType, type servicoDBType } from "../utils/types.js";
 
 export const ServiceModel = {
     async create(newService: servicoDBType): Promise<servicoDBType | null> {
@@ -102,5 +102,36 @@ export const ServiceModel = {
         console.log(error)
         return null
     }
+    },
+
+    async getAllServicoDetalhadO(limit: number, offset: number) {
+        try {
+            const query = `
+            SELECT
+                s.id
+                s.nome
+                s.descricao
+                c.designacao as designacao_categoria
+                c.icone as icone_categoria
+                e.id as id_empresa
+                e.designacao as designacao_empresa
+                e.icone as icone_empresa
+                s.enabled
+            FROM tbl_servicos s
+            INNER JOIN tbl_categoria c ON c.id = s.id_categoria
+            INNER JOIN tbl_empresa e ON e.id = s.id_empresa
+            LIMIT ? OFFSET ?
+            `
+
+            const values = [limit, offset]
+
+            const [rows] = await db.execute<ServicoDetalhadoType[] & RowDataPacket[]>(query, values)
+
+            return Array.isArray(rows) && rows.length > 0 ? rows as ServicoDetalhadoType[] : null
+
+        } catch (error) {
+            console.log(error)
+            return null
+        }
     }
 }

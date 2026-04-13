@@ -33,7 +33,7 @@ export const ServicoController = {
 
     async getAll(req: Request, res: Response) {
         const getAllServicesResponse: servicoDBType[] | null = await ServiceModel.getAll()
-        
+
         if (!getAllServicesResponse) {
             const response: ResponseType<null> = {
                 status:"error",
@@ -140,5 +140,9 @@ export const ServicoController = {
                     data: deleteServiceResponse
                 }
                 return res.status(200).json(response)
+        },
+
+        async getAllServicoDetalhadO(req: Request, res: Response) {
+
         }
 }
