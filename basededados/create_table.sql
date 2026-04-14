@@ -131,6 +131,21 @@ ALTER TABLE tbl_prestadores
 DROP COLUMN disponivel
 ;
 
+ALTER TABLE tbl_prestadores
+	ADD COLUMN id_empresa INTEGER,
+    ADD CONSTRAINT fk_empresa_prestadores
+    FOREIGN KEY (id_empresa)
+    REFERENCES tbl_empresa(id)
+;
+
+ALTER TABLE tbl_prestacao_servico
+	ADD COLUMN id_empresa INTEGER,
+    ADD COLUMN tipo_prestador ENUM("empresa", "particular"),
+    ADD CONSTRAINT fk_empresa_prestacao_servico
+    FOREIGN KEY (id_empresa)
+    REFERENCES tbl_empresa(id)
+;
+
 ALTER TABLE tbl_proposta
 	ADD CONSTRAINT fk_prestacao_servico_proposta
 	FOREIGN KEY (id_prestacao_servico)
@@ -156,4 +171,8 @@ ALTER TABLE tbl_proposta
 	ADD CONSTRAINT fk_tbl_prestadores_proposta
 	FOREIGN KEY (id_prestador)
 	REFERENCES tbl_prestadores(id)
+;
+
+ALTER TABLE tbl_utilizadores
+	ADD COLUMN `role` ENUM("cliente", "admin", "prestador", "empresa") default "cliente"
 ;

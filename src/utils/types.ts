@@ -1,3 +1,28 @@
+export enum Role {
+    CLIENTE = "cliente",
+    ADMIN ="admin",
+    PRESTADOR = "prestador",
+    EMPRESA = "empresa"
+}
+
+export enum EstadoProposta {
+    PENDENTE = "pendente",
+    ACEITE = "aceite",
+    CANCELADO = "cancelado"
+}
+
+export enum EstadoPrestacaoServico {
+    PENDENTE = "pendente",
+    EM_PROGRESSO = "em_progresso",
+    FINALIZADO = "finalizado",
+    CANCELADO = "cancelado"
+}
+
+export enum TipoPrestador {
+    PARTICULAR = "particular",
+    EMPRESA = "empresa"
+}
+
 export interface PedidoServicoType {
     cliente: string;
     descricao: string;
@@ -48,8 +73,9 @@ export interface userDBType {
     email: string,
     telefone:string ,
     pais: string ,
-    localidade:string ,
-    password: string ,
+    localidade:string,
+    password: string,
+    role: Role,
     enabled: boolean,
     created_at: string,
     updated_at: string
@@ -74,19 +100,6 @@ export interface OrcamentoDBType {
     updated_at: string
 }
 
-export enum EstadoProposta {
-    PENDENTE = "pendente",
-    ACEITE = "aceite",
-    CANCELADO = "cancelado"
-}
-
-export enum EstadoPrestacaoServico {
-    PENDENTE = "pendente",
-    EM_PROGRESSO = "em_progresso",
-    FINALIZADO = "finalizado",
-    CANCELADO = "cancelado"
-}
-
 export interface PropostaDBType {
     id: string,
     id_prestacao_servico: string,
@@ -109,7 +122,9 @@ export interface PrestacaoServicoDBType {
     preco_hora: number, 
     estado: EstadoPrestacaoServico,
     id_orcamento: string,
-    id_utilizador: string,  
+    id_utilizador: string,
+    id_empresa: string,
+    tipo_prestador: TipoPrestador,
     urgente: boolean,
     enabled: boolean,
     created_at: string,
@@ -126,21 +141,41 @@ export interface PrestacaoServicoDetalhadoType {
     urgente: boolean
 }
 
+export interface ServicoDetalhadoType {
+    id: string,
+    nome: string,
+    descricao: string,
+    designacao_categoria: string,
+    icone_categoria: string,
+    id_empresa: string,
+    designacao_empresa: string,
+    icone_empresa: string,
+    enabled: boolean
+}
+
 export interface ResponseType<T> {
     status: "success" | "error",
     message: string,
     data: T | null
 }
 
-export interface ServicoDetalhadoType<T> {
+export interface categoriaBDType {
     id: string,
-    nome: string,
+    designacao: string,
+    icone: string,
+    created_at: string,
+    updated_at: string
+}
+
+export interface EmpresaDBType {
+    id: string,
+    designacao: string,
     descricao: string,
-    designacao_categoria:
-    icone:
-    icone_categoria:
-    id_empresa:
-    designacao_empresa:
-    icone_empresa:
-    enabled: boolean
+    nif: string,
+    icone: string,
+    id_utilizador: string,
+    localizacao: string,
+    enabled: boolean,
+    created_at: string,
+    updated_at: string
 }

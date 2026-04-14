@@ -44,7 +44,7 @@ async getAll(req: Request, res: Response) {
                 data: getUsersResponse
         }
         return res.status(200).json(response)
-},
+    },
 
 async get(req: Request, res: Response) {
     const { id } = req.params
@@ -74,7 +74,7 @@ async get(req: Request, res: Response) {
             }
             return res.status(400).json(response)
         }
-},
+    },
 
 async update(req: Request, res: Response) {
     const { id } = req.params
@@ -110,7 +110,7 @@ async update(req: Request, res: Response) {
             message: "Usuário atualizado com sucesso",
             data: updateUserResponse
         })
-},
+    },
 
 async updatePassword(req: Request, res: Response) {
     const {id} = req.params
@@ -145,7 +145,7 @@ async updatePassword(req: Request, res: Response) {
         message:"Senha atualizada com sucesso",
         data: updatePasswordResponse
     })
-},
+    },
 
 async login(req: Request, res: Response) {
     const { email, password } = req.body
@@ -177,7 +177,8 @@ async login(req: Request, res: Response) {
     const payload = {
         id: userData.id,
         email: userData.email,
-        nome: userData.nome
+        nome: userData.nome,
+        role: userData.role
     }
 
     const token = jwt.sign(payload, process.env.JWT_SECRET as string, {expiresIn: "1h"})
@@ -190,7 +191,7 @@ async login(req: Request, res: Response) {
             user: payload
         }
     })
-},
+    },
 
 async delete(req: Request, res: Response) {
     const { id } = req.params
@@ -219,6 +220,6 @@ async delete(req: Request, res: Response) {
         data: deleteUserResponse
     }
     return res.status(200).json(response) 
-}
+    }
 
 }

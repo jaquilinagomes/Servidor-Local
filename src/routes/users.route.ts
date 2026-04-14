@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UserController } from "../controllers/users.controller.js";
-import AuthMilddleware from "../security/auth.middleware.js";
-import authGuard from "../security/authGuard.js";
+import AuthMilddleware, { authorize } from "../security/auth.middleware.js";
+import { Role } from "../utils/types.js";
 
 const UserRoute = {
     create: "/create",
@@ -14,12 +14,20 @@ const UserRoute = {
 }
 const router = Router()
 
-router.get(UserRoute.getAll, AuthMilddleware, UserController.getAll)
-router.get(UserRoute.getById, UserController.get)
-router.post(UserRoute.create, UserController.create)
-router.put(UserRoute.update, UserController.update)
-router.delete(UserRoute.update, UserController.delete)
 router.post(UserRoute.login, UserController.login)
-router.put(UserRoute.updatePassword, authGuard, UserController.updatePassword)
+
+router.post(UserRoute.create, UserController.create)
+
+router.use(AuthMilddleware)
+
+router.get(UserRoute.getAll, authorize([Role.ADMIN]), UserController.getAll)
+
+router.get(UserRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role. PRESTADOR, Role.EMPRESA]), UserController.get)
+
+router.put(UserRoute.update, authorize([Role.ADMIN, Role.CLIENTE, Role. PRESTADOR, Role.EMPRESA]), UserController.update)
+
+router.delete(UserRoute.update, authorize([Role.ADMIN]), UserController.delete)
+
+router.put(UserRoute.updatePassword, authorize([Role.ADMIN, Role.CLIENTE, Role. PRESTADOR, Role.EMPRESA]), UserController.updatePassword)
 
 export { router };
