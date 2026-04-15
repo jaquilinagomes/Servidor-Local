@@ -166,5 +166,26 @@ export const PrestacaoServicoModel = {
             console.log(error)
             return null
         }
+    },
+
+    async getAllPrestacoesServicoByCategoria(limit: number, offset: number) {
+        try {
+            const query = `
+            SELECT DISTINCT
+
+            `
+            const [rows] = await db.execute(query,
+                [
+                    limit.toString(),
+                    offset.toString()
+                ]
+            )
+            
+            if (Array.isArray(rows) && rows.length === 0) return null
+            return Array.isArray(rows) ? rows : null
+        } catch (error) {
+            console.log(error)
+            return null
+        }
     }
 }

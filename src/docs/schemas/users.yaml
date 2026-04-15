@@ -98,7 +98,7 @@ components:
           type: string
           string: "senha123"
 
-    UpdatePassword:
+    ResetPassword:
       type: object
       properties:
         passwordAntiga:

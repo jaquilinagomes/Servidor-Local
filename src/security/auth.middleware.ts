@@ -44,10 +44,10 @@ export default function AuthMilddleware(req: Request, res: Response, next: NextF
 export function authorize(roles: string[]) {
     return (req: Request, res: Response, next: NextFunction) => {
         if (!req.user) {
-            return res.status(401).json({ message: "Utilizador nao autorizado" })
+            return res.status(401).json({ message: "Utilizador não autorizado" })
         }
         if (!roles.includes(req.user.role)) {
-            return res.status(403).json({ message: "Permissao insuficiente" })
+            return res.status(403).json({ message: "Permissão insuficiente" })
         }
 
         next()

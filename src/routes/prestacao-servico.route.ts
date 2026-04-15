@@ -1,6 +1,8 @@
 import { Router } from "express";
 import { prestacaoServicoController } from "../controllers/prestacao-servico.controller.js";
 import { prestadorController } from "../controllers/prestador.controller.js";
+import AuthMilddleware, { authorize } from "../security/auth.middleware.js";
+import { Role } from "../utils/types.js";
 
 const PrestacaoServicoRoute = {
     create: "/create",
@@ -14,10 +16,17 @@ const PrestacaoServicoRoute = {
 const router = Router()
 
 router.get(PrestacaoServicoRoute.getAll, prestacaoServicoController.getAll)
+
 router.get(PrestacaoServicoRoute.getById, prestacaoServicoController.get)
-router.post(PrestacaoServicoRoute.create, prestacaoServicoController.create)
-router.put(PrestacaoServicoRoute.update, prestacaoServicoController.update)
-router.delete(PrestacaoServicoRoute.delete, prestacaoServicoController.delete)
+
+router.use(AuthMilddleware)
+
+router.post(PrestacaoServicoRoute.create, authorize([Role.ADMIN, Role.EMPRESA]), prestacaoServicoController.create)
+
+router.put(PrestacaoServicoRoute.update, authorize([Role.ADMIN]), prestacaoServicoController.update)
+
+router.delete(PrestacaoServicoRoute.delete, authorize([Role.ADMIN]), prestacaoServicoController.delete)
+
 router.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, prestacaoServicoController.getAllPrestacaoServicoDetalhada)
 
 export { router };

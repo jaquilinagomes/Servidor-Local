@@ -170,5 +170,14 @@ export const prestacaoServicoController = {
             data: getAllPrestacaoServicosResponse
         }
         return res.status(200).json(response)
+    },
+
+    async getAllPrestacoesServicoByCategoria(req: Request, res: Response) {
+        const { limit, offset } = req.query
+
+        let LIMIT = 10
+        let OFFSET = 0
+
+        
     }
 }

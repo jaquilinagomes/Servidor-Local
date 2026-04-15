@@ -112,7 +112,7 @@ async update(req: Request, res: Response) {
         })
     },
 
-async updatePassword(req: Request, res: Response) {
+async resetPassword(req: Request, res: Response) {
     const {id} = req.params
     const { passwordAntiga, passwordNova, confirmarPassword} = req.body
     if (!id || !passwordAntiga || !passwordNova || !confirmarPassword) {
@@ -139,7 +139,7 @@ async updatePassword(req: Request, res: Response) {
         })
     }
 
-    const updatePasswordResponse = await UserModel.updatePassword (id as string, passwordNova as string)
+    const updatePasswordResponse = await UserModel.resetPassword (id as string, passwordNova as string)
     return res.status(200).json({
         status: "success",
         message:"Senha atualizada com sucesso",

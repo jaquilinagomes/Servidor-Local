@@ -84,6 +84,7 @@ Table table_proposta [headercolor: #175e7a] {
 	enabled boolean [ not null ]
 	created_at datetime [ not null ]
 	updated_at datetime [ not null ]
+	id_prestador varchar(255) [ not null ]
 }
 
 Table table_categoria [headercolor: #175e7a] {
@@ -137,4 +138,8 @@ Ref fk_table_prestadores_id_empresa_table_empresa {
 
 Ref fk_table_empresa_id_utilizadores_table_utilizadores {
 	table_empresa.id_utilizador > table_utilizadores.id [ delete: no action, update: no action ]
+}
+
+Ref fk_table_prestadores_id_table_proposta {
+	table_prestadores.id < table_proposta.id_prestador [ delete: no action, update: no action ]
 }

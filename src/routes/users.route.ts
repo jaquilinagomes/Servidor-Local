@@ -10,8 +10,9 @@ const UserRoute = {
     update:"/update/:id",
     delete:"/delete/:id",
     login: "/login",
-    updatePassword: "/update-password/:id"
+    resetPassword: "/reset-password/:id"
 }
+
 const router = Router()
 
 router.post(UserRoute.login, UserController.login)
@@ -26,8 +27,8 @@ router.get(UserRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role. PRESTAD
 
 router.put(UserRoute.update, authorize([Role.ADMIN, Role.CLIENTE, Role. PRESTADOR, Role.EMPRESA]), UserController.update)
 
-router.delete(UserRoute.update, authorize([Role.ADMIN]), UserController.delete)
+router.delete(UserRoute.delete, authorize([Role.ADMIN]), UserController.delete)
 
-router.put(UserRoute.updatePassword, authorize([Role.ADMIN, Role.CLIENTE, Role. PRESTADOR, Role.EMPRESA]), UserController.updatePassword)
+router.put(UserRoute.resetPassword, authorize([Role.ADMIN, Role.CLIENTE, Role. PRESTADOR, Role.EMPRESA]), UserController.resetPassword)
 
 export { router };

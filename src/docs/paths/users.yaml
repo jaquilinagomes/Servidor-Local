@@ -127,7 +127,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/UserResponseError"
 
-  /users/update-password/{id}:
+  /users/reset-password/{id}:
     put:
       summary: Atualizar senha de um usuário
       tags:
@@ -147,7 +147,7 @@ paths:
           application/json:
             schema:
               type: object
-              $ref: "#/components/schemas/UpdatePassword"
+              $ref: "#/components/schemas/ResetPassword"
       responses:
         "200":
           description: Senha do usuário atualizado com sucesso
