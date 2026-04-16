@@ -1,7 +1,7 @@
 # schema/prestacao-servico.yaml
 
 paths:
-  /prestacaoservico:
+  /prestacao-servico:
     get:
       summary: Listar todas as prestações de serviços
       tags:
@@ -24,7 +24,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/PrestacaoServicoResponseError"
 
-  /prestacaoservico/create:
+  /prestacao-servico/create:
     post:
       summary: Criar uma nova prestação de serviço
       tags:
@@ -53,7 +53,7 @@ paths:
                 type:
                 $ref: "#/components/schemas/PrestacaoServicoResponseError"
 
-  /prestacaoservico/get-by-id/{id}:
+  /prestacao-servico/get-by-id/{id}:
     get:
       summary: Buscar uma prestação de serviço por ID
       tags:
@@ -83,7 +83,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/PrestacaoServicoResponseError"
 
-  /prestacaoservico/update/{id}:
+  /prestacao-servico/update/{id}:
     put:
       summary: Atualizar uma prestação de serviço
       tags:
@@ -127,7 +127,7 @@ paths:
                 type: object
                 $ref: "#/components/schemas/PrestacaoServicoResponseError"
 
-  /prestacaoservico/delete/{id}:
+  /prestacao-servico/delete/{id}:
     delete:
       summary: Apagar uma prestação de serviço
       tags:
@@ -185,6 +185,51 @@ paths:
                 $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
         "500":
           description: Erro ao buscar prestação de serviço detalhada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrestacaoServicoResponseError"
+
+  /prestacao-servico/get-all-by-categoria/{categoria}:
+    get:
+      summary:
+      tags:
+        - Prestacao de Servico
+      description:
+      parameters:
+        - name: categoria
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "1"
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "10"
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "0"
+      responses:
+        "200":
+          description: Prestação de serviço por categoria encontrada com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+        "400":
+          description: Dados de prestação de serviço por categoria invalidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PrestacaoServicoResponseError"
+        "500":
+          description: Erro ao buscar prestacao de servico por categoria
           content:
             application/json:
               schema:

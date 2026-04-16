@@ -44,9 +44,15 @@ async getAll(): Promise<PropostaDBType[] | null> {
 async get(id: string): Promise<PropostaDBType | null> {
     try {
     const [rows] = await db.execute<PropostaDBType & RowDataPacket[]>(
- "SELECT * FROM tbl_propostas WHERE id = ?",
+        `SELECT DISTINCT 
+            pt.*,
+            pr.id as owner
+        FROM tbl_proposta pt
+        INNER JOIN tbl_prestadores pr ON pt.id_prestador = pr.id
+        INNER JOIN tbl_utilizadores u ON pr.id_utilizadores = u.id
+        WHERE pt.id = ?`,
 
-    [id]
+        [id]
 );
 
     if (Array.isArray(rows) && rows.length === 0) return null

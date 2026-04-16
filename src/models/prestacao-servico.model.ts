@@ -1,6 +1,6 @@
 import type { RowDataPacket } from "mysql2";
 import db from "../lib/db.js";
-import type { PrestacaoServicoDBType, PrestacaoServicoDetalhadoType} from "../utils/types.js";
+import { type PrestacaoServicoByCategoriaType, type PrestacaoServicoDBType, type PrestacaoServicoDetalhadoType} from "../utils/types.js";
 import { generateUUID } from "../utils/uuid.js";
 
 export const PrestacaoServicoModel = {
@@ -168,14 +168,26 @@ export const PrestacaoServicoModel = {
         }
     },
 
-    async getAllPrestacoesServicoByCategoria(limit: number, offset: number) {
+    async getAllPrestacaoServicoByCategoria(idcategoria: string, limit: number, offset: number) {
         try {
             const query = `
             SELECT DISTINCT
-
+                ps.id as id_prestacao_servico,
+                ps.designacao as descricao,
+                s.nome as nome_servico,
+                c.designacao as nome_categoria,
+                c.icone as icone_categoria,
+                ps.created_at as data_pedido,
+                ps.urgente
+            FROM tbl_prestacao_servico ps
+            INNER JOIN tbl_categoria c ON c.id = s.id_categoria AND c.id = ?
+            INNER JOIN tbl_servicos s ON ps.id_servico = s.id
+            ORDER BY ps.created_at DESC
+            limit ? offset ?
             `
-            const [rows] = await db.execute(query,
+            const [rows] = await db.execute<PrestacaoServicoByCategoriaType[] & RowDataPacket[]>(query,
                 [
+                    idcategoria,
                     limit.toString(),
                     offset.toString()
                 ]

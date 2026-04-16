@@ -13,13 +13,13 @@ const PrestadorRoute = {
 
 const router = Router()
 
-router.get(PrestadorRoute.getAll, prestadorController.getAll)
+router.get(PrestadorRoute.getAll, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), prestadorController.getAll)
 
-router.get(PrestadorRoute.getById, prestadorController.get)
+router.get(PrestadorRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestadorController.get)
 
 router.use(AuthMilddleware)
 
-router.post(PrestadorRoute.create, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA]), prestadorController.create)
+router.post(PrestadorRoute.create, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR]), prestadorController.create)
 
 router.put(PrestadorRoute.update, authorize([Role.ADMIN]), prestadorController.update)
 

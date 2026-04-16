@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { prestacaoServicoController } from "../controllers/prestacao-servico.controller.js";
-import { prestadorController } from "../controllers/prestador.controller.js";
 import AuthMilddleware, { authorize } from "../security/auth.middleware.js";
 import { Role } from "../utils/types.js";
 
@@ -10,23 +9,27 @@ const PrestacaoServicoRoute = {
     getAll: "/",
     update: "/update/:id",
     delete: "/delete/:id",
-    getAllPrestacaoServicoDetalhada: "/get-all-detalhado"
+    getAllPrestacaoServicoDetalhada: "/get-all-detalhado",
+    getAllPrestacaoServicoByCategoria: "/get-all-by-categoria"
 }
 
 const router = Router()
 
-router.get(PrestacaoServicoRoute.getAll, prestacaoServicoController.getAll)
+router.get(PrestacaoServicoRoute.getAll, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.getAll)
 
-router.get(PrestacaoServicoRoute.getById, prestacaoServicoController.get)
+router.get(PrestacaoServicoRoute.getById,authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.get)
+
+router.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.getAllPrestacaoServicoDetalhada)
+
+router.get(PrestacaoServicoRoute.getAllPrestacaoServicoByCategoria, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.getAllPrestacaoServicoByCategoria)
 
 router.use(AuthMilddleware)
 
-router.post(PrestacaoServicoRoute.create, authorize([Role.ADMIN, Role.EMPRESA]), prestacaoServicoController.create)
+router.post(PrestacaoServicoRoute.create, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.create)
 
-router.put(PrestacaoServicoRoute.update, authorize([Role.ADMIN]), prestacaoServicoController.update)
+router.put(PrestacaoServicoRoute.update, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.update)
 
-router.delete(PrestacaoServicoRoute.delete, authorize([Role.ADMIN]), prestacaoServicoController.delete)
+router.delete(PrestacaoServicoRoute.delete, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.delete)
 
-router.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, prestacaoServicoController.getAllPrestacaoServicoDetalhada)
 
 export { router };

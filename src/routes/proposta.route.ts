@@ -1,7 +1,8 @@
 import { Router } from "express"
 import { PropostaController } from "../controllers/proposta.controller.js"
-import AuthMilddleware, { authorize } from "../security/auth.middleware.js"
+import AuthMilddleware, { authorize, isOwner } from "../security/auth.middleware.js"
 import { Role } from "../utils/types.js"
+import { PropostaModel } from "../models/proposta.model.js"
 
 
 const PropostaRoute = {
@@ -9,21 +10,24 @@ const PropostaRoute = {
     getById:"/get-by-id/:id",
     getAll: "/",
     update: "/update/:id",
-    delete: "/delete/:id"
+    delete: "/delete/:id",
+    aceitar: "/aceitar/:id"
 }
 
 const router = Router()
 
-router.get(PropostaRoute.getById, authorize([Role.ADMIN, Role.CLIENTE, Role.EMPRESA, Role.PRESTADOR]), PropostaController.get)
-
 router.use(AuthMilddleware)
 
-router.get(PropostaRoute.getAll, authorize([Role.ADMIN]), PropostaController.getAll)
+router.get(PropostaRoute.getById, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), PropostaController.get)
 
-router.post(PropostaRoute.create, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), PropostaController.create)
+router.get(PropostaRoute.getAll, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), PropostaController.getAll)
 
-router.put(PropostaRoute.update, authorize([Role.ADMIN]), PropostaController.update)
+router.post(PropostaRoute.create, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), PropostaController.create)
 
-router.delete(PropostaRoute.delete, authorize([Role.ADMIN]), PropostaController.delete)
+router.put(PropostaRoute.update, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), isOwner(PropostaModel, "owner"), PropostaController.update)
+
+router.delete(PropostaRoute.delete, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), isOwner(PropostaModel, "owner"), PropostaController.delete)
+
+// router.put(PropostaRoute.aceitar, authorize([Role.ADMIN, Role.Cliente]), PropostaController.aceitar)
 
 export { router };

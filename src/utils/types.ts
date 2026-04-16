@@ -107,6 +107,7 @@ export interface PropostaDBType {
     horas_estimadas: number,
     estado: EstadoProposta,
     id_prestador: string,
+    owner?: string,
     enabled:boolean,
     created_at: string,
     updated_at: string
@@ -178,4 +179,14 @@ export interface EmpresaDBType {
     enabled: boolean,
     created_at: string,
     updated_at: string
+}
+
+export interface PrestacaoServicoByCategoriaType {
+    id_prestacao_servico: string,
+    descricao: string,
+    nome_servico: string,
+    nome_categoria: string,
+    icone_categoria: string,
+    data_pedido: string,
+    urgente: string
 }

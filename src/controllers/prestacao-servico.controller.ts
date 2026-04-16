@@ -1,4 +1,4 @@
-import type { PrestacaoServicoDBType, PrestacaoServicoDetalhadoType, ResponseType } from "../utils/types.js"
+import type { PrestacaoServicoByCategoriaType, PrestacaoServicoDBType, PrestacaoServicoDetalhadoType, ResponseType } from "../utils/types.js"
 import { PrestacaoServicoModel } from "../models/prestacao-servico.model.js" 
 import type { Request, Response } from "express"
 
@@ -172,12 +172,41 @@ export const prestacaoServicoController = {
         return res.status(200).json(response)
     },
 
-    async getAllPrestacoesServicoByCategoria(req: Request, res: Response) {
-        const { limit, offset } = req.query
+    async getAllPrestacaoServicoByCategoria(req: Request, res: Response) {
+        const { categoria } = req.params
+        const { limit, offset } = req.query as { limit: string, offset: string}
 
         let LIMIT = 10
         let OFFSET = 0
 
+        if (limit && parseInt(limit) > 0) LIMIT = parseInt(limit)
+        if (offset && parseInt(offset) > 0) OFFSET = parseInt(offset)
+
+        if (!categoria) {
+            const response: ResponseType<null> = {
+                status: "error",
+                message: "Categoria obrigatória",
+                data: null
+            }
+            return res.status(400).json(response)
+        }
         
+        const getAllPrestacaoServicoByCategoriaResponse = await PrestacaoServicoModel.getAllPrestacaoServicoByCategoria(categoria as string, LIMIT, OFFSET)
+
+        if (!getAllPrestacaoServicoByCategoriaResponse) {
+            const response: ResponseType<null> = {
+                status: "error",
+                message: "Prestacao de servico nao encontrada",
+                data: null
+            }
+            return res.status(404).json(response)
+        }
+
+        const response: ResponseType<PrestacaoServicoByCategoriaType[]> = {
+            status: "success",
+            message: "Prestacao de servico encontrada com sucesso",
+            data: getAllPrestacaoServicoByCategoriaResponse
+        }
+        return res.status(200).json(response)
     }
 }
