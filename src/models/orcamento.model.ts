@@ -51,9 +51,9 @@ export const OrcamentoModel = {
 
             const value = [id]
 
-            const rows = await db.execute<OrcamentoDBType & RowDataPacket[]>(query, value)
+            const [rows] = await db.execute<OrcamentoDBType[] & RowDataPacket[]>(query, value)
 
-            return Array.isArray(rows) && rows.length > 0 ? rows[0] : null
+            return Array.isArray(rows) && rows.length > 0 ? rows[0] as OrcamentoDBType : null
 
         } catch (error) {
             console.log(error)

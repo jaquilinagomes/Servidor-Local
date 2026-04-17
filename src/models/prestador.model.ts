@@ -41,7 +41,7 @@ export const PrestadorModel = {
 
     async get(id: string): Promise<PrestadorDBType | null> {
         try {
-            const [ rows ] = await db.execute<PrestadorDBType & RowDataPacket[]>(
+            const [ rows ] = await db.execute<PrestadorDBType[] & RowDataPacket[]>(
                 `SELECT * FROM tbl-prestadores
                 WHERE tbl_prestadores.id = ?`,
 

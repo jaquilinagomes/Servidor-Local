@@ -43,7 +43,7 @@ async getAll(): Promise<PropostaDBType[] | null> {
 
 async get(id: string): Promise<PropostaDBType | null> {
     try {
-    const [rows] = await db.execute<PropostaDBType & RowDataPacket[]>(
+    const [rows] = await db.execute<PropostaDBType[] & RowDataPacket[]>(
         `SELECT DISTINCT 
             pt.*,
             pr.id as owner

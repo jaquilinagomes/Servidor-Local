@@ -28,7 +28,7 @@ export const UserController = {
         return res.status(201).json(response)
     },
 
-async getAll(req: Request, res: Response) {
+    async getAll(req: Request, res: Response) {
     const getUsersResponse: userDBType[] | null = await UserModel.getAll()
     if (!getUsersResponse) {
         const response: ResponseType<null> = {
@@ -46,7 +46,7 @@ async getAll(req: Request, res: Response) {
         return res.status(200).json(response)
     },
 
-async get(req: Request, res: Response) {
+    async get(req: Request, res: Response) {
     const { id } = req.params
         if (id) {
             const getUserByIdResponse: userDBType | null = await UserModel.get(id as string)
@@ -76,7 +76,7 @@ async get(req: Request, res: Response) {
         }
     },
 
-async update(req: Request, res: Response) {
+    async update(req: Request, res: Response) {
     const { id } = req.params
     
         const updatedUser: userDBType = req.body
@@ -112,7 +112,7 @@ async update(req: Request, res: Response) {
         })
     },
 
-async resetPassword(req: Request, res: Response) {
+    async resetPassword(req: Request, res: Response) {
     const {id} = req.params
     const { passwordAntiga, passwordNova, confirmarPassword} = req.body
     if (!id || !passwordAntiga || !passwordNova || !confirmarPassword) {
@@ -147,7 +147,7 @@ async resetPassword(req: Request, res: Response) {
     })
     },
 
-async login(req: Request, res: Response) {
+    async login(req: Request, res: Response) {
     const { email, password } = req.body
     if (!email || !password) {
         return res.status(400).json ({
@@ -193,7 +193,7 @@ async login(req: Request, res: Response) {
     })
     },
 
-async delete(req: Request, res: Response) {
+    async delete(req: Request, res: Response) {
     const { id } = req.params
 
     if (!id) {

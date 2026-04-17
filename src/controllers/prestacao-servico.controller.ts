@@ -191,7 +191,7 @@ export const prestacaoServicoController = {
             return res.status(400).json(response)
         }
         
-        const getAllPrestacaoServicoByCategoriaResponse = await PrestacaoServicoModel.getAllPrestacaoServicoByCategoria(categoria as string, LIMIT, OFFSET)
+        const getAllPrestacaoServicoByCategoriaResponse: PrestacaoServicoByCategoriaType[] | null = await PrestacaoServicoModel.getAllPrestacaoServicoByCategoria(categoria as string, LIMIT, OFFSET)
 
         if (!getAllPrestacaoServicoByCategoriaResponse) {
             const response: ResponseType<null> = {

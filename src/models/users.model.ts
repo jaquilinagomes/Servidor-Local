@@ -36,16 +36,19 @@ export const UserModel = {
     }
 },
 
-async getAll(): Promise<userDBType[] | null> {
+    async getAll(): Promise<userDBType[] | null> {
     const [rows] = await db.execute<userDBType[] & RowDataPacket[]>("SELECT * FROM tbl_utilizadores")
 
     return rows
 },
 
-async get(id: string): Promise<userDBType | null>{
+    async get(id: string): Promise<userDBType | null>{
     try {
-        const [rows] = await db.execute<userDBType & RowDataPacket[]>(
-            `SELECT * FROM tbl_utilizadores 
+        const [rows] = await db.execute<userDBType[] & RowDataPacket[]>(
+            `SELECT DISTINCT
+                u.*
+
+            * FROM tbl_utilizadores 
         WHERE tbl_utilizadores.id = ?`,
 
             [id]
@@ -59,9 +62,9 @@ async get(id: string): Promise<userDBType | null>{
     }
 },
 
-async getByEmail(email: string): Promise<userDBType | null> {
+    async getByEmail(email: string): Promise<userDBType | null> {
     try {
-        const [rows] = await db.execute<userDBType & RowDataPacket[]>(
+        const [rows] = await db.execute<userDBType[] & RowDataPacket[]>(
             `SELECT * FROM tbl_utilizadores
             WHERE tbl_utilizadores.email = ?`,
             [email]
@@ -75,7 +78,7 @@ async getByEmail(email: string): Promise<userDBType | null> {
     }
 },
 
-async update(id: string, userAtualizado: userDBType) {
+    async update(id: string, userAtualizado: userDBType) {
     try {
         const query = 
         `UPDATE FROM tbl_utilizadores
@@ -115,7 +118,7 @@ async update(id: string, userAtualizado: userDBType) {
     }
 },
 
-async resetPassword(id: string, password: string) {
+    async resetPassword(id: string, password: string) {
     try {
         const updateUser = await db.execute(
             "UPDATE tbl_utilizadores SET password = ?, updated_at = ? WHERE id = ?", [
@@ -130,7 +133,7 @@ async resetPassword(id: string, password: string) {
     }
 },
 
-async delete(id: string): Promise<userDBType | null> {
+    async delete(id: string): Promise<userDBType | null> {
     try {
         const query = `
         DELETE FROM tbl_utilizadores

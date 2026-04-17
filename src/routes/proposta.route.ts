@@ -7,7 +7,7 @@ import { PropostaModel } from "../models/proposta.model.js"
 
 const PropostaRoute = {
     create: "/create",
-    getById:"/get-by-id/:id",
+    get:"/get-by-id/:id",
     getAll: "/",
     update: "/update/:id",
     delete: "/delete/:id",
@@ -18,7 +18,7 @@ const router = Router()
 
 router.use(AuthMilddleware)
 
-router.get(PropostaRoute.getById, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), PropostaController.get)
+router.get(PropostaRoute.get, authorize([Role.ADMIN, Role.EMPRESA, Role.PRESTADOR]), PropostaController.get)
 
 router.get(PropostaRoute.getAll, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), PropostaController.getAll)
 

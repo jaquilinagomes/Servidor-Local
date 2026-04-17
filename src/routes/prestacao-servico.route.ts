@@ -5,7 +5,7 @@ import { Role } from "../utils/types.js";
 
 const PrestacaoServicoRoute = {
     create: "/create",
-    getById:"/get-by-id/:id",
+    get:"/get-by-id/:id",
     getAll: "/",
     update: "/update/:id",
     delete: "/delete/:id",
@@ -17,7 +17,7 @@ const router = Router()
 
 router.get(PrestacaoServicoRoute.getAll, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.getAll)
 
-router.get(PrestacaoServicoRoute.getById,authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.get)
+router.get(PrestacaoServicoRoute.get,authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.get)
 
 router.get(PrestacaoServicoRoute.getAllPrestacaoServicoDetalhada, authorize([Role.ADMIN, Role.CLIENTE, Role.PRESTADOR, Role.EMPRESA]), prestacaoServicoController.getAllPrestacaoServicoDetalhada)
 

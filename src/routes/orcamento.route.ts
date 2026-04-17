@@ -3,11 +3,10 @@ import {} from "../controllers/prestador.controller.js";
 import { OrcamentoController } from "../controllers/orcamento.controller.js";
 import AuthMilddleware, { authorize } from "../security/auth.middleware.js";
 import { Role } from "../utils/types.js";
-import type { calcularOrcamento } from "../orcamento.js";
 
 const OrcamentoRoute = {
     create: "/create",
-    getById:"/get-by-id/:id",
+    get:"/get-by-id/:id",
     getAll: "/",
     update: "/update/:id",
     delete: "/delete/:id",
@@ -18,7 +17,7 @@ const router = Router()
 
 router.use(AuthMilddleware)
 
-router.get(OrcamentoRoute.getById, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), OrcamentoController.get)
+router.get(OrcamentoRoute.get, authorize([Role.ADMIN, Role.PRESTADOR, Role.EMPRESA]), OrcamentoController.get)
 
 router.get(OrcamentoRoute.getAll, authorize([Role.ADMIN]), OrcamentoController.getAll)
 
