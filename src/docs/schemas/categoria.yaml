@@ -1,0 +1,76 @@
+# schema/categoria.yaml
+
+# id: string,
+# designacao: string,
+# icone: string,
+# owner?: string,
+# created_at: string,
+# updated_at: string
+
+components:
+  schemas:
+    # schema principal de categoria
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        designacao: 
+          type: string
+          example: ""
+        icone:
+          type: string
+          example: "url"
+        isowner:
+          type: string
+          example: "CategoriaModel, owner"
+        created_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+        updated_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+
+    # schema para criar uma nova categoria
+    CreateCategoria:
+      type: object
+      required:
+      properties:
+        designacao: 
+          type: string
+          example: ""
+        icone:
+          type: string
+          example: "url"
+        isowner:
+          type: string
+          example: "CategoriaModel, isowner"
+
+    # schema generico para sucesso
+    CategoriaResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Categoria criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/Categoria"
+
+    # schema generico de resposta de erro
+    CategoriaResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar por categoria"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object
+          properties: null

@@ -160,7 +160,7 @@ export interface ResponseType<T> {
     data: T | null
 }
 
-export interface categoriaBDType {
+export interface CategoriaBDType {
     id: string,
     designacao: string,
     icone: string,

@@ -1,13 +1,13 @@
 import type { RowDataPacket } from "mysql2"
-import type { categoriaBDType } from "../utils/types.js"
+import type { CategoriaBDType } from "../utils/types.js"
 import db from "../lib/db.js"
 
 
 
 export const CategoriaModel = {
-    async create(categoria: categoriaBDType): Promise<categoriaBDType | null> {
+    async create(categoria: CategoriaBDType): Promise<CategoriaBDType | null> {
         try {
-        const [rows] = await db.execute<categoriaBDType & RowDataPacket[]>(
+        const [rows] = await db.execute<CategoriaBDType & RowDataPacket[]>(
             `INSERT INTO tbl_categoria VALUES (?,?,?,?,?)`,
 
             [
@@ -27,15 +27,15 @@ export const CategoriaModel = {
     }
 },
 
-async getAll(): Promise<categoriaBDType[] | null> {
-    const [rows] = await db.execute<categoriaBDType[] & RowDataPacket[]>("SELECT * FROM tbl_categoria")
+async getAll(): Promise<CategoriaBDType[] | null> {
+    const [rows] = await db.execute<CategoriaBDType[] & RowDataPacket[]>("SELECT * FROM tbl_categoria")
 
     return rows
 },
 
-async get(id: string): Promise<categoriaBDType | null>{
+async get(id: string): Promise<CategoriaBDType | null>{
     try {
-        const [rows] = await db.execute<categoriaBDType[] & RowDataPacket[]>(
+        const [rows] = await db.execute<CategoriaBDType[] & RowDataPacket[]>(
             `SELECT * FROM tbl_categoria
         WHERE tbl_categoria.id = ?`,
 
@@ -43,14 +43,14 @@ async get(id: string): Promise<categoriaBDType | null>{
         )
 
         if (Array.isArray(rows) && rows.length === 0) return null
-        return Array.isArray(rows) ? rows[0] as categoriaBDType : null
+        return Array.isArray(rows) ? rows[0] as CategoriaBDType : null
     } catch (error) {
         console.log(error)
         return null
     }
 },
 
-async update(id: string, categoriaAtualizada: categoriaBDType) {
+async update(id: string, categoriaAtualizada: CategoriaBDType) {
     try {
         const query = 
         `UPDATE FROM tbl_categoria
@@ -77,7 +77,7 @@ async update(id: string, categoriaAtualizada: categoriaBDType) {
     }
 },
 
-async delete(id: string): Promise<categoriaBDType | null> {
+async delete(id: string): Promise<CategoriaBDType | null> {
     try {
         const query = `
         DELETE FROM tbl_categoria
@@ -85,7 +85,7 @@ async delete(id: string): Promise<categoriaBDType | null> {
         `
         const values = [id]
 
-        const rows: any = await db.execute<categoriaBDType & RowDataPacket[]>(query, values)
+        const rows: any = await db.execute<CategoriaBDType & RowDataPacket[]>(query, values)
         return rows[0]?.affectedRows === 0 ? null : rows
 
     } catch(error) {

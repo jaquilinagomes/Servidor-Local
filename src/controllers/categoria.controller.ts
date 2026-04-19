@@ -1,10 +1,10 @@
 import { CategoriaModel } from "../models/categoria.model.js"
-import type { categoriaBDType, ResponseType } from "../utils/types.js"
+import type { CategoriaBDType, ResponseType } from "../utils/types.js"
 import type { Request, Response } from "express"
 
 export const CategoriaController = {
     async create(req: Request, res: Response) {
-        const newCategoria: categoriaBDType = req.body
+        const newCategoria: CategoriaBDType = req.body
 
         if (!newCategoria) {
             return res.status(400).json({
@@ -16,9 +16,9 @@ export const CategoriaController = {
 
         console.log(newCategoria)
 
-        const createCategoriaResponse: categoriaBDType | null = await CategoriaModel.create(newCategoria)
+        const createCategoriaResponse: CategoriaBDType | null = await CategoriaModel.create(newCategoria)
 
-        const response: ResponseType<categoriaBDType> = {
+        const response: ResponseType<CategoriaBDType> = {
             status: "success",
             message: "Categoria criado com sucesso",
             data: createCategoriaResponse,
@@ -27,7 +27,7 @@ export const CategoriaController = {
     },
 
     async getAll(req: Request, res: Response) {
-        const getCategoriaResponse: categoriaBDType[] | null = await CategoriaModel.getAll()
+        const getCategoriaResponse: CategoriaBDType[] | null = await CategoriaModel.getAll()
         if (!getCategoriaResponse) {
             const response: ResponseType<null> = {
                 status: "error",
@@ -36,7 +36,7 @@ export const CategoriaController = {
             }
                 return res.status(500).json(response)
             }
-            const response: ResponseType<categoriaBDType[]> = {
+            const response: ResponseType<CategoriaBDType[]> = {
                 status: "success",
                     message: "Categorias buscadas com sucesso",
                     data: getCategoriaResponse
@@ -47,7 +47,7 @@ export const CategoriaController = {
         async get(req: Request, res: Response) {
             const { id } = req.params
                 if (id) {
-                    const getCategoriaByIdResponse: categoriaBDType | null = await CategoriaModel.get(id as string)
+                    const getCategoriaByIdResponse: CategoriaBDType | null = await CategoriaModel.get(id as string)
                     if (!getCategoriaByIdResponse) {
                         const response: ResponseType<null> = {
                             status: "error",
@@ -57,7 +57,7 @@ export const CategoriaController = {
                         return res.status(404).json(response)
                     }
         
-                    const response: ResponseType<categoriaBDType> = {
+                    const response: ResponseType<CategoriaBDType> = {
                         status: "success",
                         message: "Categoria encontrada",
                         data: getCategoriaByIdResponse
@@ -77,7 +77,7 @@ export const CategoriaController = {
             async update(req: Request, res: Response) {
                 const { id } = req.params
                 
-                    const updatedCategoria: categoriaBDType = req.body
+                    const updatedCategoria: CategoriaBDType = req.body
             
                     if (!id) {
                         return res.status(400).json({
@@ -121,7 +121,7 @@ export const CategoriaController = {
                         })
                         }
                 
-                        const deleteCategoriaResponse: categoriaBDType | null = await CategoriaModel.delete(id as string)
+                        const deleteCategoriaResponse: CategoriaBDType | null = await CategoriaModel.delete(id as string)
                 
                     if (!deleteCategoriaResponse) {
                         const response: ResponseType<null> = {
@@ -131,7 +131,7 @@ export const CategoriaController = {
                         }
                         return res.status(400).json(response)
                     }
-                    const response: ResponseType<categoriaBDType> = {
+                    const response: ResponseType<CategoriaBDType> = {
                         status: "success",
                         message: "Categoria apagado com sucesso",
                         data: deleteCategoriaResponse

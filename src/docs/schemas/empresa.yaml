@@ -1,0 +1,112 @@
+# schema/empresa.yaml
+
+# id: string,
+# designacao: string,
+# descricao: string,
+# nif: string,
+# icone: string,
+# id_utilizador: string,
+# localizacao: string,
+# owner?: string,
+# enabled: boolean,
+# created_at: string,
+# updated_at: string
+
+
+components:
+  schemas:
+    # schema principal de empresa
+    Empresa:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1
+        designacao: 
+          type: string
+          example: "Sunrise Agencia de Viagens e Turismo"
+        descricao:
+          type: string
+          example: "Empresa que organiza e vende servicos de viagem, como passagens, hospedagem e pacotes turisticos, facilitando o planejamento e garantindo mais comodidade ao cliente."
+        nif: 
+          type: string
+          example: 167234892
+        icone:
+          type: string
+          example: "url"
+        id_utilizador:
+          type: string
+          example: 1
+        localizacao:
+          type: string
+          example: Praia, Fazenda
+        isowner:
+          type: string
+          example: "EmpresaModel, owner"
+        enabled: 
+          type: boolean
+          example: true
+        created_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+        updated_at:
+          type: string
+          example: "2022-01-01T00:00:00.000Z"
+
+    # schema para criar uma nova empresa
+    CreateEmpresa:
+      type: object
+      required:
+      properties:
+        designacao: 
+          type: string
+          example: "Sunrise Agencia de Viagens e Turismo"
+        descricao:
+          type: string
+          example: "Empresa que organiza e vende servicos de viagem, como passagens, hospedagem e pacotes turisticos, facilitando o planejamento e garantindo mais comodidade ao cliente."
+        nif: 
+          type: string
+          example: 167234892
+        icone:
+          type: string
+          example: "url"
+        id_utilizador:
+          type: string
+          example: 1
+        localizacao:
+          type: string
+          example: Praia, Fazenda
+        isowner:
+          type: string
+          example: "EmpresaModel, isowner"
+        enabled: 
+          type: boolean
+          example: true
+
+    # schema generico para sucesso
+    EmpresaResponseSucess:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Empresa criado com sucesso"
+        status:
+          type: boolean
+          example: true
+        data:
+          type: object
+          $ref: "#/components/schemas/Empresa"
+
+    # schema generico de resposta de erro
+    EmpresaResponseError:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Erro ao buscar empresas"
+        status:
+          type: boolean
+          example: false
+        data:
+          type: object
+          properties: null
