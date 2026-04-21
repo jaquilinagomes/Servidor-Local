@@ -47,7 +47,7 @@ export function authorize(roles: string[]) {
             return res.status(401).json({ message: "Utilizador não autorizado" })
         }
         if (!roles.includes(req.user.role)) {
-            return res.status(403).json({ message: "Permissão insuficiente" })
+            return res.status(403).json({ message: "Permissao insuficiente" })
         }
 
         next()

@@ -24,7 +24,7 @@ components:
           example: "url"
         isowner:
           type: string
-          example: "CategoriaModel, owner"
+          example: ""
         created_at:
           type: string
           example: "2022-01-01T00:00:00.000Z"
@@ -45,7 +45,7 @@ components:
           example: "url"
         isowner:
           type: string
-          example: "CategoriaModel, isowner"
+          example: ""
 
     # schema generico para sucesso
     CategoriaResponseSucess:

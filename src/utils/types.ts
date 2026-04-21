@@ -1,5 +1,5 @@
 export enum Role {
-    ADMIN ="admin",
+    ADMIN = "admin",
     CLIENTE = "cliente",
     PRESTADOR = "prestador",
     EMPRESA = "empresa"
@@ -54,15 +54,15 @@ export interface prestadorType {
 }
 
 export interface PrestadorDBType {
-id: string,
-nif: string,
-profissao: string,
-taxa_urgencia: number,
-minimo_desconto: number,
-percentagem_desconto: number,
-enabled: boolean,
-created_at: string,
-updated_at: string
+    id: string,
+    nif: string,
+    profissao: string,
+    taxa_urgencia: number,
+    minimo_desconto: number,
+    percentagem_desconto: number,
+    enabled: boolean,
+    created_at: string,
+    updated_at: string
 }
 
 export interface userDBType {
@@ -71,9 +71,9 @@ export interface userDBType {
     numero_identificacao: string,
     data_nascimento: string,
     email: string,
-    telefone:string ,
+    telefone: string ,
     pais: string ,
-    localidade:string,
+    localidade: string,
     password: string,
     role: Role,
     enabled: boolean,
@@ -108,7 +108,7 @@ export interface PropostaDBType {
     estado: EstadoProposta,
     id_prestador: string,
     owner?: string,
-    enabled:boolean,
+    enabled: boolean,
     created_at: string,
     updated_at: string
 }

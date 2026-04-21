@@ -42,7 +42,7 @@ components:
           example: Praia, Fazenda
         isowner:
           type: string
-          example: "EmpresaModel, owner"
+          example: ""
         enabled: 
           type: boolean
           example: true
@@ -78,7 +78,7 @@ components:
           example: Praia, Fazenda
         isowner:
           type: string
-          example: "EmpresaModel, isowner"
+          example: ""
         enabled: 
           type: boolean
           example: true

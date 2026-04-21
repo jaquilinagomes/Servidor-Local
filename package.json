@@ -1,31 +1,30 @@
 {
-  "name": "servidor-local",
+  "name": "servidor-local2",
   "version": "1.0.0",
-  "description": "",
-  "homepage": "https://github.com/jaquilinagomes/Servidor-Local#readme",
-  "bugs": {
-    "url": "https://github.com/jaquilinagomes/Servidor-Local/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jaquilinagomes/Servidor-Local.git"
-  },
-  "license": "ISC",
-  "author": "",
-  "type": "module",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "start": "tsx src/index.ts",
     "dev": "tsx watch src/index.ts",
     "docs": "swagger-jsdoc -o ./src/docs/swagger.json ./src/docs/swagger.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
+    "@apollo/server": "^5.5.0",
+    "@as-integrations/express5": "^1.1.2",
     "@types/swagger-jsdoc": "^6.0.4",
     "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
     "date-fns": "^4.1.0",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
+    "graphql": "^16.13.2",
+    "graphql-tag": "^2.12.6",
+    "jest": "^30.3.0",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.19.1",
     "swagger-jsdoc": "^6.2.8",
@@ -35,9 +34,12 @@
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.3.0",
     "@types/swagger-ui-express": "^4.1.8",
+    "cross-env": "^10.1.0",
+    "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
