@@ -10,7 +10,7 @@ export const EmpresaModel = {
             `INSERT INTO tbl_empresa VALUES (?,?,?,?,?,?,?,?,?,?)`,
 
             [
-                empresa.id,
+                null,
                 empresa.designacao,
                 empresa.descricao,
                 empresa.nif,

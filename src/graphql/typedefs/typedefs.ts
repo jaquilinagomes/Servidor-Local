@@ -3,28 +3,28 @@ import { gql } from "graphql-tag";
 
 export const typeDefs = gql`
     enum Role {
-        ADMIN = "admin",
-        CLIENTE = "cliente",
-        PRESTADOR = "prestador",
-        EMPRESA = "empresa"
+        ADMIN,
+        CLIENTE,
+        PRESTADOR,
+        EMPRESA,
     }
 
     enum EstadoProposta {
-        PENDENTE = "pendente",
-        ACEITE = "aceite",
-        CANCELADO = "cancelado"
+        PENDENTE,
+        ACEITE,
+        CANCELADO
     }
 
     enum EstadoPrestacaoServico {
-        PENDENTE = "pendente",
-        EM_PROGRESSO = "em_progresso",
-        FINALIZADO = "finalizado",
-        CANCELADO = "cancelado"
+        PENDENTE,
+        EM_PROGRESSO,
+        FINALIZADO,
+        CANCELADO
     }
 
     enum TipoPrestador {
-        PARTICULAR = "particular",
-        EMPRESA = "empresa"
+        PARTICULAR,
+        EMPRESA
     }
 
     type Utilizador {
@@ -39,52 +39,54 @@ export const typeDefs = gql`
         password: String,
         role: Role,
         enabled: Boolean,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
     }
 
     type Servico {
         id: ID!,
         nome: String!,
         descricao: String,
-        categoria: String,
+        id_categoria: Categoria,
         enabled: Boolean,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
     }
 
     type Prestador {
         id: ID!,
         nif: String!,
         profissao: String,
-        taxa_urgencia: String,
-        minimo_desconto: String,
-        percentagem_desconto: String,
+        taxa_urgencia: Int!,
+        minimo_desconto: Int!,
+        percentagem_desconto: Int!,
+        id_empresa: Empresa,
+        id_utilizador: Utilizador,
         enabled: Boolean,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
     }
 
     type Orcamento {
         id : ID!,
         total: Float,
-        id_utilizadores: ID!,
+        id_utilizadores: Utilizador,
         enabled: Boolean,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
     }
 
     type Proposta {
         id: ID!,
-        id_prestacao_servico: ID!,
+        id_prestacao_servico: PrestacaoServico,
         preco_hora: Float!,
         horas_estimadas: Int!,
         estado: EstadoProposta,
-        id_prestador: ID!,
+        id_prestador: Prestador,
         owner: String,
         enabled: Boolean,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
     }
 
     type PrestacaoServico {
@@ -92,27 +94,26 @@ export const typeDefs = gql`
         designacao: String,
         subtotal: Float,
         horas_estimadas: Int!,
-        id_prestador: ID!,
-        id_servico: ID!,
+        id_prestador: Prestador,
+        id_servico: Servico,
         preco_hora: Float!, 
         estado: EstadoPrestacaoServico,
-        id_orcamento: ID!,
-        id_utilizador: ID!,
-        id_empresa: ID!,
+        id_orcamento: Orcamento,
+        id_utilizador: Utilizador,
+        id_empresa: Empresa,
         tipo_prestador: TipoPrestador,
         urgente: Boolean,
         enabled: Boolean,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
     }
 
     type Categoria {
         id: ID!,
         designacao: String,
         icone: String,
-        owner: String,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
     }
 
     type Empresa {
@@ -121,13 +122,58 @@ export const typeDefs = gql`
         descricao: String,
         nif: String!,
         icone: String,
-        id_utilizador: ID!,
+        id_utilizador: Utilizador,
         localizacao: String,
-        owner: String,
         enabled: Boolean,
-        createdAt: String,
-        updatedAt: String
+        created_at: String,
+        updated_at: String
 }
+    type Query {
+        getAllUsers: [Utilizador]
+        getUserById(id: ID!): Utilizador
+        getAllServices: [Servico]
+        getServiceById(id: ID!): Servico
+    }
+
+    type Mutation {
+        createUser(
+            nome: String!,
+            numero_identificacao: String!,
+            data_nascimento: String!,
+            email: String!,
+            telefone: String!,
+            pais: String!,
+            localidade: String,
+            password: String,
+            role: Role,
+            enabled: Boolean): Utilizador,
+        updateUser(
+            id: ID!,
+            nome: String!,
+            numero_identificacao: String!,
+            data_nascimento: String!,
+            email: String!,
+            telefone: String!,
+            pais: String!,
+            localidade: String,
+            password: String,
+            role: Role,
+            enabled: Boolean): Utilizador,
+        deleteUser(id: ID!): Utilizador
+        createService(
+            nome: String!,
+            descricao: String!,
+            categoria: Categoria,
+            enabled: Boolean): Servico
+        )
+        updateService(
+            id: ID!, 
+            nome: String!, 
+            descricao: String, 
+            categoria: Categoria,
+            enabled: Boolean): Servico
+        deleteService(id: ID!): Servico
+    }
 
 
 `
