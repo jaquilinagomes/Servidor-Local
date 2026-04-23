@@ -166,6 +166,7 @@ export interface CategoriaBDType {
     id: string,
     designacao: string,
     icone: string,
+    owner?: string,
     created_at: string,
     updated_at: string
 }
@@ -178,6 +179,7 @@ export interface EmpresaDBType {
     icone: string,
     id_utilizador: string,
     localizacao: string,
+    owner?: string,
     enabled: boolean,
     created_at: string,
     updated_at: string

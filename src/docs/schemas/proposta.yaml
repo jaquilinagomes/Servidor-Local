@@ -106,7 +106,7 @@ components:
               example: Aceite
 
     # schema generico para sucesso
-    PropostaResponseSucess:
+    PropostaResponseSuccess:
       type: object
       properties:
         message:

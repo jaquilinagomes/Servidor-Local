@@ -44,7 +44,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+                $ref: "#/components/schemas/PrestacaoServicoResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -74,7 +74,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+                $ref: "#/components/schemas/PrestacaoServicoResponseSuccess"
         "404":
           description: Prestação de serviço não encontrado
           content:
@@ -111,7 +111,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+                $ref: "#/components/schemas/PrestacaoServicoResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -148,7 +148,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+                $ref: "#/components/schemas/PrestacaoServicoResponseSuccess"
         "404":
           description: Prestação de serviço não encontrado
           content:
@@ -182,7 +182,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+                $ref: "#/components/schemas/PrestacaoServicoResponseSuccess"
         "500":
           description: Erro ao buscar prestação de serviço detalhada
           content:
@@ -221,7 +221,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PrestacaoServicoResponseSucess"
+                $ref: "#/components/schemas/PrestacaoServicoResponseSuccess"
         "400":
           description: Dados de prestação de serviço por categoria invalidos
           content:

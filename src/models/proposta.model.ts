@@ -10,19 +10,19 @@ export const PropostaModel = {
         try {
 
     const [rows] = await db.execute<PropostaDBType & RowDataPacket[]>(
-    `INSERT INTO tbl_proposta
-    ( id, id_prestacao_servico, preco_hora, horas_estimadas, estado, enabled, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-    generateUUID(),
-    proposta.id_prestacao_servico,
-    proposta.preco_hora,
-    proposta.horas_estimadas,
-    proposta.estado,
-    proposta.enabled,
-    new Date(),
-    new Date()
-    ]
+            `INSERT INTO tbl_proposta
+            ( id, id_prestacao_servico, preco_hora, horas_estimadas, estado, enabled, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                        [
+                generateUUID(),
+                proposta.id_prestacao_servico,
+                proposta.preco_hora,
+                proposta.horas_estimadas,
+                proposta.estado,
+                proposta.enabled,
+                new Date(),
+                new Date()
+                ]
 )
 
     console.log({ rows });

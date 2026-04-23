@@ -9,21 +9,21 @@ export const categoriaResolver = {
         },
 
         getCategoriaById: async (_: any, args: { id: string}) => {
-                return await CategoriaModel.get(args.id);
-                }
+            return await CategoriaModel.get(args.id);
+        }
     },
 
     Mutation: {
-            createCategoria: async (_: any, args: { categoria: CategoriaBDType}) => {
-                return await CategoriaModel.create(args.categoria);
-            },
-    
-            updateCategoria: async (_: any, args: { id: string, categoria: CategoriaBDType}) => {
-                return await CategoriaModel.update(args.id, args.categoria);
-            },
-    
-            deleteCategoria: async (_: any, args: { id: string }) => {
-                return await CategoriaModel.delete(args.id);
-            }
+        createCategoria: async (_: any, args: { categoria: CategoriaBDType}) => {
+            return await CategoriaModel.create(args.categoria);
         },
+    
+        updateCategoria: async (_: any, args: { id: string, categoria: CategoriaBDType}) => {
+            return await CategoriaModel.update(args.id, args.categoria);
+        },
+    
+        deleteCategoria: async (_: any, args: { id: string }) => {
+            return await CategoriaModel.delete(args.id);
+        }
+    },
 }

@@ -11,28 +11,28 @@ export const empresaResolver = {
         },
 
         getEmpresaById: async (_: any, args: { id: string}) => {
-                return await EmpresaModel.get(args.id);
-                }
+            return await EmpresaModel.get(args.id);
+        }
     },
 
     Mutation: {
-            createEmpresa: async (_: any, args: { empresa: EmpresaDBType}) => {
-                return await EmpresaModel.create(args.empresa);
-            },
-    
-            updateEmpresa: async (_: any, args: { id: string, empresa: EmpresaDBType}) => {
-                return await EmpresaModel.update(args.id, args.empresa);
-            },
-    
-            deleteEmpresa: async (_: any, args: { id: string }) => {
-                return await EmpresaModel.delete(args.id);
-            }
+        createEmpresa: async (_: any, args: { empresa: EmpresaDBType}) => {
+            return await EmpresaModel.create(args.empresa);
         },
+    
+        updateEmpresa: async (_: any, args: { id: string, empresa: EmpresaDBType}) => {
+            return await EmpresaModel.update(args.id, args.empresa);
+        },
+    
+        deleteEmpresa: async (_: any, args: { id: string }) => {
+            return await EmpresaModel.delete(args.id);
+        }
+    },
 
-        // Relacionamento de tabela
+        // Relacionamento de tabelas
     empresa: {
         utilizador: async (parent: { id_utilizador: string }) => {
-                return await UserModel.get(parent.id_utilizador);
-            }
+            return await UserModel.get(parent.id_utilizador);
+        }
     }
     }

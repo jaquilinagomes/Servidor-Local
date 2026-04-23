@@ -48,7 +48,7 @@ components:
           example: ""
 
     # schema generico para sucesso
-    CategoriaResponseSucess:
+    CategoriaResponseSuccess:
       type: object
       properties:
         message:

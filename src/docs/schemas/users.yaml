@@ -112,7 +112,7 @@ components:
           example: "senha123"
 
   # schema generico para sucesso
-    UserResponseSucess:
+    UserResponseSuccess:
       type: object
       properties:
         message:

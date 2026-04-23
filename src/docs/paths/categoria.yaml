@@ -44,7 +44,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/CategoriaResponseSucess" 
+                $ref: "#/components/schemas/CategoriaResponseSuccess" 
         "400":
           description: Dados inválidos
           content:
@@ -74,7 +74,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/CategoriaResponseSucess"
+                $ref: "#/components/schemas/CategoriaResponseSuccess"
         "404":
           description: Categoria não encontrada
           content:
@@ -111,7 +111,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/CategoriaResponseSucess"
+                $ref: "#/components/schemas/CategoriaResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -148,7 +148,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/CategoriaResponseSucess"
+                $ref: "#/components/schemas/CategoriaResponseSuccess"
         "404":
           description: Categoria não encontrada
           content:

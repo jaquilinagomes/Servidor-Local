@@ -11,7 +11,7 @@ export const ServiceModel = {
             null,
             newService.nome,
             newService.descricao,
-            newService.categoria,
+            newService.id_categoria,
             newService.enabled,
             new Date(),
             new Date()
@@ -73,7 +73,7 @@ export const ServiceModel = {
         const values = [
             servicoAtualizado.nome,
             servicoAtualizado.descricao,
-            servicoAtualizado.categoria,
+            servicoAtualizado.id_categoria,
             servicoAtualizado.enabled,
             new Date(),
             id

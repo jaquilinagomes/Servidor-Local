@@ -84,7 +84,7 @@ components:
           example: true
 
     # schema generico para sucesso
-    EmpresaResponseSucess:
+    EmpresaResponseSuccess:
       type: object
       properties:
         message:

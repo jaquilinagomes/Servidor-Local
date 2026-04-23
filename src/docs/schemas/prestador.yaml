@@ -68,7 +68,7 @@ components:
           example: true
 
     # schema generico para sucesso
-    PrestadorResponseSucess:
+    PrestadorResponseSuccess:
       type: object
       properties:
         message:

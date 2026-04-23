@@ -10,27 +10,28 @@ export const orcamentoResolver = {
         },
 
         getOrcamentoById: async (_: any, args: { id: string}) => {
-                return await OrcamentoModel.get(args.id);
-                }
+            return await OrcamentoModel.get(args.id);
+        }
     },
 
     Mutation: {
-            createOrcamento: async (_: any, args: { orcamento: OrcamentoDBType}) => {
-                return await OrcamentoModel.create(args.orcamento);
-            },
-    
-            updateOrcamento: async (_: any, args: { id: string, orcamento: OrcamentoDBType}) => {
-                return await OrcamentoModel.update(args.id, args.orcamento);
-            },
-    
-            deleteOrcamento: async (_: any, args: { id: string }) => {
-                return await OrcamentoModel.delete(args.id);
-            }
+        createOrcamento: async (_: any, args: { orcamento: OrcamentoDBType}) => {
+            return await OrcamentoModel.create(args.orcamento);
         },
+    
+        updateOrcamento: async (_: any, args: { id: string, orcamento: OrcamentoDBType}) => {
+            return await OrcamentoModel.update(args.id, args.orcamento);
+        },
+    
+        deleteOrcamento: async (_: any, args: { id: string }) => {
+            return await OrcamentoModel.delete(args.id);
+        }
+    },
 
+        // Relacionamento de tabelas
     orcamento: {
         utilizadores: async (parent: { id_utilizadores: string }) => {
-                return await UserModel.get(parent.id_utilizadores);
-            }
+            return await UserModel.get(parent.id_utilizadores);
+        }
     }
     }

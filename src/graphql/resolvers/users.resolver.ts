@@ -1,4 +1,5 @@
 
+import { EmpresaModel } from "../../models/empresa.model.js";
 import { UserModel } from "../../models/users.model.js";
 import type { userDBType } from "../../utils/types.js";
 
@@ -25,5 +26,10 @@ export const userResolver = {
         deleteUser: async (_: any, args: { id: string }) => {
             return await UserModel.delete(args.id);
         }
+    },
+
+    // Relacionamento de tabelas
+    empresa: async (parent: { id: string }) => {
+            return await EmpresaModel.get(parent.id);
     }
 }

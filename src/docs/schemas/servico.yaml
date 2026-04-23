@@ -86,7 +86,7 @@ components:
           example: true
 
     # schema generico para sucesso
-    ResponseSucess:
+    ResponseSuccess:
       type: object
       properties:
         message:

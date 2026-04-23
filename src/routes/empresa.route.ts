@@ -22,8 +22,8 @@ router.get(EmpresaRoute.getAll, authorize([Role.ADMIN]), EmpresaController.getAl
 
 router.post(EmpresaRoute.create, authorize([Role.ADMIN, Role.CLIENTE]), EmpresaController.create)
 
-router.put(EmpresaRoute.update, authorize([Role.ADMIN]), isOwner(EmpresaModel, "owner"), EmpresaController.update)
+router.put(EmpresaRoute.update, authorize([Role.ADMIN]), isOwner(EmpresaModel, "owner"),EmpresaController.update)
 
-router.delete(EmpresaRoute.delete, authorize([Role.ADMIN]),isOwner(EmpresaModel, "owner"), EmpresaController.delete)
+router.delete(EmpresaRoute.delete, authorize([Role.ADMIN]), isOwner(EmpresaModel, "owner"), EmpresaController.delete)
 
 export { router };

@@ -56,7 +56,7 @@ components:
         example: 1
 
     # schema generico para sucesso
-    OrcamentoResponseSucess:
+    OrcamentoResponseSuccess:
       type: object
       properties:
         message:

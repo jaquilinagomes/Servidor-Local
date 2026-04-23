@@ -44,7 +44,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UserResponseSucess"
+                $ref: "#/components/schemas/UserResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -74,7 +74,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UserResponseSucess"
+                $ref: "#/components/schemas/UserResponseSuccess"
         "404":
           description: Usuário não encontrado
           content:
@@ -111,7 +111,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UserResponseSucess"
+                $ref: "#/components/schemas/UserResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -155,7 +155,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UserResponseSucess"
+                $ref: "#/components/schemas/UserResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -192,7 +192,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UserResponseSucess"
+                $ref: "#/components/schemas/UserResponseSuccess"
         "404":
           description: Usuário não encontrado
           content:
@@ -220,7 +220,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/UserResponseSucess"
+                $ref: "#/components/schemas/UserResponseSuccess"
         "404":
           description: "Usuário não encontrado"
           content:

@@ -91,7 +91,7 @@ components:
           example:
 
     # schema generico para sucesso
-    PrestacaoServicoResponseSucess:
+    PrestacaoServicoResponseSuccess:
       type: object
       properties:
         message:

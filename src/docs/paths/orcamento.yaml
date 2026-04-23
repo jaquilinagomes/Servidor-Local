@@ -44,7 +44,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/OrcamentoResponseSucess"
+                $ref: "#/components/schemas/OrcamentoResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -74,7 +74,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/OrcamentoResponseSucess"
+                $ref: "#/components/schemas/OrcamentoResponseSuccess"
         "404":
           description: Orçamento não encontrado
           content:
@@ -104,7 +104,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/OrcamentoResponseSucess"
+                $ref: "#/components/schemas/OrcamentoResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -148,7 +148,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/OrcamentoResponseSucess"
+                $ref: "#/components/schemas/OrcamentoResponseSuccess"
         "400":
           description: Dados inválidos
           content:
@@ -185,7 +185,7 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: "#/components/schemas/OrcamentoResponseSucess"
+                $ref: "#/components/schemas/OrcamentoResponseSuccess"
         "404":
           description: Orçamento não encontrado
           content:

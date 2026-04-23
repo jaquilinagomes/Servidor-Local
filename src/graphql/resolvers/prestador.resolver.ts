@@ -12,21 +12,21 @@ export const prestadorResolver = {
 
         getPrestadorById: async (_: any, args: { id: string}) => {
                 return await PrestadorModel.get(args.id);
-                }
+        }
     },
 
     Mutation: {
-            createPrestador: async (_: any, args: { prestador: PrestadorDBType}) => {
+        createPrestador: async (_: any, args: { prestador: PrestadorDBType}) => {
                 return await PrestadorModel.create(args.prestador);
-            },
+        },
     
-            updatePrestador: async (_: any, args: { id: string, prestador: PrestadorDBType}) => {
+        updatePrestador: async (_: any, args: { id: string, prestador: PrestadorDBType}) => {
                 return await PrestadorModel.update(args.id, args.prestador);
-            },
+        },
     
-            deletePrestador: async (_: any, args: { id: string }) => {
+        deletePrestador: async (_: any, args: { id: string }) => {
                 return await PrestadorModel.delete(args.id);
-            }
+        }
         },
     
         // Relacionamento de tabelas

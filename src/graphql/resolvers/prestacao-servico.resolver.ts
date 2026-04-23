@@ -15,22 +15,22 @@ export const prestacaoServicoResolver = {
         },
 
         getPrestacaoServicoById: async (_: any, args: { id: string}) => {
-                return await PrestacaoServicoModel.get(args.id);
-                }
+            return await PrestacaoServicoModel.get(args.id);
+        }
     },
 
     Mutation: {
-            createPrestacaoServico: async (_: any, args: { prestacaoServico: PrestacaoServicoDBType}) => {
-                return await PrestacaoServicoModel.create(args.prestacaoServico);
-            },
+        createPrestacaoServico: async (_: any, args: { prestacaoServico: PrestacaoServicoDBType}) => {
+            return await PrestacaoServicoModel.create(args.prestacaoServico);
+        },
     
-            updatePrestacaoServico: async (_: any, args: { id: string, prestacaoServico: PrestacaoServicoDBType}) => {
-                return await PrestacaoServicoModel.update(args.id, args.prestacaoServico);
-            },
+        updatePrestacaoServico: async (_: any, args: { id: string, prestacaoServico: PrestacaoServicoDBType}) => {
+            return await PrestacaoServicoModel.update(args.id, args.prestacaoServico);
+        },
     
-            deletePrestacaoServico: async (_: any, args: { id: string }) => {
-                return await PrestacaoServicoModel.delete(args.id);
-            }
+        deletePrestacaoServico: async (_: any, args: { id: string }) => {
+            return await PrestacaoServicoModel.delete(args.id);
+        }
         },
 
         // Relacionamento de tabelas
