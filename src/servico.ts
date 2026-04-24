@@ -124,7 +124,7 @@ export async function updateService(id: string, updateService: servicoDBType) {
                     SET 
                         nome=?,
                         descricao=?,
-                        categoria=?,
+                        id_categoria=?,
                         enabled=?,
                         updated_at=?
                     WHERE

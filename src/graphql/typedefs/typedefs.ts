@@ -47,7 +47,7 @@ export const typeDefs = gql`
         id: ID!,
         nome: String!,
         descricao: String,
-        id_categoria: Categoria,
+        categoria: Categoria,
         enabled: Boolean,
         created_at: String,
         updated_at: String
@@ -178,13 +178,13 @@ export const typeDefs = gql`
         createService(
             nome: String!,
             descricao: String!,
-            id_categoria: String,
+            categoria: String!,
             enabled: Boolean): Servico,
         updateService(
             id: ID!, 
             nome: String!, 
             descricao: String, 
-            id_categoria: String,
+            categoria: String!,
             enabled: Boolean): Servico,
         deleteService(id: ID!): Servico
         createProposta(

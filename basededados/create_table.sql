@@ -183,3 +183,9 @@ ALTER TABLE tbl_proposta
 ALTER TABLE tbl_utilizadores
 	ADD COLUMN `role` ENUM("cliente", "admin", "prestador", "empresa") default "cliente"
 ;
+
+ALTER TABLE tbl_prestacao_servico
+	ADD COLUMN id_utilizador VARCHAR(255) NOT NULL,
+    ADD CONSTRAINT fk_tbl_utilizadores_prestacao_servico
+    FOREIGN KEY (id_utilizador)
+    REFERENCES tbl_utilizadores(id)

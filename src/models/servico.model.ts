@@ -11,17 +11,21 @@ export const ServiceModel = {
             null,
             newService.nome,
             newService.descricao,
-            newService.id_categoria,
+            newService.categoria,
             newService.enabled,
             new Date(),
             new Date()
         ]
 
-        const [rows] = await db.execute<servicoDBType & RowDataPacket[]>(query, values)
+        const rows = await db.execute(query, values)
 
-        return rows
+        // select last id
+        const queryLastId = `SELECT * FROM tbl_servicos ORDER BY id DESC LIMIT 1`
+        const [lastService] = await db.execute<servicoDBType[] & RowDataPacket[]>(queryLastId)
+
+        return lastService[0] as servicoDBType
     } catch (error) {
-        console.log(error)
+        console.log(error)   
         return null
     }
     },
@@ -73,7 +77,7 @@ export const ServiceModel = {
         const values = [
             servicoAtualizado.nome,
             servicoAtualizado.descricao,
-            servicoAtualizado.id_categoria,
+            servicoAtualizado.categoria,
             servicoAtualizado.enabled,
             new Date(),
             id
