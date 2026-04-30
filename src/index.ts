@@ -11,9 +11,14 @@ import swaggerUi from "swagger-ui-express";
 import { ApolloServer } from "@apollo/server";
 import { resolvers, typeDefs } from "./graphql/index.js";
 import { expressMiddleware } from "@as-integrations/express5";
+import cors from "cors";
 
 const app = express()
 app.use(express.json())
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+}))
 
 app.use("/service", ServiceRouter)
 app.use("/users", UserRouter)
