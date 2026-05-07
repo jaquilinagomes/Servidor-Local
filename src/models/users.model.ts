@@ -8,9 +8,24 @@ import { generateUUID } from "../utils/uuid.js";
 
 export const UserModel = {
     async create(user: userDBType): Promise<userDBType | null> {
+        console.log(
+            generateUUID(),
+                user.nome,
+                user.numero_identificacao,
+                formatDateDDMMYYYY(user.data_nascimento),
+                user.email,
+                user.telefone,
+                user.pais,
+                user.localidade,
+                await hashPassword(user.password),
+                user.enabled,
+                new Date(),
+                new Date(),
+                user.role
+        )
         try {
         const [rows] = await db.execute<userDBType & RowDataPacket[]>(
-            `INSERT INTO tbl_utilizadores VALUES (?,?,?,?,?,?,?,?,?,?,?,?)`,
+            `INSERT INTO tbl_utilizadores VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`,
 
             [
                 generateUUID(),
@@ -24,7 +39,8 @@ export const UserModel = {
                 await hashPassword(user.password),
                 user.enabled,
                 new Date(),
-                new Date()
+                new Date(),
+                user.role
             ],
         )
     

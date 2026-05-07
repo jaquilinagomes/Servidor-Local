@@ -25,7 +25,7 @@ export const UserController = {
             message: "Utilizador criado com sucesso",
             data: createUserResponse,
         }
-        return res.status(201).json(response)
+        return res.status(200).json(response)
     },
 
     async getAll(req: Request, res: Response) {
